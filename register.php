@@ -50,6 +50,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="stylesheet" href="CSS/style.css">
 </head>
 <body>
+
+<section class="form-section">
+
 <h2>Register</h2>
 <?php if (!empty($error)): ?>
     <div class="error-message"><?php echo $error; ?></div>
@@ -67,5 +70,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <button type="submit">Register</button>
 </form>
 <p>Already have an account? <a href="login.php">Login here</a></p>
+</section>
+
 </body>
 </html>

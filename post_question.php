@@ -33,6 +33,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="stylesheet" href="CSS/style.css">
 </head>
 <body>
+
+<section class="form-section">
 <h2>Post a Question</h2>
 <?php if (!empty($error)): ?>
     <div class="error-message"><?php echo $error; ?></div>
@@ -51,5 +53,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <p style="text-align:center; margin-top:10px;">
     <a href="index.php" style="color:#800000; text-decoration:underline;">&larr; Back to Home</a>
 </p>
+</section>
+
 </body>
 </html>
