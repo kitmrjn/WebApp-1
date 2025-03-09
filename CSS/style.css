@@ -10,14 +10,17 @@
 body {
   background-color: #fff4e6;
   color: #333;
-  padding-top: 80px; /* Space for fixed header */
+  padding-top: 80px;
   overflow-x: hidden;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
 /* Header */
 header {
   background-color: #800000; /* Maroon */
-  color: #fdd835;            /* Gold */
+  color: #fdd835; /* Gold */
   padding: 20px;
   display: flex;
   justify-content: space-between;
@@ -116,12 +119,13 @@ nav a:hover {
 /* Footer */
 footer {
   text-align: center;
-  background-color: #800000; /* Maroon */
-  color: #fdd835;            /* Gold */
+  background-color: #800000;
+  color: #fdd835;
   padding: 10px;
   position: fixed;
   bottom: 0;
   width: 100%;
+  margin-top: 30px;
 }
 
 footer p {
@@ -141,25 +145,27 @@ footer p {
   margin-bottom: 20px;
 }
 
-/* Question Cards (Home Page) */
+/* Question Cards (Home Page) - THREADS STYLE */
 .question {
   background-color: #fff;
-  padding: 20px;
-  margin-bottom: 20px;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 15px;
+  margin-bottom: 15px;
+  border-radius: 10px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+  display: flex;
+  flex-direction: column;
 }
 
 .question-header {
   display: flex;
-  align-items: center;
-  margin-bottom: 15px;
+  align-items: flex-start;
+  margin-bottom: 10px;
 }
 
 .avatar {
   border-radius: 50%;
-  width: 50px;
-  height: 50px;
+  width: 40px;
+  height: 40px;
   margin-right: 10px;
 }
 
@@ -168,20 +174,21 @@ footer p {
 }
 
 .question-info h3 {
-  font-size: 1.4rem;
+  font-size: 1.2rem;
   color: #800000;
-  margin-bottom: 5px;
+  margin-bottom: 3px;
 }
 
 .timestamp {
-  font-size: 0.9rem;
-  color: #888;
+  font-size: 0.8rem;
+  color: #777;
 }
 
 .answer-preview {
   font-size: 1rem;
-  color: #555;
-  margin-bottom: 15px;
+  color: #444;
+  margin-bottom: 10px;
+  line-height: 1.4;
 }
 
 .answer-button {
@@ -191,7 +198,8 @@ footer p {
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  font-size: 1rem;
+  font-size: 0.9rem;
+  align-self: flex-start;
 }
 
 .answer-button:hover {
@@ -241,72 +249,76 @@ footer p {
 }
 
 /* Forms (Login, Register, Post, etc.) */
-section.form-section {
+.form-section {
   width: 90%;
-  max-width: 600px; /* wider forms for a more professional look */
+  max-width: 600px;
   margin: 30px auto;
   padding: 20px;
   background-color: #fff;
   border-radius: 8px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  flex: 1;
+  margin-bottom: 100px; /* Add space between form and footer */
 }
 
-section.form-section h2 {
+.form-section h2 {
   font-size: 1.8rem;
   color: #800000;
   text-align: center;
   margin-bottom: 20px;
 }
 
-section.form-section form {
+.form-section form {
   display: flex;
   flex-direction: column;
   gap: 15px;
 }
 
-section.form-section form label {
+.form-section form label {
   font-weight: bold;
   color: #800000;
   margin-bottom: 5px;
 }
 
-section.form-section input[type="text"],
-section.form-section input[type="email"],
-section.form-section input[type="password"],
-section.form-section textarea {
-  width: 100%;
-  padding: 12px;
-  font-size: 1rem;
-  border: 2px solid #800000;
-  border-radius: 8px;
-  outline: none;
+.form-section input[type="text"],
+.form-section input[type="email"],
+.form-section input[type="password"],
+.form-section textarea {
+    width: 100%;
+    padding: 10px; /* Reduced padding */
+    font-size: 1rem;
+    border: 2px solid #800000;
+    border-radius: 8px;
+    outline: none;
+    margin-bottom: 10px; /* Reduced margin */
+    box-sizing: border-box;
 }
 
-section.form-section input[type="text"]:focus,
-section.form-section input[type="email"]:focus,
-section.form-section input[type="password"]:focus,
-section.form-section textarea:focus {
+.form-section input[type="text"]:focus,
+.form-section input[type="email"]:focus,
+.form-section input[type="password"]:focus,
+.form-section textarea:focus {
   border-color: #5a0000;
   box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
 }
 
-section.form-section button {
-  padding: 12px 20px;
+.form-section button {
+  padding: 10px 20px; /* Reduced padding */
   background-color: #800000;
   color: #fdd835;
   border: none;
   border-radius: 8px;
   cursor: pointer;
   font-size: 1rem;
-  align-self: flex-start;
-  width: 150px;
+  width: 100%;
+  margin-top: 10px; /* Reduced margin */
 }
 
-section.form-section button:hover {
+.form-section button:hover {
   background-color: #5a0000;
 }
 
-section.form-section .error-message {
+.form-section .error-message {
   color: #d9534f;
   background-color: #f2dede;
   padding: 10px;
@@ -314,19 +326,108 @@ section.form-section .error-message {
   margin-bottom: 20px;
 }
 
+.back-to-home-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px; /* Reduced margin */
+}
+
+.back-to-home {
+  display: inline-flex;
+  align-items: center;
+  color: #800000;
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: color 0.3s ease;
+}
+
+.back-to-home i {
+  margin-right: 8px;
+  font-size: 0.9rem;
+}
+
+.back-to-home:hover {
+  color: #5a0000;
+  text-decoration: underline;
+}
+
+/* Modal Styles */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1001;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0,0,0,0.4);
+}
+
+.modal-content {
+  background-color: #fff;
+  margin: 15% auto;
+  padding: 25px;
+  border-radius: 8px;
+  width: 90%;
+  max-width: 600px;
+  position: relative;
+}
+
+.modal-content h2 {
+  color: #800000;
+  margin-bottom: 20px;
+}
+
+.modal-content textarea {
+  width: 100%;
+  height: 150px;
+  padding: 15px;
+  border: 2px solid #800000;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  resize: vertical;
+}
+
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.close:hover {
+  color: #800000;
+}
+
+.answer-submit-btn {
+  background-color: #800000;
+  color: #fdd835;
+  padding: 12px 25px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.answer-submit-btn:hover {
+  background-color: #5a0000;
+}
+
 /* Links under forms */
-section.form-section p {
+.form-section p {
   margin-top: 10px;
   text-align: center;
 }
 
-section.form-section p a {
+.form-section p a {
   color: #800000;
   text-decoration: none;
   font-weight: bold;
 }
 
-section.form-section p a:hover {
+.form-section p a:hover {
   text-decoration: underline;
 }
 
@@ -343,8 +444,25 @@ section.form-section p a:hover {
   margin-bottom: 5px;
 }
 
-/* Optional: Adjust the footer if you want it below content instead of fixed */
-footer {
-  position: static; /* or remove this line if you want a sticky footer */
-  margin-top: 30px;
+/* Post Question Modal */
+#postQuestionModal .modal-content {
+  max-width: 700px;
+}
+
+#postQuestionModal label {
+  display: block;
+  margin-top: 10px;
+  color: #800000;
+  font-weight: bold;
+}
+
+#postQuestionModal input[type="text"],
+#postQuestionModal textarea {
+  width: 100%;
+  padding: 8px;
+  margin-top: 5px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
 }
