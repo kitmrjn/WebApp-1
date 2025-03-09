@@ -440,6 +440,12 @@ footer p {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+.answers {
+  margin-top: 15px;
+  padding-top: 15px;
+  border-top: 1px solid #ddd;
+}
+
 .answer-box p {
   margin-bottom: 5px;
 }

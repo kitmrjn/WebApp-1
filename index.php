@@ -38,6 +38,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_SESSION['user_id']) && isse
     <title>Vincenthinks - Home</title>
     <link rel="stylesheet" href="CSS/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        /* Add smooth transition for expanding questions */
+        .question {
+            transition: all 0.5s ease;
+            overflow: hidden;
+            max-height: 150px; /* Initial height */
+        }
+
+        .question.expanded {
+            max-height: 1000px; /* Expanded height */
+            overflow-y: auto; /* Make it scrollable */
+        }
+    </style>
 </head>
 <body>
     <!-- Answer Modal -->
@@ -82,15 +95,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_SESSION['user_id']) && isse
         <div id="questionsContainer">
             <?php if (!empty($questions)): ?>
                 <?php foreach($questions as $row): ?>
-                    <div class="question">
+                    <div class="question" data-question-id="<?php echo htmlspecialchars($row['question_id']); ?>">
                         <div class="question-header">
                             <img src="images/userAvatar.jpg" alt="User Avatar" class="avatar">
                             <div class="question-info">
-                                <h3>
-                                    <a href="question.php?id=<?php echo htmlspecialchars($row['question_id']); ?>">
-                                        <?php echo htmlspecialchars($row['title']); ?>
-                                    </a>
-                                </h3>
+                                <h3><?php echo htmlspecialchars($row['title']); ?></h3>
                                 <p class="timestamp">Asked by <?php echo htmlspecialchars($row['username']); ?> on <?php echo htmlspecialchars($row['created_at']); ?></p>
                             </div>
                         </div>
@@ -115,12 +124,58 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_SESSION['user_id']) && isse
     </footer>
 
     <script>
+     // Function to open the reply modal
+        function openReplyModal(parentId) {
+            document.getElementById('modalParentId').value = parentId;
+            document.getElementById('answerModal').style.display = 'block';
+        }
+
+        // Function to handle question click
+        document.querySelectorAll('.question').forEach(question => {
+            question.addEventListener('click', function() {
+                const questionId = this.getAttribute('data-question-id');
+
+                // Remove all other questions
+                document.querySelectorAll('.question').forEach(q => {
+                    if (q !== this) {
+                        q.remove(); // Remove the question from the DOM
+                    }
+                });
+
+                // Check if answers are already loaded
+                const answersDiv = this.querySelector('.answers');
+                if (answersDiv) {
+                    // If answers are already loaded, just expand the question
+                    this.classList.add('expanded');
+                    return; // Exit the function
+                }
+
+                // Fetch and display answers
+                fetch(`get_answers.php?question_id=${questionId}`)
+                    .then(response => response.text())
+                    .then(data => {
+                        // Create a new div to display the answers
+                        const answersDiv = document.createElement('div');
+                        answersDiv.className = 'answers';
+                        answersDiv.innerHTML = data;
+
+                        // Append answers to the expanded question
+                        this.appendChild(answersDiv);
+
+                        // Expand the question smoothly
+                        this.classList.add('expanded');
+                    })
+                    .catch(error => console.error('Error fetching answers:', error));
+            });
+        });
+
+        // Search functionality
         function searchQuestions() {
             let input = document.getElementById("searchInput").value.toLowerCase();
             let questions = document.getElementsByClassName("question");
             
             for (let i = 0; i < questions.length; i++) {
-                let title = questions[i].querySelector("h3 a").innerText.toLowerCase();
+                let title = questions[i].querySelector("h3").innerText.toLowerCase();
                 let content = questions[i].querySelector(".answer-preview").innerText.toLowerCase();
                 
                 if (title.includes(input) || content.includes(input)) {
