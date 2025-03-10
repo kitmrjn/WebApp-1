@@ -1,0 +1,88 @@
+/* modals.css */
+
+/* Modal Styles */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1001;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0,0,0,0.4);
+}
+
+.modal-content {
+  background-color: #fff;
+  margin: 15% auto;
+  padding: 25px;
+  border-radius: 8px;
+  width: 90%;
+  max-width: 600px;
+  position: relative;
+}
+
+.modal-content h2 {
+  color: #800000;
+  margin-bottom: 20px;
+}
+
+.modal-content textarea {
+  width: 100%;
+  height: 150px;
+  padding: 15px;
+  border: 2px solid #800000;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  resize: vertical;
+}
+
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.close:hover {
+  color: #800000;
+}
+
+.answer-submit-btn {
+  background-color: #800000;
+  color: #fdd835;
+  padding: 12px 25px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.answer-submit-btn:hover {
+  background-color: #5a0000;
+}
+
+/* Post Question Modal */
+#postQuestionModal .modal-content {
+  max-width: 700px;
+}
+
+#postQuestionModal label {
+  display: block;
+  margin-top: 10px;
+  color: #800000;
+  font-weight: bold;
+}
+
+#postQuestionModal input[type="text"],
+#postQuestionModal textarea {
+  width: 100%;
+  padding: 8px;
+  margin-top: 5px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}

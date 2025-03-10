@@ -1,0 +1,40 @@
+/* search-bar.css */
+
+/* Search Bar (Home Page) */
+.search-bar {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  position: relative;
+  max-width: 800px;
+  margin: 0 20px;
+}
+
+.search-bar input[type="text"] {
+  width: 100%;
+  padding: 12px 20px 12px 50px;
+  border: 1px solid #ccc;
+  border-radius: 25px;
+  font-size: 16px;
+  outline: none;
+  height: 50px;
+}
+
+.search-bar input[type="text"]::placeholder {
+  color: #999;
+}
+
+.search-bar input[type="text"]:focus {
+  border-color: #007BFF;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+.search-bar .search-icon {
+  position: absolute;
+  left: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #999;
+  font-size: 20px;
+  pointer-events: none;
+}

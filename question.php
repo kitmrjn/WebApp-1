@@ -53,7 +53,10 @@ $answers = $aStmt->fetchAll(PDO::FETCH_ASSOC);
 <html>
 <head>
     <title>Question Details</title>
-    <link rel="stylesheet" href="CSS/style.css">
+    <link rel="stylesheet" href="CSS/global.css">
+    <link rel="stylesheet" href="CSS/header.css">
+    <link rel="stylesheet" href="CSS/question-detail.css">
+    <link rel="stylesheet" href="CSS/forms.css">
 </head>
 <body>
 <header>

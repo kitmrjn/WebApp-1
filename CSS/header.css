@@ -1,0 +1,61 @@
+/* header.css */
+
+/* Header */
+header {
+  background-color: #800000; /* Maroon */
+  color: #fdd835; /* Gold */
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+}
+
+header .logo {
+  display: flex;
+  align-items: center;
+}
+
+header .logo h1 {
+  font-size: 2rem;
+  margin-left: 10px;
+}
+
+.logo-link {
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  align-items: center;
+}
+
+.logo-link:hover {
+  opacity: 0.9;
+}
+
+.nav-logo {
+  height: 55px;
+  margin-right: 5px;
+  border-radius: 3px;
+}
+
+/* Navigation */
+nav {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+nav a {
+  color: #fdd835;
+  margin: 0 15px;
+  text-decoration: none;
+  font-size: 1rem;
+}
+
+nav a:hover {
+  text-decoration: underline;
+}
