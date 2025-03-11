@@ -5,6 +5,9 @@ require_once 'db_config.php'; // includes $conn (PDO object)
 // reCAPTCHA Secret Key
 $recaptchaSecretKey = '6LeJXvEqAAAAAKm0-NmvD-iraCVhy4h7IYO8kDxi'; // Replace with your Secret Key
 
+// Initialize variables to hold form data
+$usernameOrEmail = '';
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Verify reCAPTCHA
     $recaptchaResponse = $_POST['g-recaptcha-response'];
@@ -51,7 +54,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     <script src="JS/login.js" defer></script>
 </head>
-<body>
+<body class="auth-page">
 
 <section class="form-section">
     <h2>Login</h2>
@@ -60,7 +63,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <?php endif; ?>
     <form method="POST" action="">
         <label>Username or Email</label>
-        <input type="text" name="usernameOrEmail" required>
+        <input type="text" name="usernameOrEmail" required value="<?php echo htmlspecialchars($usernameOrEmail); ?>">
 
         <label>Password</label>
         <input type="password" name="password" required>
