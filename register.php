@@ -21,12 +21,43 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $confirmPassword = trim($_POST['confirmPassword']);
         $course   = trim($_POST['course']);
 
-        // Basic validation
-        if (empty($username) || empty($email) || empty($password) || empty($confirmPassword) || empty($course)) {
-            $error = "All fields are required.";
-        } elseif ($password !== $confirmPassword) {
+        // Validate username
+        if (empty($username)) {
+            $error = "Username is required.";
+        } elseif (strlen($username) < 5 || strlen($username) > 20) {
+            $error = "Username must be between 5 and 20 characters.";
+        } elseif (preg_match('/^[0-9]+$/', $username)) {
+            $error = "Username cannot be only numbers.";
+        } elseif (!preg_match('/^[a-zA-Z0-9-]+$/', $username)) {
+            $error = "Username can only contain letters, numbers, and hyphens (-).";
+        }
+
+        // Validate password
+        elseif (empty($password)) {
+            $error = "Password is required.";
+        } elseif (strlen($password) < 8 || strlen($password) > 20) {
+            $error = "Password must be between 8 and 20 characters.";
+        }
+
+        // Validate confirm password
+        elseif ($password !== $confirmPassword) {
             $error = "Passwords do not match.";
-        } else {
+        }
+
+        // Validate email
+        elseif (empty($email)) {
+            $error = "Email is required.";
+        } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            $error = "Invalid email format.";
+        }
+
+        // Validate course
+        elseif (empty($course)) {
+            $error = "Course/Strand is required.";
+        }
+
+        // If no errors, proceed with registration
+        else {
             // Check if username or email already exists
             $checkSql = "SELECT * FROM users WHERE username = :username OR email = :email LIMIT 1";
             $stmt = $conn->prepare($checkSql);
@@ -80,16 +111,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <?php endif; ?>
     <form method="POST" action="">
         <label>Username</label>
-        <input type="text" name="username" required>
+        <input type="text" name="username" required minlength="5" maxlength="20" pattern="[a-zA-Z0-9-]+" title="Username can only contain letters, numbers, and hyphens (-).">
 
         <label>Email</label>
         <input type="email" name="email" required>
 
         <label>Password</label>
-        <input type="password" name="password" required>
+        <input type="password" name="password" required minlength="8" maxlength="20">
 
         <label>Confirm Password</label>
-        <input type="password" name="confirmPassword" required>
+        <input type="password" name="confirmPassword" required minlength="8" maxlength="20">
 
         <label>Course/Strand</label>
         <select name="course" required>
