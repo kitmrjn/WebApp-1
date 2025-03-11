@@ -2,47 +2,60 @@
 session_start();
 require_once 'db_config.php'; // includes $conn (PDO object)
 
+// reCAPTCHA Secret Key
+$recaptchaSecretKey = '6LeJXvEqAAAAAKm0-NmvD-iraCVhy4h7IYO8kDxi'; // Replace with your Secret Key
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $username = trim($_POST['username']);
-    $email    = trim($_POST['email']);
-    $password = trim($_POST['password']);
-    $confirmPassword = trim($_POST['confirmPassword']); // New field for confirm password
-    $course   = trim($_POST['course']); // Field for course/strand
+    // Verify reCAPTCHA
+    $recaptchaResponse = $_POST['g-recaptcha-response'];
+    $verifyUrl = "https://www.google.com/recaptcha/api/siteverify?secret=$recaptchaSecretKey&response=$recaptchaResponse";
+    $response = file_get_contents($verifyUrl);
+    $responseData = json_decode($response);
 
-    // Basic validation
-    if (empty($username) || empty($email) || empty($password) || empty($confirmPassword) || empty($course)) {
-        $error = "All fields are required.";
-    } elseif ($password !== $confirmPassword) {
-        $error = "Passwords do not match.";
+    if (!$responseData->success) {
+        $error = "reCAPTCHA verification failed. Please try again.";
     } else {
-        // Check if username or email already exists
-        $checkSql = "SELECT * FROM users WHERE username = :username OR email = :email LIMIT 1";
-        $stmt = $conn->prepare($checkSql);
-        $stmt->bindValue(':username', $username);
-        $stmt->bindValue(':email', $email);
-        $stmt->execute();
-        $existing = $stmt->fetch(PDO::FETCH_ASSOC);
+        $username = trim($_POST['username']);
+        $email    = trim($_POST['email']);
+        $password = trim($_POST['password']);
+        $confirmPassword = trim($_POST['confirmPassword']);
+        $course   = trim($_POST['course']);
 
-        if ($existing) {
-            $error = "Username or Email already taken.";
+        // Basic validation
+        if (empty($username) || empty($email) || empty($password) || empty($confirmPassword) || empty($course)) {
+            $error = "All fields are required.";
+        } elseif ($password !== $confirmPassword) {
+            $error = "Passwords do not match.";
         } else {
-            // Hash the password
-            $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-
-            // Insert new user
-            $sql = "INSERT INTO users (username, email, password, course) VALUES (:username, :email, :password, :course)";
-            $stmt = $conn->prepare($sql);
+            // Check if username or email already exists
+            $checkSql = "SELECT * FROM users WHERE username = :username OR email = :email LIMIT 1";
+            $stmt = $conn->prepare($checkSql);
             $stmt->bindValue(':username', $username);
             $stmt->bindValue(':email', $email);
-            $stmt->bindValue(':password', $hashedPassword);
-            $stmt->bindValue(':course', $course);
+            $stmt->execute();
+            $existing = $stmt->fetch(PDO::FETCH_ASSOC);
 
-            if ($stmt->execute()) {
-                // Success: redirect to login
-                header("Location: login.php");
-                exit();
+            if ($existing) {
+                $error = "Username or Email already taken.";
             } else {
-                $error = "Error creating account.";
+                // Hash the password
+                $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+
+                // Insert new user
+                $sql = "INSERT INTO users (username, email, password, course) VALUES (:username, :email, :password, :course)";
+                $stmt = $conn->prepare($sql);
+                $stmt->bindValue(':username', $username);
+                $stmt->bindValue(':email', $email);
+                $stmt->bindValue(':password', $hashedPassword);
+                $stmt->bindValue(':course', $course);
+
+                if ($stmt->execute()) {
+                    // Success: redirect to login
+                    header("Location: login.php");
+                    exit();
+                } else {
+                    $error = "Error creating account.";
+                }
             }
         }
     }
@@ -55,6 +68,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="stylesheet" href="CSS/global.css">
     <link rel="stylesheet" href="CSS/forms.css">
     <link rel="stylesheet" href="CSS/form-links.css">
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <script src="JS/register.js" defer></script>
 </head>
 <body>
 
@@ -103,6 +118,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <option value="Elementary">Elementary</option>
             </optgroup>
         </select>
+
+        <!-- Centered reCAPTCHA Widget -->
+        <div class="g-recaptcha" data-sitekey="6LeJXvEqAAAAAARS60cGZML2OOi0US8HT1qEtGhJ"></div>
 
         <button type="submit">Register</button>
     </form>
