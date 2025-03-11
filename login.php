@@ -35,6 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="stylesheet" href="CSS/global.css">
     <link rel="stylesheet" href="CSS/forms.css">
     <link rel="stylesheet" href="CSS/form-links.css">
+    <link rel="stylesheet" href="CSS/style.css">
 </head>
 <body>
 
