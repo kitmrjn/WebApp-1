@@ -104,8 +104,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_SESSION['user_id']) && isse
                         <div class="question-header">
                             <img src="images/userAvatar.jpg" alt="User Avatar" class="avatar">
                             <div class="question-info">
-                                <h3><?php echo htmlspecialchars($row['title']); ?></h3>
-                                <p class="timestamp">Asked by <?php echo htmlspecialchars($row['username']); ?> on <?php echo htmlspecialchars($row['created_at']); ?></p>
+                                <h3><?php echo htmlspecialchars($row['title']); ?></h3> <!-- Title is now the category -->
+                                <p class="timestamp">
+                                    Asked by <?php echo htmlspecialchars($row['username']); ?> on <?php echo htmlspecialchars($row['created_at']); ?>
+                                </p>
                             </div>
                         </div>
                         <p class="answer-preview">

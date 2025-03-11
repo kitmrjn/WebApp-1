@@ -72,7 +72,7 @@ $answers = $aStmt->fetchAll(PDO::FETCH_ASSOC);
 </header>
 
 <?php if ($question): ?>
-    <h2><?php echo htmlspecialchars($question['title']); ?></h2>
+    <h2><?php echo htmlspecialchars($question['title']); ?></h2> <!-- Title is now the category -->
     <p>Asked by: <?php echo htmlspecialchars($question['username']); ?></p>
     <p>On: <?php echo $question['created_at']; ?></p>
     <p><?php echo nl2br(htmlspecialchars($question['content'])); ?></p>
