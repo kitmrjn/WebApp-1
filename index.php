@@ -16,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_SESSION['user_id']) && isse
     $question_id   = intval($_POST['question_id']);
     $user_id       = $_SESSION['user_id'];
 
-    if (!empty($answerContent) && $question_id > 0) {
+    if (!empty($answerContent)) {
         $aSql = "INSERT INTO answers (question_id, user_id, content) VALUES (:qid, :uid, :content)";
         $aStmt = $conn->prepare($aSql);
         $aStmt->bindValue(':qid', $question_id, PDO::PARAM_INT);
@@ -43,19 +43,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_SESSION['user_id']) && isse
     <link rel="stylesheet" href="CSS/questions.css">
     <link rel="stylesheet" href="CSS/modals.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <style>
-        /* Add smooth transition for expanding questions */
-        .question {
-            transition: all 0.5s ease;
-            overflow: hidden;
-            max-height: 150px; /* Initial height */
-        }
-
-        .question.expanded {
-            max-height: 1000px; /* Expanded height */
-            overflow-y: auto; /* Make it scrollable */
-        }
-    </style>
 </head>
 <body>
     <!-- Answer Modal -->
@@ -113,6 +100,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_SESSION['user_id']) && isse
                         <p class="answer-preview">
                             <?php echo mb_strimwidth(htmlspecialchars($row['content']), 0, 100, "..."); ?>
                         </p>
+                        <div class="answer-full" style="display: none;">
+                            <?php echo htmlspecialchars($row['content']); ?>
+                        </div>
                         <?php if (isset($_SESSION['user_id'])): ?>
                             <button onclick="openAnswerModal(<?php echo htmlspecialchars($row['question_id']); ?>)" class="answer-button">Answer</button>
                         <?php else: ?>

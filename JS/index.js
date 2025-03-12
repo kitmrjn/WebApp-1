@@ -8,6 +8,17 @@ function openReplyModal(parentId) {
 document.querySelectorAll('.question').forEach(question => {
   question.addEventListener('click', function() {
       const questionId = this.getAttribute('data-question-id');
+      const preview = this.querySelector('.answer-preview');
+      const fullContent = this.querySelector('.answer-full');
+
+      // Toggle visibility of preview and full content
+      if (preview.style.display !== 'none') {
+          preview.style.display = 'none';
+          fullContent.style.display = 'block';
+      } else {
+          preview.style.display = 'block';
+          fullContent.style.display = 'none';
+      }
 
       // Remove all other questions
       document.querySelectorAll('.question').forEach(q => {
