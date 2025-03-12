@@ -1,12 +1,18 @@
 <?php
-require_once 'auth.php';    // ensures user is logged in
-require_once 'db_config.php'; // includes $conn (PDO)
+require_once 'auth.php';    // Ensures user is logged in
+require_once 'db_config.php'; // Includes $conn (PDO)
 
 // Initialize error variable
 $error = "";
 
 // Function to resize image
 function resizeImage($file, $max_width, $max_height) {
+    // Check if the file exists
+    if (!file_exists($file)) {
+        throw new Exception("File does not exist: $file");
+    }
+
+    // Get image dimensions and type
     list($width, $height, $type) = getimagesize($file);
 
     // Calculate aspect ratio
@@ -19,22 +25,44 @@ function resizeImage($file, $max_width, $max_height) {
 
     // Create a new image resource
     $src = imagecreatefromstring(file_get_contents($file));
+    if ($src === false) {
+        throw new Exception("Failed to create image from string.");
+    }
+
     $dst = imagecreatetruecolor($max_width, $max_height);
+    if ($dst === false) {
+        imagedestroy($src);
+        throw new Exception("Failed to create true color image.");
+    }
 
     // Resize the image
-    imagecopyresampled($dst, $src, 0, 0, 0, 0, $max_width, $max_height, $width, $height);
+    if (!imagecopyresampled($dst, $src, 0, 0, 0, 0, $max_width, $max_height, $width, $height)) {
+        imagedestroy($src);
+        imagedestroy($dst);
+        throw new Exception("Failed to resize the image.");
+    }
 
     // Save the resized image
     $resized_file = tempnam(sys_get_temp_dir(), 'resized');
     switch ($type) {
         case IMAGETYPE_JPEG:
-            imagejpeg($dst, $resized_file);
+            if (!imagejpeg($dst, $resized_file, 90)) { // 90% quality
+                imagedestroy($src);
+                imagedestroy($dst);
+                throw new Exception("Failed to save JPEG image.");
+            }
             break;
         case IMAGETYPE_PNG:
-            imagepng($dst, $resized_file);
+            if (!imagepng($dst, $resized_file, 9)) { // 9 = compression level
+                imagedestroy($src);
+                imagedestroy($dst);
+                throw new Exception("Failed to save PNG image.");
+            }
             break;
         default:
-            return false;
+            imagedestroy($src);
+            imagedestroy($dst);
+            throw new Exception("Unsupported image type.");
     }
 
     // Free up memory
@@ -54,7 +82,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_FILES['photo']) && $_FILES['photo']['error'] === UPLOAD_ERR_OK) {
         $upload_dir = 'uploads/'; // Directory to store uploaded files
         if (!is_dir($upload_dir)) {
-            mkdir($upload_dir, 0755, true); // Create the directory if it doesn't exist
+            if (!mkdir($upload_dir, 0755, true)) {
+                $error = "Failed to create upload directory.";
+            }
         }
 
         $file_name = basename($_FILES['photo']['name']);
@@ -66,11 +96,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if (!in_array($file_type, $allowed_types)) {
             $error = "Only JPG, JPEG, and PNG files are allowed.";
         } else {
-            // Resize the image to a maximum width of 400px
-            $resized_file = resizeImage($file_tmp, 400, 400);
-            if (!$resized_file) {
-                $error = "Failed to resize the image.";
-            } else {
+            try {
+                // Resize the image to a maximum width of 400px
+                $resized_file = resizeImage($file_tmp, 400, 400);
+
                 // Generate a unique file name to avoid conflicts
                 $unique_name = uniqid() . '.' . $file_type;
                 $photo_path = $upload_dir . $unique_name;
@@ -79,6 +108,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 if (!rename($resized_file, $photo_path)) {
                     $error = "Failed to upload the file.";
                 }
+            } catch (Exception $e) {
+                $error = "Error processing image: " . $e->getMessage();
             }
         }
     }

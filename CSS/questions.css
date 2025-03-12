@@ -19,12 +19,12 @@
   border-radius: 10px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
   display: flex;
-  flex-direction: column;
-  transition: all 0.5s ease;
+  flex-direction: column; 
   overflow: hidden;
   max-height: 150px; /* Default height for collapsed state */
   cursor: pointer;
   border: 1px solid #ccc;
+  transition: 2.5s;
 }
 
 .question.expanded {
@@ -81,11 +81,12 @@
 }
 
 .question-photo-thumbnail {
-  max-width: 150px; /* Smaller size for feed */
-  height: auto;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  width: calc(100% + 30px); 
+  height: 100%;
+  border-radius: none;
   margin-top: 10px;
+  margin-right: -15px;
+  margin-left: -15px;
 }
 
 .answer-button {
@@ -98,6 +99,7 @@
   font-size: 0.9rem;
   align-self: flex-start;
   margin-top: 10px; /* Add space between content and button */
+  margin-bottom: 10px;
 }
 
 .answer-button:hover {
