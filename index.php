@@ -97,11 +97,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_SESSION['user_id']) && isse
                                 </p>
                             </div>
                         </div>
-                        <p class="answer-preview">
-                            <?php echo mb_strimwidth(htmlspecialchars($row['content']), 0, 100, "..."); ?>
-                        </p>
-                        <div class="answer-full" style="display: none;">
-                            <?php echo htmlspecialchars($row['content']); ?>
+                        <div class="question-content">
+                            <p class="answer-preview">
+                                <?php echo mb_strimwidth(htmlspecialchars($row['content']), 0, 100, "..."); ?>
+                            </p>
+                            <div class="answer-full" style="display: none;">
+                                <?php echo htmlspecialchars($row['content']); ?>
+                            </div>
+                            <?php if (!empty($row['photo_path'])): ?>
+                                <div class="question-photo">
+                                    <img src="<?php echo htmlspecialchars($row['photo_path']); ?>" alt="Question Photo" class="question-photo-thumbnail">
+                                </div>
+                            <?php endif; ?>
                         </div>
                         <?php if (isset($_SESSION['user_id'])): ?>
                             <button onclick="openAnswerModal(<?php echo htmlspecialchars($row['question_id']); ?>)" class="answer-button">Answer</button>

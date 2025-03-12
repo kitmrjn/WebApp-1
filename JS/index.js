@@ -1,12 +1,8 @@
-// Function to open the reply modal
-function openReplyModal(parentId) {
-  document.getElementById('modalParentId').value = parentId;
-  document.getElementById('answerModal').style.display = 'block';
-}
-
 // Function to handle question click
 document.querySelectorAll('.question').forEach(question => {
-  question.addEventListener('click', function() {
+  question.addEventListener('click', function(event) {
+      event.stopPropagation(); // Prevent event from bubbling up
+
       const questionId = this.getAttribute('data-question-id');
       const preview = this.querySelector('.answer-preview');
       const fullContent = this.querySelector('.answer-full');
@@ -20,10 +16,14 @@ document.querySelectorAll('.question').forEach(question => {
           fullContent.style.display = 'none';
       }
 
-      // Remove all other questions
+      // Ensure the Answer button is always visible
+      const answerButton = this.querySelector('.answer-button');
+      answerButton.style.display = 'block';
+
+      // Remove all other questions (optional, based on your design)
       document.querySelectorAll('.question').forEach(q => {
           if (q !== this) {
-              q.remove(); // Remove the question from the DOM
+              q.style.display = 'none'; // Hide other questions
           }
       });
 
@@ -52,6 +52,20 @@ document.querySelectorAll('.question').forEach(question => {
           })
           .catch(error => console.error('Error fetching answers:', error));
   });
+});
+
+// Close expanded question when clicking outside
+document.addEventListener('click', function(event) {
+    if (!event.target.closest('.question')) {
+        document.querySelectorAll('.question').forEach(question => {
+            const preview = question.querySelector('.answer-preview');
+            const fullContent = question.querySelector('.answer-full');
+            preview.style.display = 'block';
+            fullContent.style.display = 'none';
+            question.classList.remove('expanded');
+            question.style.display = 'block'; // Show all questions again
+        });
+    }
 });
 
 // Search functionality
