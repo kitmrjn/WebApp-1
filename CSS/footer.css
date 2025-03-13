@@ -3,13 +3,16 @@
 /* Footer */
 footer {
   text-align: center;
-  background-color: #800000;
-  color: #fdd835;
+  background-color: #f0f0f0; /* Light background color */
+  color: #333;
   padding: 10px;
-  position: fixed;
-  bottom: 0;
+  /* Remove fixed positioning, so it respects layout flow */
+  /* position: fixed; */
+  /* bottom: 0; */
   width: 100%;
-  margin-top: 30px;
+
+  /* Remove margin-top; let layout control this */
+  /* margin-top: 30px; */
 }
 
 footer p {

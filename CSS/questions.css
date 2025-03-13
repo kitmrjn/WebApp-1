@@ -1,14 +1,24 @@
+/* Recent Questions Section */
+.recent-questions-wrapper {
+  display: flex;
+  justify-content: center; /* Center the recent questions horizontally */
+  margin-top: 20px; /* Top margin */
+  margin-bottom: 20px; /* Bottom margin */
+}
+
 /* Recent Questions (Home Page) */
 .recent-questions {
-  margin: 20px auto;
-  width: 90%;
-  max-width: 1200px;
+  margin: 0 20px; /* 20px left and right margins */
+  width: fit-content; /* Fit to content width */
+  max-width: 1200px; /* Max width */
+  display: flex;
+  flex-direction: column;
+  align-items: stretch; /* Or flex-start depending on your design */
 }
 
 .recent-questions h2 {
-  font-size: 1.8rem;
+  text-align: center;
   color: #800000;
-  margin-bottom: 20px;
 }
 
 /* Question Cards (Home Page) - THREADS STYLE */
@@ -19,17 +29,17 @@
   border-radius: 10px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
   display: flex;
-  flex-direction: column; 
+  flex-direction: column;
   overflow: hidden;
-  max-height: 150px; /* Default height for collapsed state */
   cursor: pointer;
   border: 1px solid #ccc;
   transition: 2.5s;
+  width: 700px;
 }
 
 .question.expanded {
-  max-height: 1000px; /* Expanded height */
-  overflow-y: auto; /* Make it scrollable */
+  max-height: 1000px;
+  overflow-y: auto;
 }
 
 .question-header {
@@ -66,9 +76,9 @@
   margin-bottom: 10px;
   line-height: 1.4;
   display: block;
-  overflow: hidden; /* Prevent text from overflowing */
-  text-overflow: ellipsis; /* Add ellipsis for long text */
-  white-space: nowrap; /* Keep text in a single line */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .answer-full {
@@ -77,11 +87,11 @@
   color: #444;
   margin-bottom: 10px;
   line-height: 1.4;
-  word-wrap: break-word; /* Ensure long words break and wrap */
+  word-wrap: break-word;
 }
 
 .question-photo-thumbnail {
-  width: calc(100% + 30px); 
+  width: calc(100% + 30px);
   height: 100%;
   border-radius: none;
   margin-top: 10px;
@@ -98,10 +108,17 @@
   cursor: pointer;
   font-size: 0.9rem;
   align-self: flex-start;
-  margin-top: 10px; /* Add space between content and button */
+  margin-top: 10px;
   margin-bottom: 10px;
 }
 
 .answer-button:hover {
   background-color: #5a0000;
+}
+
+/* Footer styling */
+footer {
+  background-color: #f0f0f0; /* Light background */
+  padding: 20px;
+  text-align: center;
 }
