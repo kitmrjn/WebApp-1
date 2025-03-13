@@ -1,40 +1,49 @@
-/* search-bar.css */
-
-/* Search Bar (Home Page) */
+/* Search Bar Adjustments */
 .search-bar {
-  flex: 1;
+  flex: 2; /* Allow search bar to take more space */
+  min-width: 400px; /* Increased minimum width */
+  margin: 0 auto; /* Center the search bar */
   display: flex;
-  justify-content: center;
-  position: relative;
-  max-width: 800px;
-  margin: 0 20px;
+  align-items: center;
+  padding: 0;
+  max-width: 800px; /* Increased maximum width */
+  height: 40px; /* Increased height for the search bar container */
+  position: relative; /* Needed for absolute positioning of the icon */
 }
 
-.search-bar input[type="text"] {
+.search-bar input {
   width: 100%;
-  padding: 12px 20px 12px 50px;
+  padding: 8px 35px 8px 12px; /* Increased padding for a bigger look */
+  font-size: 14px; /* Increased font size */
   border: 1px solid #ccc;
-  border-radius: 25px;
-  font-size: 16px;
-  outline: none;
-  height: 50px;
+  border-radius: 25px; /* Rounded corners */
+  height: 36px; /* Increased height for the input */
+  box-sizing: border-box; /* Ensure padding doesn't affect height */
+  transition: all 0.3s ease; /* Smooth transition for focus effect */
 }
 
 .search-bar input[type="text"]::placeholder {
-  color: #999;
+  color: #999; /* Placeholder text color */
 }
 
 .search-bar input[type="text"]:focus {
-  border-color: #007BFF;
-  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+  border-color: #007BFF; /* Border color on focus */
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Box shadow on focus */
+  outline: none; /* Remove default outline */
 }
 
-.search-bar .search-icon {
+.search-icon {
   position: absolute;
-  left: 20px;
-  top: 50%;
-  transform: translateY(-50%);
-  color: #999;
-  font-size: 20px;
-  pointer-events: none;
+  right: 12px; /* Adjust icon position for bigger input */
+  color: #999; /* Gray color */
+  cursor: pointer;
+  font-size: 1rem; /* Increased icon size */
+  pointer-events: none; /* Ensure the icon doesn't block clicks */
+  transition: opacity 0.3s ease; /* Smooth transition for disappearing effect */
+}
+
+/* Hide the search icon when input is focused or has text */
+.search-bar input:focus ~ .search-icon,
+.search-bar input:not(:placeholder-shown) ~ .search-icon {
+  opacity: 0; /* Hide the icon */
 }

@@ -63,7 +63,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_SESSION['user_id']) && isse
                     <a href="index.php">Home</a>
                     <?php if (isset($_SESSION['user_id'])): ?>
                         <a href="post_question.php">Ask a Question</a>
-                        <a href="logout.php">Logout (<?php echo htmlspecialchars($_SESSION['username']); ?>)</a>
+                        <div class="profile-dropdown">
+                            <i class="fas fa-user-circle profile-icon"></i> <!-- Profile icon -->
+                            <div class="dropdown-content">
+                                <a href="#">My Profile</a> <!-- Add link to profile page -->
+                                <a href="logout.php">Logout</a>
+                            </div>
+                        </div>
                     <?php else: ?>
                         <a href="login.php">Login</a>
                         <a href="register.php">Register</a>
@@ -133,4 +139,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_SESSION['user_id']) && isse
     </div>
     <script src="JS/index.js"></script>
 </body>
-</html>
+</html> 
