@@ -9,8 +9,7 @@
 /* Recent Questions (Home Page) */
 .recent-questions {
   margin: 0 20px; /* 20px left and right margins */
-  width: fit-content; /* Fit to content width */
-  max-width: 1200px; /* Max width */
+  width: 700px; /* Match the width of questions in index.php */
   display: flex;
   flex-direction: column;
   align-items: stretch; /* Or flex-start depending on your design */
@@ -34,7 +33,7 @@
   cursor: pointer;
   border: 1px solid #ccc;
   transition: 2.5s;
-  width: 700px;
+  width: 100%; /* Take full width of its container */
 }
 
 .question.expanded {
@@ -107,14 +106,22 @@
   word-wrap: break-word;
 }
 
-/* Question Photo Styling */
+/* Question Photo Styling (Thumbnail for Home Page) */
 .question-photo-thumbnail {
   width: calc(100% + 30px);
-  height: 100%;
+  height: auto; /* Ensure the height adjusts proportionally */
   border-radius: none;
   margin-top: 10px;
   margin-right: -15px;
   margin-left: -15px;
+}
+
+/* Question Photo Styling (Full Size for Question Page) */
+.question-photo-full {
+  max-width: 100%; /* Ensure the photo doesn't exceed its container */
+  height: auto; /* Maintain aspect ratio */
+  border-radius: 10px; /* Optional: Add rounded corners */
+  margin-top: 10px;
 }
 
 /* Answer Button Styling */

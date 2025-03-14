@@ -1,27 +1,7 @@
 <?php
 session_start();
 require_once 'db_config.php'; // includes $conn (PDO)
-
-// Function to calculate relative time
-function time_ago($datetime) {
-    $now = new DateTime;
-    $created_at = new DateTime($datetime);
-    $interval = $now->diff($created_at);
-
-    if ($interval->y > 0) {
-        return $interval->y == 1 ? '1 year ago' : $interval->y . ' years ago';
-    } elseif ($interval->m > 0) {
-        return $interval->m == 1 ? '1 month ago' : $interval->m . ' months ago';
-    } elseif ($interval->d > 0) {
-        return $interval->d == 1 ? '1 day ago' : $interval->d . ' days ago';
-    } elseif ($interval->h > 0) {
-        return $interval->h == 1 ? '1 hr ago' : $interval->h . ' hrs ago';
-    } elseif ($interval->i > 0) {
-        return $interval->i == 1 ? '1 min ago' : $interval->i . ' mins ago';
-    } else {
-        return 'Just now';
-    }
-}
+require_once 'functions.php'; // include the time_ago function
 
 // Fetch the latest questions
 $sql = "SELECT q.*, u.username
@@ -30,26 +10,6 @@ $sql = "SELECT q.*, u.username
         ORDER BY q.created_at DESC";
 $stmt = $conn->query($sql);
 $questions = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-// Handle new answer submission from modal
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_SESSION['user_id']) && isset($_POST['question_id'])) {
-    $answerContent = trim($_POST['answer']);
-    $question_id   = intval($_POST['question_id']);
-    $user_id       = $_SESSION['user_id'];
-
-    if (!empty($answerContent)) {
-        $aSql = "INSERT INTO answers (question_id, user_id, content) VALUES (:qid, :uid, :content)";
-        $aStmt = $conn->prepare($aSql);
-        $aStmt->bindValue(':qid', $question_id, PDO::PARAM_INT);
-        $aStmt->bindValue(':uid', $user_id, PDO::PARAM_INT);
-        $aStmt->bindValue(':content', $answerContent);
-        $aStmt->execute();
-
-        // Reload to show the new answer
-        header("Location: index.php"); // Redirect back to index
-        exit();
-    }
-}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -97,18 +57,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_SESSION['user_id']) && isse
                     <?php endif; ?>
                 </nav>
             </header>
-            <!-- Answer Modal -->
-            <div id="answerModal" class="modal">
-                <div class="modal-content">
-                    <span class="close">&times;</span>
-                    <h2>Post Your Answer</h2>
-                    <form method="POST" action="">
-                        <input type="hidden" name="question_id" id="modalQuestionId" value="">
-                        <textarea name="answer" rows="4" required placeholder="Write your answer..."></textarea>
-                        <button type="submit" class="answer-submit-btn">Submit Answer</button>
-                    </form>
-                </div>
-            </div>
 
             <!-- Recent Questions Section -->
             <div class="recent-questions-wrapper">
@@ -141,11 +89,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_SESSION['user_id']) && isse
                                             </div>
                                         <?php endif; ?>
                                     </div>
-                                    <?php if (isset($_SESSION['user_id'])): ?>
-                                        <button onclick="openAnswerModal(<?php echo htmlspecialchars($row['question_id']); ?>)" class="answer-button">Answer</button>
-                                    <?php else: ?>
-                                        <a href="login.php" class="answer-button">Login to Answer</a>
-                                    <?php endif; ?>
+                                    <a href="question.php?id=<?php echo htmlspecialchars($row['question_id']); ?>" class="answer-button">View Answers</a>
                                 </div>
                             <?php endforeach; ?>
                         <?php else: ?>
@@ -159,6 +103,35 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_SESSION['user_id']) && isse
             <p>&copy; <?php echo date('Y'); ?> VincenThinks. All rights reserved.</p>
         </footer>
     </div>
+
+    <!-- Full Question Modal -->
+    <div id="fullQuestionModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 id="modalQuestionTitle"></h2>
+            <p class="modal-question-meta">
+                <span id="modalQuestionUsername"></span> • <span id="modalQuestionTime"></span>
+            </p>
+            <div class="modal-question-content">
+                <p id="modalQuestionContent"></p>
+                <div id="modalQuestionPhoto"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Answer Modal -->
+    <div id="answerModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Post Your Answer</h2>
+            <form method="POST" action="">
+                <input type="hidden" name="question_id" id="modalQuestionId" value="">
+                <textarea name="answer" rows="4" required placeholder="Write your answer..."></textarea>
+                <button type="submit" class="answer-submit-btn">Submit Answer</button>
+            </form>
+        </div>
+    </div>
+
     <script src="JS/index.js"></script>
 </body>
 </html>

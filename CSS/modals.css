@@ -86,3 +86,33 @@
   border-radius: 4px;
   box-sizing: border-box;
 }
+
+/* Full Question Modal Styles */
+#fullQuestionModal .modal-content {
+  max-width: 700px;
+  padding: 25px;
+}
+
+#fullQuestionModal h2 {
+  color: #800000;
+  margin-bottom: 10px;
+}
+
+.modal-question-meta {
+  font-size: 0.9rem;
+  color: #777;
+  margin-bottom: 15px;
+}
+
+.modal-question-content {
+  font-size: 1rem;
+  color: #444;
+  line-height: 1.6;
+}
+
+.modal-question-content img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 10px;
+  margin-top: 10px;
+}
