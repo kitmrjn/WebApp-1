@@ -1,4 +1,3 @@
-/* Global Reset & Font */
 * {
   margin: 0;
   padding: 0;
@@ -6,9 +5,8 @@
   font-family: Arial, sans-serif;
 }
 
-/* Base Body Styles */
 body {
-  background-color: #f7eded; /* White background for all pages by default */
+  background-color: #f7eded;
   color: #333;
   padding-top: 80px;
   overflow-x: hidden;
@@ -17,13 +15,12 @@ body {
   min-height: 100vh;
 }
 
-/* Apply background and overlay only to login/register pages */
 body.auth-page {
   background-image: url('../images/svccbackground.jpg');
-  background-size: cover; /* Ensure the image covers the entire background */
-  background-position: center; /* Center the background image */
-  background-repeat: no-repeat; /* Prevent the image from repeating */
-  background-attachment: fixed; /* Keep the background fixed while scrolling */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
   margin: 0;
   padding: 0;
   font-family: Arial, sans-serif;
@@ -33,7 +30,6 @@ body.auth-page {
   min-height: 100vh;
 }
 
-/* Add a semi-transparent overlay to improve readability (only for login/register pages) */
 body.auth-page::before {
   content: '';
   position: fixed;
@@ -41,17 +37,16 @@ body.auth-page::before {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(255, 255, 255, 0.8); /* White overlay with 80% opacity */
-  z-index: -1; /* Place the overlay behind the content */
+  background-color: rgba(255, 255, 255, 0.8);
+  z-index: -1;
 }
 
-/* Ensure the form section stands out */
 .form-section {
-  background-color: #ffffff; /* White background for the form */
+  background-color: #ffffff;
   padding: 20px;
   border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   max-width: 500px;
-  margin: 50px auto; /* Center the form vertically and horizontally */
-  z-index: 1; /* Ensure the form is above the overlay */
+  margin: 50px auto;
+  z-index: 1;
 }

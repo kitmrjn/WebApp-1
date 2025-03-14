@@ -1,6 +1,3 @@
-/* question-detail.css */
-
-/* Question Detail (question.php) */
 .answer-box {
   background-color: #fff;
   padding: 15px;
@@ -17,12 +14,4 @@
 
 .answer-box p {
   margin-bottom: 5px;
-}
-
-.question-photo-full {
-  max-width: 100%; /* Full size for question details */
-  height: auto;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  margin-top: 10px;
 }

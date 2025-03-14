@@ -1,18 +1,9 @@
-/* footer.css */
-
-/* Footer */
 footer {
   text-align: center;
-  background-color: #f0f0f0; /* Light background color */
+  background-color: #f0f0f0;
   color: #333;
   padding: 10px;
-  /* Remove fixed positioning, so it respects layout flow */
-  /* position: fixed; */
-  /* bottom: 0; */
   width: 100%;
-
-  /* Remove margin-top; let layout control this */
-  /* margin-top: 30px; */
 }
 
 footer p {

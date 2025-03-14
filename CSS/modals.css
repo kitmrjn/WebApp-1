@@ -1,6 +1,3 @@
-/* modals.css */
-
-/* Modal Styles */
 .modal {
   display: none;
   position: fixed;
@@ -15,11 +12,13 @@
 
 .modal-content {
   background-color: #fff;
-  margin: 15% auto;
+  margin: 5% auto;
   padding: 25px;
   border-radius: 8px;
   width: 90%;
   max-width: 600px;
+  max-height: 80vh;
+  overflow-y: auto;
   position: relative;
 }
 
@@ -64,30 +63,6 @@
   background-color: #5a0000;
 }
 
-/* Post Question Modal */
-#postQuestionModal .modal-content {
-  max-width: 700px;
-}
-
-#postQuestionModal label {
-  display: block;
-  margin-top: 10px;
-  color: #800000;
-  font-weight: bold;
-}
-
-#postQuestionModal input[type="text"],
-#postQuestionModal textarea {
-  width: 100%;
-  padding: 8px;
-  margin-top: 5px;
-  margin-bottom: 15px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  box-sizing: border-box;
-}
-
-/* Full Question Modal Styles */
 #fullQuestionModal .modal-content {
   max-width: 700px;
   padding: 25px;
@@ -110,9 +85,14 @@
   line-height: 1.6;
 }
 
-.modal-question-content img {
+.modalQuestionPhoto img {
   max-width: 100%;
   height: auto;
   border-radius: 10px;
   margin-top: 10px;
+  width: auto !important;
+}
+
+body.modal-open {
+  overflow: hidden;
 }

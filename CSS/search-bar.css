@@ -1,49 +1,47 @@
-/* Search Bar Adjustments */
 .search-bar {
-  flex: 2; /* Allow search bar to take more space */
-  min-width: 400px; /* Increased minimum width */
-  margin: 0 auto; /* Center the search bar */
+  flex: 2;
+  min-width: 400px;
+  margin: 0 auto;
   display: flex;
   align-items: center;
   padding: 0;
-  max-width: 800px; /* Increased maximum width */
-  height: 40px; /* Increased height for the search bar container */
-  position: relative; /* Needed for absolute positioning of the icon */
+  max-width: 800px;
+  height: 40px;
+  position: relative;
 }
 
 .search-bar input {
   width: 100%;
-  padding: 8px 35px 8px 12px; /* Increased padding for a bigger look */
-  font-size: 14px; /* Increased font size */
+  padding: 8px 35px 8px 12px;
+  font-size: 14px;
   border: 1px solid #ccc;
-  border-radius: 25px; /* Rounded corners */
-  height: 36px; /* Increased height for the input */
-  box-sizing: border-box; /* Ensure padding doesn't affect height */
-  transition: all 0.3s ease; /* Smooth transition for focus effect */
+  border-radius: 25px;
+  height: 36px;
+  box-sizing: border-box;
+  transition: all 0.3s ease;
 }
 
 .search-bar input[type="text"]::placeholder {
-  color: #999; /* Placeholder text color */
+  color: #999;
 }
 
 .search-bar input[type="text"]:focus {
-  border-color: #007BFF; /* Border color on focus */
-  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Box shadow on focus */
-  outline: none; /* Remove default outline */
+  border-color: #007BFF;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+  outline: none;
 }
 
 .search-icon {
   position: absolute;
-  right: 12px; /* Adjust icon position for bigger input */
-  color: #999; /* Gray color */
+  right: 12px;
+  color: #999;
   cursor: pointer;
-  font-size: 1rem; /* Increased icon size */
-  pointer-events: none; /* Ensure the icon doesn't block clicks */
-  transition: opacity 0.3s ease; /* Smooth transition for disappearing effect */
+  font-size: 1rem;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
 }
 
-/* Hide the search icon when input is focused or has text */
 .search-bar input:focus ~ .search-icon,
 .search-bar input:not(:placeholder-shown) ~ .search-icon {
-  opacity: 0; /* Hide the icon */
+  opacity: 0;
 }

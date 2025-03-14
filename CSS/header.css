@@ -1,8 +1,7 @@
-/* Header Container */
 header {
-  background-color: #800000; /* Maroon */
-  color: #fdd835; /* Gold */
-  padding: 10px 20px; /* Reduced padding */
+  background-color: #800000;
+  color: #fdd835;
+  padding: 10px 20px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -11,21 +10,20 @@ header {
   left: 0;
   width: 100%;
   z-index: 1000;
-  height: 60px; /* Reduced height */
+  height: 60px;
 }
 
-/* Logo Adjustments */
 header .logo {
   display: flex;
   align-items: center;
-  flex: 0 0 auto; /* Prevent logo from growing or shrinking */
-  min-width: 150px; /* Prevent logo from shrinking too much */
+  flex: 0 0 auto;
+  min-width: 150px;
 }
 
 header .logo h1 {
-  font-size: 20px; /* Smaller font size */
+  font-size: 20px;
   margin-left: 10px;
-  white-space: nowrap; /* Prevent text from wrapping */
+  white-space: nowrap;
 }
 
 a {
@@ -34,58 +32,53 @@ a {
 }
 
 .nav-logo {
-  height: 40px; /* Smaller logo */
+  height: 40px;
   margin-right: 5px;
   border-radius: 3px;
 }
 
-/* Search Bar Adjustments */
-
-
-/* Navigation Adjustments */
 nav {
   display: flex;
   align-items: center;
-  gap: 15px; /* Reduced gap */
-  flex: 0 0 auto; /* Prevent nav from growing or shrinking */
-  justify-content: flex-end; /* Align nav to the right */
-  min-width: 150px; /* Prevent nav from collapsing */
+  gap: 15px;
+  flex: 0 0 auto;
+  justify-content: flex-end;
+  min-width: 150px;
 }
 
 nav a {
   text-decoration: none;
-  font-size: 0.9rem; /* Smaller font size */
-  white-space: nowrap; /* Prevent text from wrapping */
+  font-size: 0.9rem;
+  white-space: nowrap;
 }
 
 nav a:hover {
   text-decoration: underline;
 }
 
-/* Profile Dropdown Styles */
 .profile-dropdown {
   position: relative;
   display: inline-block;
 }
 
 .profile-icon {
-  font-size: 1.5rem; /* Icon size */
+  font-size: 1.5rem;
   cursor: pointer;
 }
 
 .dropdown-content {
-  display: none; /* Hidden by default */
+  display: none;
   position: absolute;
   right: 0;
-  background-color: white; /* White background */
+  background-color: white;
   min-width: 120px;
   box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
   z-index: 1;
-  border-radius: 5px; /* Rounded corners */
+  border-radius: 5px;
 }
 
 .dropdown-content a {
-  color: #800000; /* Maroon text */
+  color: #800000;
   padding: 10px;
   text-decoration: none;
   display: block;
@@ -93,39 +86,33 @@ nav a:hover {
 }
 
 .dropdown-content a:hover {
-  background-color: #f0f0f0; /* Light gray hover */
-  border-radius: 5px; /* Rounded corners */
+  background-color: #f0f0f0;
+  border-radius: 5px;
 }
 
-/* Remove the hover effect */
-/* .profile-dropdown:hover .dropdown-content {
-  display: block;
-} */
-
-/* Mobile Responsiveness */
 @media (max-width: 768px) {
   header {
-    padding: 10px; /* Further reduce padding */
-    height: auto; /* Allow height to adjust */
-    flex-direction: column; /* Stack elements vertically */
-    align-items: flex-start; /* Align items to the left */
+    padding: 10px;
+    height: auto;
+    flex-direction: column;
+    align-items: flex-start;
   }
 
   header .logo {
-    margin-bottom: 10px; /* Add spacing between logo and search bar */
+    margin-bottom: 10px;
   }
 
   .search-bar {
-    width: 100%; /* Full width for search bar */
-    margin: 10px 0; /* Add spacing */
+    width: 100%;
+    margin: 10px 0;
   }
 
   nav {
-    width: 100%; /* Full width for nav */
-    justify-content: space-between; /* Space out nav items */
+    width: 100%;
+    justify-content: space-between;
   }
 
   .profile-dropdown {
-    margin-left: auto; /* Push dropdown to the right */
+    margin-left: auto;
   }
 }
