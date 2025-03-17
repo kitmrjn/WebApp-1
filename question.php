@@ -166,7 +166,12 @@ $answers = $aStmt->fetchAll(PDO::FETCH_ASSOC);
                             </div>
 
                             <?php if (isset($_SESSION['user_id'])): ?>
-                                <button onclick="openAnswerModal()" class="answer-button">Post Your Answer</button>
+                                <div class="form-actions">
+                                    <button onclick="openAnswerModal()" class="answer-button">Post Your Answer</button>
+                                    <a href="index.php" class="back-to-home">
+                                        <i class="fas fa-arrow-left"></i> Back to Home
+                                    </a>
+                                </div>
                             <?php else: ?>
                                 <p class="login-prompt"><a href="login.php">Login</a> to answer this question.</p>
                             <?php endif; ?>
