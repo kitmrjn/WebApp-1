@@ -1,6 +1,11 @@
 // Function to handle question click
 document.querySelectorAll('.question').forEach(question => {
   question.addEventListener('click', function(event) {
+      // Prevent the event from triggering if the click is on the "View Answers" button
+      if (event.target.classList.contains('answer-button')) {
+          return; // Allow the default behavior (navigation to question.php)
+      }
+
       event.stopPropagation(); // Prevent event from bubbling up
 
       const questionId = this.getAttribute('data-question-id');
@@ -18,7 +23,25 @@ document.querySelectorAll('.question').forEach(question => {
       document.getElementById('modalQuestionPhoto').innerHTML = questionPhoto;
 
       // Show the modal
-      document.getElementById('fullQuestionModal').style.display = 'block';
+      const modal = document.getElementById('fullQuestionModal');
+      modal.style.display = 'block';
+
+      // Prevent background scrolling
+      document.body.style.overflow = 'hidden';
+
+      // Re-enable background scrolling when the modal is closed
+      modal.querySelector('.close').addEventListener('click', function() {
+          modal.style.display = 'none';
+          document.body.style.overflow = 'auto'; // Re-enable background scrolling
+      });
+
+      // Re-enable background scrolling when clicking outside the modal
+      window.onclick = function(event) {
+          if (event.target == modal) {
+              modal.style.display = 'none';
+              document.body.style.overflow = 'auto'; // Re-enable background scrolling
+          }
+      };
   });
 });
 
@@ -27,6 +50,7 @@ document.querySelectorAll('.close').forEach(closeButton => {
   closeButton.addEventListener('click', function() {
       document.getElementById('fullQuestionModal').style.display = 'none';
       document.getElementById('answerModal').style.display = 'none';
+      document.body.style.overflow = 'auto'; // Re-enable background scrolling
   });
 });
 
@@ -36,9 +60,11 @@ window.onclick = function(event) {
   const answerModal = document.getElementById('answerModal');
   if (event.target == fullQuestionModal) {
       fullQuestionModal.style.display = 'none';
+      document.body.style.overflow = 'auto'; // Re-enable background scrolling
   }
   if (event.target == answerModal) {
       answerModal.style.display = 'none';
+      document.body.style.overflow = 'auto'; // Re-enable background scrolling
   }
 }
 
@@ -63,6 +89,7 @@ function searchQuestions() {
 function openAnswerModal(questionId) {
   document.getElementById('modalQuestionId').value = questionId;
   document.getElementById('answerModal').style.display = 'block';
+  document.body.style.overflow = 'hidden'; // Prevent background scrolling
 }
 
 // Profile dropdown functionality
@@ -80,4 +107,4 @@ document.addEventListener('click', function(event) {
   if (!profileDropdown.contains(event.target)) {
       dropdownContent.style.display = 'none';
   }
-});
+}); 

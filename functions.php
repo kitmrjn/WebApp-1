@@ -1,6 +1,6 @@
 <?php
 // functions.php
-
+    date_default_timezone_set('Asia/Manila');
 // Function to calculate relative time
 function time_ago($datetime) {
     $now = new DateTime;

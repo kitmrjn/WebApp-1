@@ -85,12 +85,12 @@
   line-height: 1.6;
 }
 
-.modalQuestionPhoto img {
+#fullQuestionModal .modalQuestionPhoto img {
   max-width: 100%;
   height: auto;
   border-radius: 10px;
   margin-top: 10px;
-  width: auto !important;
+  width: auto;
 }
 
 body.modal-open {

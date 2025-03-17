@@ -44,7 +44,7 @@ $aSql = "SELECT a.*, u.username
          FROM answers a
          JOIN users u ON a.user_id = u.user_id
          WHERE a.question_id = :qid
-         ORDER BY a.created_at ASC";
+         ORDER BY a.created_at DESC";
 $aStmt = $conn->prepare($aSql);
 $aStmt->bindValue(':qid', $question_id, PDO::PARAM_INT);
 $aStmt->execute();
@@ -129,7 +129,7 @@ $answers = $aStmt->fetchAll(PDO::FETCH_ASSOC);
                                     <p><?php echo nl2br(htmlspecialchars($question['content'])); ?></p>
                                     <?php if (!empty($question['photo_path'])): ?>
                                         <div class="question-photo">
-                                            <img src="<?php echo htmlspecialchars($question['photo_path']); ?>" alt="Question Photo" class="question-photo-full">
+                                            <img src="<?php echo htmlspecialchars($question['photo_path']); ?>" alt="Question Photo" class="question-photo">
                                         </div>
                                     <?php endif; ?>
                                 </div>

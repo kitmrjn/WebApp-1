@@ -29,7 +29,7 @@
   overflow: hidden;
   cursor: pointer;
   border: 1px solid #ccc;
-  transition: 2.5s;
+  transition: max-height 0.3s ease-in-out;
   width: 100%;
 }
 
@@ -100,11 +100,22 @@
   word-wrap: break-word;
 }
 
+.question-photo {
+  width: 100%; /* Ensure the image takes up the full width of its container */
+  height: auto; /* Maintain aspect ratio */
+  border-radius: 10px;
+  margin-top: 10px;
+  display: block;
+  overflow: hidden;
+}
+
 .question-photo-thumbnail {
   width: 100%;
   height: auto;
   border-radius: 10px;
   margin-top: 10px;
+  display: block;
+  overflow: hidden;
 }
 
 .answer-button {
