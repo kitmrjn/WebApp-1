@@ -13,35 +13,39 @@ document.querySelectorAll('.question').forEach(question => {
       const questionUsername = this.querySelector('.username').innerText;
       const questionTime = this.querySelector('.time-ago').innerText;
       const questionContent = this.querySelector('.answer-full').innerHTML;
-      const questionPhoto = this.querySelector('.question-photo-thumbnail')?.outerHTML || '';
 
-      // Populate the modal with question details
-      document.getElementById('modalQuestionTitle').innerText = questionTitle;
-      document.getElementById('modalQuestionUsername').innerText = questionUsername;
-      document.getElementById('modalQuestionTime').innerText = questionTime;
-      document.getElementById('modalQuestionContent').innerHTML = questionContent;
-      document.getElementById('modalQuestionPhoto').innerHTML = questionPhoto;
+      // Fetch all photos for the question
+      fetch(`get_photos.php?question_id=${questionId}`)
+          .then(response => response.text())
+          .then(photos => {
+              // Populate the modal with question details
+              document.getElementById('modalQuestionTitle').innerText = questionTitle;
+              document.getElementById('modalQuestionUsername').innerText = questionUsername;
+              document.getElementById('modalQuestionTime').innerText = questionTime;
+              document.getElementById('modalQuestionContent').innerHTML = questionContent;
+              document.getElementById('modalQuestionPhoto').innerHTML = photos;
 
-      // Show the modal
-      const modal = document.getElementById('fullQuestionModal');
-      modal.style.display = 'block';
+              // Show the modal
+              const modal = document.getElementById('fullQuestionModal');
+              modal.style.display = 'block';
 
-      // Prevent background scrolling
-      document.body.style.overflow = 'hidden';
+              // Prevent background scrolling
+              document.body.style.overflow = 'hidden';
 
-      // Re-enable background scrolling when the modal is closed
-      modal.querySelector('.close').addEventListener('click', function() {
-          modal.style.display = 'none';
-          document.body.style.overflow = 'auto'; // Re-enable background scrolling
-      });
+              // Re-enable background scrolling when the modal is closed
+              modal.querySelector('.close').addEventListener('click', function() {
+                  modal.style.display = 'none';
+                  document.body.style.overflow = 'auto'; // Re-enable background scrolling
+              });
 
-      // Re-enable background scrolling when clicking outside the modal
-      window.onclick = function(event) {
-          if (event.target == modal) {
-              modal.style.display = 'none';
-              document.body.style.overflow = 'auto'; // Re-enable background scrolling
-          }
-      };
+              // Re-enable background scrolling when clicking outside the modal
+              window.onclick = function(event) {
+                  if (event.target == modal) {
+                      modal.style.display = 'none';
+                      document.body.style.overflow = 'auto'; // Re-enable background scrolling
+                  }
+              };
+          });
   });
 });
 
@@ -107,4 +111,4 @@ document.addEventListener('click', function(event) {
   if (!profileDropdown.contains(event.target)) {
       dropdownContent.style.display = 'none';
   }
-}); 
+});

@@ -77,63 +77,77 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $category = trim($_POST['category']); // Get category (this will be the title)
     $user_id  = $_SESSION['user_id'];
 
-    // Handle file upload
-    $photo_path = null;
-    if (isset($_FILES['photo']) && $_FILES['photo']['error'] === UPLOAD_ERR_OK) {
-        $upload_dir = 'uploads/'; // Directory to store uploaded files
-        if (!is_dir($upload_dir)) {
-            if (!mkdir($upload_dir, 0755, true)) {
-                $error = "Failed to create upload directory.";
-            }
-        }
-
-        $file_name = basename($_FILES['photo']['name']);
-        $file_tmp = $_FILES['photo']['tmp_name'];
-        $file_type = strtolower(pathinfo($file_name, PATHINFO_EXTENSION));
-
-        // Validate file type (only allow JPEG and PNG)
-        $allowed_types = ['jpg', 'jpeg', 'png'];
-        if (!in_array($file_type, $allowed_types)) {
-            $error = "Only JPG, JPEG, and PNG files are allowed.";
-        } else {
-            try {
-                // Resize the image to a maximum width of 400px
-                $resized_file = resizeImage($file_tmp, 400, 400);
-
-                // Generate a unique file name to avoid conflicts
-                $unique_name = uniqid() . '.' . $file_type;
-                $photo_path = $upload_dir . $unique_name;
-
-                // Move the resized file to the uploads directory
-                if (!rename($resized_file, $photo_path)) {
-                    $error = "Failed to upload the file.";
-                }
-            } catch (Exception $e) {
-                $error = "Error processing image: " . $e->getMessage();
-            }
-        }
-    }
-
-    if (!empty($content) && !empty($category) && empty($error)) {
-        // Use prepared statement to prevent SQL injection
-        $sql = "INSERT INTO questions (user_id, title, content, category, photo_path) VALUES (:uid, :title, :content, :category, :photo_path)";
+    if (!empty($content) && !empty($category)) {
+        // Insert the question into the database
+        $sql = "INSERT INTO questions (user_id, title, content, category) VALUES (:uid, :title, :content, :category)";
         $stmt = $conn->prepare($sql);
         $stmt->bindParam(':uid', $user_id, PDO::PARAM_INT);
         $stmt->bindParam(':title', $category, PDO::PARAM_STR); // Set title to the selected category
         $stmt->bindParam(':content', $content, PDO::PARAM_STR);
         $stmt->bindParam(':category', $category, PDO::PARAM_STR);
-        $stmt->bindParam(':photo_path', $photo_path, PDO::PARAM_STR);
 
         if ($stmt->execute()) {
-            // Redirect to home
-            header("Location: index.php");
-            exit();
+            $question_id = $conn->lastInsertId(); // Get the ID of the newly inserted question
+
+            // Handle multiple file uploads
+            if (!empty($_FILES['photos']['name'][0])) {
+                $upload_dir = 'uploads/'; // Directory to store uploaded files
+                if (!is_dir($upload_dir)) {
+                    if (!mkdir($upload_dir, 0755, true)) {
+                        $error = "Failed to create upload directory.";
+                    }
+                }
+
+                foreach ($_FILES['photos']['tmp_name'] as $key => $tmp_name) {
+                    $file_name = basename($_FILES['photos']['name'][$key]);
+                    $file_tmp = $_FILES['photos']['tmp_name'][$key];
+                    $file_type = strtolower(pathinfo($file_name, PATHINFO_EXTENSION));
+
+                    // Validate file type (only allow JPEG and PNG)
+                    $allowed_types = ['jpg', 'jpeg', 'png'];
+                    if (!in_array($file_type, $allowed_types)) {
+                        $error = "Only JPG, JPEG, and PNG files are allowed.";
+                        break;
+                    }
+
+                    try {
+                        // Resize the image to a maximum width of 400px
+                        $resized_file = resizeImage($file_tmp, 400, 400);
+
+                        // Generate a unique file name to avoid conflicts
+                        $unique_name = uniqid() . '.' . $file_type;
+                        $photo_path = $upload_dir . $unique_name;
+
+                        // Move the resized file to the uploads directory
+                        if (!rename($resized_file, $photo_path)) {
+                            $error = "Failed to upload the file.";
+                            break;
+                        }
+
+                        // Insert the photo into the question_photos table
+                        $photo_sql = "INSERT INTO question_photos (question_id, photo_path) VALUES (:qid, :photo_path)";
+                        $photo_stmt = $conn->prepare($photo_sql);
+                        $photo_stmt->bindParam(':qid', $question_id, PDO::PARAM_INT);
+                        $photo_stmt->bindParam(':photo_path', $photo_path, PDO::PARAM_STR);
+                        $photo_stmt->execute();
+                    } catch (Exception $e) {
+                        $error = "Error processing image: " . $e->getMessage();
+                        break;
+                    }
+                }
+            }
+
+            if (empty($error)) {
+                // Redirect to home
+                header("Location: index.php");
+                exit();
+            }
         } else {
             // Log the error
             error_log("Error posting question: " . print_r($stmt->errorInfo(), true));
             $error = "Error posting question.";
         }
-    } elseif (empty($error)) {
+    } else {
         $error = "All fields are required.";
     }
 }
@@ -202,8 +216,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
 
             <div class="form-group">
-                <label for="photo">Upload Photo (Optional)</label>
-                <input type="file" id="photo" name="photo" accept="image/jpeg, image/png">
+                <label for="photos">Upload Photos (Optional)</label>
+                <input type="file" id="photos" name="photos[]" accept="image/jpeg, image/png" multiple>
             </div>
 
             <div class="form-actions">

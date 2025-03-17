@@ -10,6 +10,22 @@ $sql = "SELECT q.*, u.username
         ORDER BY q.created_at DESC";
 $stmt = $conn->query($sql);
 $questions = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+// Fetch the first 2 photos for each question
+foreach ($questions as &$question) {
+    $photo_sql = "SELECT photo_path FROM question_photos WHERE question_id = :qid LIMIT 2";
+    $photo_stmt = $conn->prepare($photo_sql);
+    $photo_stmt->bindValue(':qid', $question['question_id'], PDO::PARAM_INT);
+    $photo_stmt->execute();
+    $question['photos'] = $photo_stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    // Fetch the total number of photos
+    $count_sql = "SELECT COUNT(*) AS total_photos FROM question_photos WHERE question_id = :qid";
+    $count_stmt = $conn->prepare($count_sql);
+    $count_stmt->bindValue(':qid', $question['question_id'], PDO::PARAM_INT);
+    $count_stmt->execute();
+    $question['total_photos'] = $count_stmt->fetch(PDO::FETCH_ASSOC)['total_photos'];
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -27,7 +43,6 @@ $questions = $stmt->fetchAll(PDO::FETCH_ASSOC);
 </head>
 <body>
     <div class="page-container">
-        <!-- Flex layout for main content -->
         <div class="content-wrap">
             <header>
                 <a href="index.php" class="logo-link">
@@ -45,9 +60,9 @@ $questions = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     <?php if (isset($_SESSION['user_id'])): ?>
                         <a href="post_question.php">Ask a Question</a>
                         <div class="profile-dropdown">
-                            <i class="fas fa-user-circle profile-icon"></i> <!-- Profile icon -->
+                            <i class="fas fa-user-circle profile-icon"></i>
                             <div class="dropdown-content">
-                                <a href="#">My Profile</a> <!-- Add link to profile page -->
+                                <a href="#">My Profile</a>
                                 <a href="logout.php">Logout</a>
                             </div>
                         </div>
@@ -83,9 +98,18 @@ $questions = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                         <div class="answer-full" style="display: none;">
                                             <?php echo htmlspecialchars($row['content']); ?>
                                         </div>
-                                        <?php if (!empty($row['photo_path'])): ?>
-                                            <div class="question-photo">
-                                                <img src="<?php echo htmlspecialchars($row['photo_path']); ?>" alt="Question Photo" class="question-photo-thumbnail">
+                                        <?php if (!empty($row['photos'])): ?>
+                                            <div class="question-photos">
+                                                <?php foreach ($row['photos'] as $index => $photo): ?>
+                                                    <div class="photo-container <?php echo (count($row['photos']) === 1 ? 'single-photo' : 'multiple-photos'); ?>">
+                                                        <img src="<?php echo htmlspecialchars($photo['photo_path']); ?>" alt="Question Photo" class="question-photo-thumbnail">
+                                                        <?php if ($index === 1 && $row['total_photos'] > 2): ?>
+                                                            <div class="photo-count-overlay">
+                                                                +<?php echo $row['total_photos'] - 2; ?>
+                                                            </div>
+                                                        <?php endif; ?>
+                                                    </div>
+                                                <?php endforeach; ?>
                                             </div>
                                         <?php endif; ?>
                                     </div>

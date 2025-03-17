@@ -20,6 +20,13 @@ $qStmt->bindValue(':qid', $question_id, PDO::PARAM_INT);
 $qStmt->execute();
 $question = $qStmt->fetch(PDO::FETCH_ASSOC);
 
+// Fetch photos for the question
+$pSql = "SELECT photo_path FROM question_photos WHERE question_id = :qid";
+$pStmt = $conn->prepare($pSql);
+$pStmt->bindValue(':qid', $question_id, PDO::PARAM_INT);
+$pStmt->execute();
+$photos = $pStmt->fetchAll(PDO::FETCH_ASSOC);
+
 // Handle new answer submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_SESSION['user_id'])) {
     $answerContent = trim($_POST['answer']);
@@ -127,9 +134,11 @@ $answers = $aStmt->fetchAll(PDO::FETCH_ASSOC);
                                 </div>
                                 <div class="question-content">
                                     <p><?php echo nl2br(htmlspecialchars($question['content'])); ?></p>
-                                    <?php if (!empty($question['photo_path'])): ?>
-                                        <div class="question-photo">
-                                            <img src="<?php echo htmlspecialchars($question['photo_path']); ?>" alt="Question Photo" class="question-photo">
+                                    <?php if (!empty($photos)): ?>
+                                        <div class="question-photos">
+                                            <?php foreach ($photos as $photo): ?>
+                                                <img src="<?php echo htmlspecialchars($photo['photo_path']); ?>" alt="Question Photo" class="question-photo">
+                                            <?php endforeach; ?>
                                         </div>
                                     <?php endif; ?>
                                 </div>

@@ -93,6 +93,20 @@
   width: auto;
 }
 
+#fullQuestionModal .question-photos {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+#fullQuestionModal .question-photo {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+  display: block;
+  overflow: hidden;
+}
+
 body.modal-open {
   overflow: hidden;
 }

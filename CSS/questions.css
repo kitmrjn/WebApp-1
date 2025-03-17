@@ -100,6 +100,13 @@
   word-wrap: break-word;
 }
 
+.question-photos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 10px;
+}
+
 .question-photo {
   width: 100%; /* Ensure the image takes up the full width of its container */
   height: auto; /* Maintain aspect ratio */
@@ -115,7 +122,33 @@
   border-radius: 10px;
   margin-top: 10px;
   display: block;
+}
+
+.photo-container {
+  position: relative;
+  border-radius: 10px;
   overflow: hidden;
+}
+
+/* Single photo takes 100% width */
+.photo-container.single-photo {
+  width: 100%;
+}
+
+/* Multiple photos take 48% width each */
+.photo-container.multiple-photos {
+  width: 48%;
+}
+
+.photo-count-overlay {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
+  color: white;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-size: 14px;
 }
 
 .answer-button {
