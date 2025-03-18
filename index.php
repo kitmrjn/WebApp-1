@@ -1,3 +1,4 @@
+
 <?php
 session_start();
 require_once 'db_config.php'; // includes $conn (PDO)
@@ -115,9 +116,17 @@ foreach ($questions as &$question) {
                                             </div>
                                         <?php endif; ?>
                                     </div>
-                                    <a href="question.php?id=<?php echo htmlspecialchars($row['question_id']); ?>" class="answer-button">
-                                        <i class="bi bi-chat-left-text"></i> Answer <!-- Bootstrap icon -->
-                                    </a>
+                                    <!-- Buttons at the bottom -->
+                                    <div class="question-actions">
+                                        <!-- Answers button on the left -->
+                                        <a href="question.php?id=<?php echo htmlspecialchars($row['question_id']); ?>" class="answer-button">
+                                            <i class="bi bi-chat-left-text"></i> Answers
+                                        </a>
+                                        <!-- Report button on the right -->
+                                        <button class="report-button">
+                                            <i class="bi bi-flag"></i> Report
+                                        </button>
+                                    </div>
                                 </div>
                             <?php endforeach; ?>
                         <?php else: ?>

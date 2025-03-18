@@ -2,8 +2,8 @@
 document.querySelectorAll('.question').forEach(question => {
   question.addEventListener('click', function(event) {
       // Prevent the event from triggering if the click is on the "View Answers" button
-      if (event.target.classList.contains('answer-button')) {
-          return; // Allow the default behavior (navigation to question.php)
+      if (event.target.classList.contains('answer-button') || event.target.classList.contains('report-button')) {
+          return; // Allow the default behavior (navigation to question.php or report action)
       }
 
       event.stopPropagation(); // Prevent event from bubbling up
@@ -51,11 +51,13 @@ document.querySelectorAll('.question').forEach(question => {
 
 // Close modals when clicking the close button
 document.querySelectorAll('.close').forEach(closeButton => {
-  closeButton.addEventListener('click', function() {
-      const modal = this.closest('.modal'); // Find the closest modal
-      modal.style.display = 'none'; // Hide the modal
-      document.body.style.overflow = 'auto'; // Re-enable background scrolling
-  });
+  if (closeButton) {
+    closeButton.addEventListener('click', function() {
+        const modal = this.closest('.modal'); // Find the closest modal
+        modal.style.display = 'none'; // Hide the modal
+        document.body.style.overflow = 'auto'; // Re-enable background scrolling
+    });
+  }
 });
 
 // Close modals when clicking outside
@@ -96,19 +98,32 @@ function openAnswerModal(questionId) {
   document.body.style.overflow = 'hidden'; // Prevent background scrolling
 }
 
+// Report button functionality
+document.querySelectorAll('.report-button').forEach(reportButton => {
+  if (reportButton) {
+    reportButton.addEventListener('click', function(event) {
+      event.stopPropagation(); // Prevent the question click event from firing
+      const questionId = this.closest('.question').getAttribute('data-question-id');
+      alert(`Report question with ID: ${questionId}`); // Replace with actual report functionality
+    });
+  }
+});
+
 // Profile dropdown functionality
 const profileDropdown = document.querySelector('.profile-dropdown');
 const dropdownContent = document.querySelector('.dropdown-content');
 
 // Toggle dropdown on profile icon click
-profileDropdown.addEventListener('click', function(event) {
-  event.stopPropagation(); // Prevent the click from bubbling up
-  dropdownContent.style.display = dropdownContent.style.display === 'block' ? 'none' : 'block';
-});
+if (profileDropdown && dropdownContent) {
+  profileDropdown.addEventListener('click', function(event) {
+    event.stopPropagation(); // Prevent the click from bubbling up
+    dropdownContent.style.display = dropdownContent.style.display === 'block' ? 'none' : 'block';
+  });
 
-// Close dropdown when clicking outside
-document.addEventListener('click', function(event) {
-  if (!profileDropdown.contains(event.target)) {
-      dropdownContent.style.display = 'none';
-  }
-});
+  // Close dropdown when clicking outside
+  document.addEventListener('click', function(event) {
+    if (!profileDropdown.contains(event.target)) {
+        dropdownContent.style.display = 'none';
+    }
+  });
+}

@@ -42,6 +42,7 @@
   display: flex;
   align-items: flex-start;
   margin-bottom: 10px;
+  position: relative;
 }
 
 .avatar {
@@ -157,7 +158,16 @@
   font-size: 14px;
 }
 
-/* Style the answer button (icon + text) */
+/* Container for the buttons at the bottom */
+.question-actions {
+  display: flex;
+  justify-content: space-between; /* Space between left and right buttons */
+  align-items: center; /* Align buttons vertically */
+  margin-top: 10px;
+  width: 100%; /* Ensure the container takes full width */
+}
+
+/* Style the answer button (left side) */
 .answer-button {
   padding: 8px 12px; /* Adjust padding for better spacing */
   background-color: rgba(128, 0, 0, 0.1); /* Semi-transparent background (10% opacity) */
@@ -166,23 +176,35 @@
   cursor: pointer;
   font-size: 1rem; /* Base font size */
   color: #800000; /* Match the icon and text color to your theme */
-  align-self: flex-start;
-  margin-top: 10px;
-  margin-bottom: 10px;
   display: inline-flex; /* Align icon and text properly */
   align-items: center;
   gap: 8px; /* Space between icon and text */
   transition: background-color 0.3s ease, color 0.3s ease; /* Smooth hover effect */
 }
 
-/* Hover effect for the button */
-.answer-button:hover {
+/* Style the report button (right side) */
+.report-button {
+  padding: 8px 12px; /* Adjust padding for better spacing */
+  background-color: rgba(128, 0, 0, 0.1); /* Semi-transparent background (10% opacity) */
+  border: none; /* Remove border */
+  border-radius: 5px; /* Slightly rounded corners */
+  cursor: pointer;
+  font-size: 1rem; /* Base font size */
+  color: #800000; /* Match the icon and text color to your theme */
+  display: inline-flex; /* Align icon and text properly */
+  align-items: center;
+  gap: 8px; /* Space between icon and text */
+  transition: background-color 0.3s ease, color 0.3s ease; /* Smooth hover effect */
+}
+
+/* Hover effect for both buttons */
+.answer-button:hover, .report-button:hover {
   color: #5a0000; /* Darker color on hover */
   background-color: rgba(128, 0, 0, 0.2); /* Slightly darker semi-transparent background on hover (20% opacity) */
 }
 
-/* Style the Bootstrap icon */
-.answer-button i {
+/* Style the Bootstrap icons */
+.answer-button i, .report-button i {
   font-size: 1.2rem; /* Slightly larger icon */
-  color: inherit; /* Inherit the color from .answer-button */
+  color: inherit; /* Inherit the color from the button */
 }
