@@ -72,6 +72,8 @@ $answers = $aStmt->fetchAll(PDO::FETCH_ASSOC);
     <link rel="stylesheet" href="CSS/question-detail.css">
     <link rel="stylesheet" href="CSS/forms.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Add Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 </head>
 <body>
     <div class="page-container">

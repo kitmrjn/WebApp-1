@@ -52,8 +52,8 @@ document.querySelectorAll('.question').forEach(question => {
 // Close modals when clicking the close button
 document.querySelectorAll('.close').forEach(closeButton => {
   closeButton.addEventListener('click', function() {
-      document.getElementById('fullQuestionModal').style.display = 'none';
-      document.getElementById('answerModal').style.display = 'none';
+      const modal = this.closest('.modal'); // Find the closest modal
+      modal.style.display = 'none'; // Hide the modal
       document.body.style.overflow = 'auto'; // Re-enable background scrolling
   });
 });

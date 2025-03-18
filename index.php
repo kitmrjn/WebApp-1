@@ -40,6 +40,8 @@ foreach ($questions as &$question) {
     <link rel="stylesheet" href="CSS/questions.css">
     <link rel="stylesheet" href="CSS/modals.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Add Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 </head>
 <body>
     <div class="page-container">
@@ -113,7 +115,9 @@ foreach ($questions as &$question) {
                                             </div>
                                         <?php endif; ?>
                                     </div>
-                                    <a href="question.php?id=<?php echo htmlspecialchars($row['question_id']); ?>" class="answer-button">View Answers</a>
+                                    <a href="question.php?id=<?php echo htmlspecialchars($row['question_id']); ?>" class="answer-button">
+                                        <i class="bi bi-chat-left-text"></i> Answer <!-- Bootstrap icon -->
+                                    </a>
                                 </div>
                             <?php endforeach; ?>
                         <?php else: ?>
