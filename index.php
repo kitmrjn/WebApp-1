@@ -4,10 +4,11 @@ session_start();
 require_once 'db_config.php'; // includes $conn (PDO)
 require_once 'functions.php'; // include the time_ago function
 
-// Fetch the latest questions
+// Fetch the latest approved questions
 $sql = "SELECT q.*, u.username
         FROM questions q
         JOIN users u ON q.user_id = u.user_id
+        WHERE q.status = 'approved'
         ORDER BY q.created_at DESC";
 $stmt = $conn->query($sql);
 $questions = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -62,6 +63,9 @@ foreach ($questions as &$question) {
                     <a href="index.php">Home</a>
                     <?php if (isset($_SESSION['user_id'])): ?>
                         <a href="post_question.php">Ask a Question</a>
+                        <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'admin'): ?>
+                            <a href="admin_dashboard.php">Admin Dashboard</a>
+                        <?php endif; ?>
                         <div class="profile-dropdown">
                             <i class="fas fa-user-circle profile-icon"></i>
                             <div class="dropdown-content">
@@ -123,7 +127,7 @@ foreach ($questions as &$question) {
                                             <i class="bi bi-chat-left-text"></i> Answers
                                         </a>
                                         <!-- Report button on the right -->
-                                        <button class="report-button">
+                                        <button class="report-button" onclick="reportPost(<?php echo htmlspecialchars($row['question_id']); ?>)">
                                             <i class="bi bi-flag"></i> Report
                                         </button>
                                     </div>

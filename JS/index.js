@@ -127,3 +127,78 @@ if (profileDropdown && dropdownContent) {
     }
   });
 }
+
+// Function to handle star rating
+document.querySelectorAll('.answer-rating').forEach(rating => {
+  const starIcon = rating.querySelector('i');
+  const ratingCount = rating.querySelector('.rating-count');
+  const answerId = rating.closest('.answer-box').getAttribute('data-answer-id');
+
+  // Load the star's initial state
+  const isHelpful = starIcon.getAttribute('data-is-helpful') === 'true';
+  if (isHelpful) {
+      starIcon.classList.add('selected');
+  }
+
+  // Add click event listener
+  rating.addEventListener('click', function () {
+      const isSelected = starIcon.classList.toggle('selected');
+      const newIsHelpful = isSelected ? 1 : 0;
+
+      // Update the count
+      let count = parseInt(ratingCount.textContent);
+      count = isSelected ? count + 1 : count - 1;
+      ratingCount.textContent = count;
+
+      // Send the rating to the backend
+      fetch('rate_answer.php', {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+              answer_id: answerId,
+              is_helpful: newIsHelpful,
+          }),
+      })
+          .then(response => response.json())
+          .then(data => {
+              if (data.success) {
+                  console.log('Rating saved successfully!');
+              } else {
+                  console.error('Failed to save rating.');
+              }
+          })
+          .catch(error => {
+              console.error('Error:', error);
+          });
+  });
+});
+
+// Function to report a post
+function reportPost(questionId) {
+  const reason = prompt("Why are you reporting this post?");
+  if (reason) {
+      fetch('report_post.php', {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+              question_id: questionId,
+              reason: reason,
+          }),
+      })
+      .then(response => response.json())
+      .then(data => {
+          if (data.success) {
+              alert('Post reported successfully!');
+          } else {
+              alert('Failed to report post.');
+          }
+      })
+      .catch(error => {
+          console.error('Error:', error);
+      });
+  }
+}

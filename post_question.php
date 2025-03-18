@@ -79,7 +79,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (!empty($content) && !empty($category)) {
         // Insert the question into the database
-        $sql = "INSERT INTO questions (user_id, title, content, category) VALUES (:uid, :title, :content, :category)";
+        $sql = "INSERT INTO questions (user_id, title, content, category, status) VALUES (:uid, :title, :content, :category, 'pending')";
         $stmt = $conn->prepare($sql);
         $stmt->bindParam(':uid', $user_id, PDO::PARAM_INT);
         $stmt->bindParam(':title', $category, PDO::PARAM_STR); // Set title to the selected category

@@ -14,7 +14,7 @@ $question_id = intval($_GET['id']);
 $qSql = "SELECT q.*, u.username
          FROM questions q
          JOIN users u ON q.user_id = u.user_id
-         WHERE q.question_id = :qid";
+         WHERE q.question_id = :qid AND q.status = 'approved'";
 $qStmt = $conn->prepare($qSql);
 $qStmt->bindValue(':qid', $question_id, PDO::PARAM_INT);
 $qStmt->execute();
@@ -46,14 +46,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_SESSION['user_id'])) {
     }
 }
 
-// Fetch existing answers
-$aSql = "SELECT a.*, u.username
+// Fetch existing answers with the user's rating (if logged in)
+$aSql = "SELECT a.*, u.username, 
+                IFNULL(r.is_helpful, 0) AS is_helpful
          FROM answers a
          JOIN users u ON a.user_id = u.user_id
+         LEFT JOIN answer_ratings r ON a.answer_id = r.answer_id AND r.user_id = :user_id
          WHERE a.question_id = :qid
          ORDER BY a.created_at DESC";
 $aStmt = $conn->prepare($aSql);
 $aStmt->bindValue(':qid', $question_id, PDO::PARAM_INT);
+$aStmt->bindValue(':user_id', isset($_SESSION['user_id']) ? $_SESSION['user_id'] : 0, PDO::PARAM_INT);
 $aStmt->execute();
 $answers = $aStmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
@@ -152,12 +155,19 @@ $answers = $aStmt->fetchAll(PDO::FETCH_ASSOC);
                                 <h3>Answers:</h3>
                                 <?php if (!empty($answers)): ?>
                                     <?php foreach ($answers as $answer): ?>
-                                        <div class="answer-box">
+                                        <div class="answer-box" data-answer-id="<?php echo $answer['answer_id']; ?>">
                                             <p class="answer-meta">
                                                 <strong><?php echo htmlspecialchars($answer['username']); ?></strong> • <?php echo time_ago($answer['created_at']); ?>
                                             </p>
-                                            <div class="answer-content">
-                                                <p><?php echo nl2br(htmlspecialchars($answer['content'])); ?></p>
+                                            <div class="answer-content-wrapper">
+                                                <div class="answer-content">
+                                                    <p><?php echo nl2br(htmlspecialchars($answer['content'])); ?></p>
+                                                </div>
+                                                <!-- Star icon with hover tooltip and count -->
+                                                <div class="answer-rating" data-tooltip="Rate">
+                                                    <i class="bi bi-star-fill <?php echo $answer['is_helpful'] ? 'selected' : ''; ?>" data-is-helpful="<?php echo $answer['is_helpful'] ? 'true' : 'false'; ?>"></i>
+                                                    <span class="rating-count"><?php echo $answer['helpful_count']; ?></span>
+                                                </div>
                                             </div>
                                             <hr>
                                         </div>
