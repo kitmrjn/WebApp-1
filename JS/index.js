@@ -177,28 +177,66 @@ document.querySelectorAll('.answer-rating').forEach(rating => {
 
 // Function to report a post
 function reportPost(questionId) {
-  const reason = prompt("Why are you reporting this post?");
-  if (reason) {
-      fetch('report_post.php', {
-          method: 'POST',
-          headers: {
-              'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-              question_id: questionId,
-              reason: reason,
-          }),
-      })
-      .then(response => response.json())
-      .then(data => {
-          if (data.success) {
-              alert('Post reported successfully!');
-          } else {
-              alert('Failed to report post.');
-          }
-      })
-      .catch(error => {
-          console.error('Error:', error);
-      });
-  }
+    const reason = prompt("Why are you reporting this post?");
+    if (reason) {
+        fetch('report_post.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                question_id: questionId,
+                reason: reason,
+            }),
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert('Post reported successfully!');
+                // Add a 'reported' class to the report button
+                const reportButton = document.querySelector(`.report-button[data-question-id="${questionId}"]`);
+                if (reportButton) {
+                    reportButton.classList.add('reported');
+                }
+            } else {
+                alert(data.message || 'Failed to report post.');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    }
+}
+
+// Function to report an answer
+function reportAnswer(answerId) {
+    const reason = prompt("Why are you reporting this answer?");
+    if (reason) {
+        fetch('report_answer.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                answer_id: answerId,
+                reason: reason,
+            }),
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert('Answer reported successfully!');
+                // Add a 'reported' class to the flag icon
+                const flagIcon = document.querySelector(`.answer-report[data-answer-id="${answerId}"] i`);
+                if (flagIcon) {
+                    flagIcon.classList.add('reported');
+                }
+            } else {
+                alert(data.message || 'Failed to report answer.');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    }
 }

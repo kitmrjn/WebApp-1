@@ -47,23 +47,42 @@ function fetchPendingPosts($conn, $sort = 'newest') {
     return $posts;
 }
 
-// Function to fetch reported posts with photos
+// Function to fetch reported posts and answers
 function fetchReportedPosts($conn) {
-    $sql = "SELECT r.*, q.title, q.content 
-            FROM reports r 
-            JOIN questions q ON r.question_id = q.question_id";
-    $stmt = $conn->prepare($sql);
-    $stmt->execute();
-    $reports = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    // Fetch reported questions
+    $questionSql = "SELECT r.*, q.title, q.content, u.username
+                    FROM reports r 
+                    JOIN questions q ON r.question_id = q.question_id
+                    JOIN users u ON q.user_id = u.user_id";
+    $questionStmt = $conn->prepare($questionSql);
+    $questionStmt->execute();
+    $reportedQuestions = $questionStmt->fetchAll(PDO::FETCH_ASSOC);
 
-    // Fetch photos for each reported post
-    foreach ($reports as &$report) {
-        $photo_sql = "SELECT photo_path FROM question_photos WHERE question_id = :qid";
-        $photo_stmt = $conn->prepare($photo_sql);
-        $photo_stmt->bindValue(':qid', $report['question_id'], PDO::PARAM_INT);
-        $photo_stmt->execute();
-        $report['photos'] = $photo_stmt->fetchAll(PDO::FETCH_ASSOC);
+    // Fetch reported answers
+    $answerSql = "SELECT ar.*, a.content, u.username, q.title AS question_title
+                  FROM answer_reports ar
+                  JOIN answers a ON ar.answer_id = a.answer_id
+                  JOIN users u ON a.user_id = u.user_id
+                  JOIN questions q ON a.question_id = q.question_id";
+    $answerStmt = $conn->prepare($answerSql);
+    $answerStmt->execute();
+    $reportedAnswers = $answerStmt->fetchAll(PDO::FETCH_ASSOC);
+
+    // Combine reported questions and answers
+    $reportedPosts = array_merge($reportedQuestions, $reportedAnswers);
+
+    // Fetch photos for reported questions
+    foreach ($reportedPosts as &$post) {
+        if (isset($post['question_id'])) {
+            $photoSql = "SELECT photo_path FROM question_photos WHERE question_id = :qid";
+            $photoStmt = $conn->prepare($photoSql);
+            $photoStmt->bindValue(':qid', $post['question_id'], PDO::PARAM_INT);
+            $photoStmt->execute();
+            $post['photos'] = $photoStmt->fetchAll(PDO::FETCH_ASSOC);
+        } else {
+            $post['photos'] = [];
+        }
     }
 
-    return $reports;
+    return $reportedPosts;
 }

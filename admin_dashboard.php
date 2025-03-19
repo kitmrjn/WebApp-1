@@ -67,9 +67,16 @@ $reported_posts = fetchReportedPosts($conn);
                 <h2>Reported Posts</h2>
                 <?php if (!empty($reported_posts)): ?>
                     <?php foreach ($reported_posts as $report): ?>
-                        <div class="post">
-                            <h3><?php echo htmlspecialchars($report['title']); ?></h3>
-                            <p><?php echo htmlspecialchars($report['content']); ?></p>
+                        <div class="post" data-question-id="<?php echo $report['question_id'] ?? ''; ?>" data-answer-id="<?php echo $report['answer_id'] ?? ''; ?>">
+                            <?php if (isset($report['question_id'])): ?>
+                                <!-- Reported Question -->
+                                <h3><?php echo htmlspecialchars($report['title']); ?></h3>
+                                <p><?php echo htmlspecialchars($report['content']); ?></p>
+                            <?php else: ?>
+                                <!-- Reported Answer -->
+                                <h3>Answer to: <?php echo htmlspecialchars($report['question_title']); ?></h3>
+                                <p><?php echo htmlspecialchars($report['content']); ?></p>
+                            <?php endif; ?>
                             <!-- Add timestamp (username and time) -->
                             <p class="timestamp">
                                 <span class="username"><?php echo htmlspecialchars($report['username']); ?></span> • 
@@ -84,7 +91,11 @@ $reported_posts = fetchReportedPosts($conn);
                                 </div>
                             <?php endif; ?>
                             <p><strong>Reason:</strong> <?php echo htmlspecialchars($report['reason']); ?></p>
-                            <button onclick="deletePost(<?php echo $report['question_id']; ?>)">Delete</button>
+                            <?php if (isset($report['question_id'])): ?>
+                                <button onclick="deletePost(<?php echo $report['question_id']; ?>)">Delete</button>
+                            <?php else: ?>
+                                <button onclick="deleteAnswer(<?php echo $report['answer_id']; ?>)">Delete</button>
+                            <?php endif; ?>
                             <button onclick="ignoreReport(<?php echo $report['id']; ?>)">Ignore</button>
                         </div>
                     <?php endforeach; ?>

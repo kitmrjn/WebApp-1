@@ -126,8 +126,8 @@ foreach ($questions as &$question) {
                                         <a href="question.php?id=<?php echo htmlspecialchars($row['question_id']); ?>" class="answer-button">
                                             <i class="bi bi-chat-left-text"></i> Answers
                                         </a>
-                                        <!-- Report button on the right -->
-                                        <button class="report-button" onclick="reportPost(<?php echo htmlspecialchars($row['question_id']); ?>)">
+                                        <!-- Report button for questions -->
+                                        <button class="report-button" data-question-id="<?php echo $row['question_id']; ?>" onclick="reportPost(<?php echo $row['question_id']; ?>)">
                                             <i class="bi bi-flag"></i> Report
                                         </button>
                                     </div>

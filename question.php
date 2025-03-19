@@ -151,6 +151,7 @@ $answers = $aStmt->fetchAll(PDO::FETCH_ASSOC);
 
                             <hr>
 
+                            <!-- Answers Section -->
                             <div class="answers-container">
                                 <h3>Answers:</h3>
                                 <?php if (!empty($answers)): ?>
@@ -167,6 +168,10 @@ $answers = $aStmt->fetchAll(PDO::FETCH_ASSOC);
                                                 <div class="answer-rating" data-tooltip="Rate">
                                                     <i class="bi bi-star-fill <?php echo $answer['is_helpful'] ? 'selected' : ''; ?>" data-is-helpful="<?php echo $answer['is_helpful'] ? 'true' : 'false'; ?>"></i>
                                                     <span class="rating-count"><?php echo $answer['helpful_count']; ?></span>
+                                                </div>
+                                                <!-- Flag icon for reporting answers -->
+                                                <div class="answer-report" data-answer-id="<?php echo $answer['answer_id']; ?>" data-tooltip="Report">
+                                                    <i class="bi bi-flag-fill" onclick="reportAnswer(<?php echo $answer['answer_id']; ?>)"></i>
                                                 </div>
                                             </div>
                                             <hr>

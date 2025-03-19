@@ -15,3 +15,57 @@
 .answer-box p {
   margin-bottom: 5px;
 }
+
+/* Style for the answer report icon */
+.answer-report {
+  position: relative; /* Required for tooltip positioning */
+  cursor: pointer;
+  display: flex; /* Align icon and count horizontally */
+  align-items: center; /* Vertically center icon and count */
+  gap: 5px; /* Space between icon and count */
+  margin-left: 10px;
+  color: #666;
+  margin-left: 10px;
+  transition: color 0.3s ease;
+}
+
+/* Style for the flag icon */
+.answer-report i {
+  font-size: 1.4rem; /* Adjusted size */
+  color: #ccc; /* Default color (unselected) */
+  background-color: transparent; /* No background */
+  transition: color 0.3s ease; /* Smooth transition for color */
+}
+
+/* Style for the flag icon when hovered */
+.answer-report:hover i {
+  color: #800000; /* Red color on hover */
+}
+
+/* Style for the flag icon when reported */
+.answer-report i.reported {
+  color: #800000; /* Red color to indicate reported */
+}
+
+/* Tooltip styles */
+.answer-report::before {
+  content: attr(data-tooltip); /* Display the tooltip text */
+  position: absolute;
+  top: -25px; /* Position above the flag icon */
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #333; /* Tooltip background color */
+  color: #fff; /* Tooltip text color */
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-size: 0.8rem;
+  opacity: 0; /* Hide by default */
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+/* Show tooltip on hover */
+.answer-report:hover::before {
+  opacity: 1;
+  visibility: visible;
+}

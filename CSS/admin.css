@@ -50,6 +50,8 @@ button {
   max-height: 90vh; /* Limit height to 90% of the viewport */
   overflow-y: auto; /* Add scroll if content overflows */
   position: relative;
+  display: flex;
+  flex-direction: column;
 }
 
 .close {
@@ -73,9 +75,15 @@ button {
 }
 
 .modal-question-content {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 10px;
   font-size: 16px;
   line-height: 1.6;
   margin-bottom: 20px;
+  margin-top: 20px;
+  overflow-y: auto;
 }
 
 /* Container for photos */
@@ -84,13 +92,14 @@ button {
   flex-direction: column;
   gap: 10px;
   margin-top: 20px;
+  width: 100%; /* Ensure the container takes up the full width */
 }
 
 /* Style for individual photos */
 .modal-photos-container img {
-  max-width: 100%;
-  max-height: 400px; /* Adjust height as needed */
+  width: 100%; /* Make photos take up the full width of the container */
+  max-height: 400px; /* Limit height to avoid overflow */
   border-radius: 5px;
   object-fit: contain; /* Ensure the entire image is visible */
-  margin: 0 auto; /* Center the image */
+  display: block; /* Remove any default inline spacing */
 }
