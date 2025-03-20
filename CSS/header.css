@@ -25,6 +25,7 @@ header .logo h1 {
   font-size: 20px;
   margin-left: 10px;
   white-space: nowrap;
+  margin-right: 5px;
 }
 
 a {
@@ -146,6 +147,21 @@ nav a:hover {
   border-radius: 5px;
 }
 
+/* Profile Links for Smaller Screens */
+.profile-links.mobile-only {
+  display: none; /* Hidden by default */
+}
+
+/* Ask a Question Link for Smaller Screens */
+.ask-question-link.mobile-only {
+  display: none; /* Hidden by default */
+  color: #fdd835;
+  text-decoration: none;
+  font-size: 12px;
+  white-space: nowrap;
+  margin-right: 10px; /* Add spacing between elements */
+}
+
 /* Responsive Styles */
 @media (max-width: 768px) {
   .hamburger {
@@ -170,6 +186,43 @@ nav a:hover {
 
   nav a {
       padding: 10px 0; /* Add spacing between links */
+  }
+
+  /* Hide profile icon on smaller screens */
+  .profile-dropdown {
+      display: none; /* Completely hide the profile icon */
+  }
+
+  /* Show profile links in hamburger menu */
+  .profile-links.mobile-only {
+      display: flex; /* Use flexbox for vertical alignment */
+      flex-direction: column; /* Stack links vertically */
+      gap: 10px; /* Add spacing between links */
+  }
+
+  .profile-links.mobile-only a {
+      color: #fdd835; /* Match the header text color */
+      padding: 10px 0; /* Add padding for better clickability */
+      text-align: left; /* Align text to the left */
+  }
+
+  .profile-links.mobile-only a:hover {
+      background-color: rgba(255, 255, 255, 0.1); /* Light hover effect */
+  }
+
+  /* Hide the "VincenThinks" text on smaller screens */
+  header .logo h1 {
+      display: none; /* Hide the text */
+  }
+
+  /* Show the Ask a Question link on smaller screens */
+  .ask-question-link.mobile-only {
+      display: block; /* Show the Ask a Question link */
+  }
+
+  /* Hide the Ask a Question link in the hamburger menu */
+  nav a.desktop-only {
+      display: none;
   }
 
   /* Adjust search bar for smaller screens */
@@ -220,10 +273,6 @@ nav a:hover {
   }
 
   /* Adjust logo and text size for smaller screens */
-  header .logo h1 {
-      font-size: 16px; /* Smaller text size */
-  }
-
   .nav-logo {
       height: 30px; /* Smaller logo size */
   }
@@ -239,5 +288,24 @@ nav a:hover {
 
   .hamburger {
       margin-left: 10px; /* Add space between search bar and hamburger */
+  }
+}
+
+/* Additional Media Query for Very Small Screens */
+@media (max-width: 480px) {
+  .search-bar {
+      max-width: 40px; /* Further shrink search bar */
+  }
+
+  .search-bar input:focus {
+      width: 150px; /* Expand input to 150px on focus */
+  }
+
+  .search-icon::after {
+      font-size: 0.7rem; /* Smaller tooltip text */
+  }
+
+  .nav-logo {
+      height: 25px; /* Even smaller logo size */
   }
 }

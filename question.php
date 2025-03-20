@@ -64,11 +64,10 @@ $answers = $aStmt->fetchAll(PDO::FETCH_ASSOC);
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Vincenthinks - Question</title>
     <link rel="stylesheet" href="CSS/global.css">
     <link rel="stylesheet" href="CSS/header.css">
-    <link rel="stylesheet" href="CSS/search-bar.css">
     <link rel="stylesheet" href="CSS/footer.css">
     <link rel="stylesheet" href="CSS/questions.css">
     <link rel="stylesheet" href="CSS/modals.css">
@@ -88,10 +87,6 @@ $answers = $aStmt->fetchAll(PDO::FETCH_ASSOC);
                         <h1>VincenThinks</h1>
                     </div>
                 </a>
-                <div class="search-bar">
-                    <input type="text" id="searchInput" placeholder="Search questions..." onkeyup="searchQuestions()">
-                    <i class="fas fa-search search-icon"></i>
-                </div>
                 <nav>
                     <a href="index.php">Home</a>
                     <?php if (isset($_SESSION['user_id'])): ?>

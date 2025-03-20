@@ -33,7 +33,7 @@ foreach ($questions as &$question) {
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Vincenthinks - Home</title>
     <link rel="stylesheet" href="CSS/global.css">
     <link rel="stylesheet" href="CSS/header.css">
@@ -48,46 +48,59 @@ foreach ($questions as &$question) {
 <body>
     <div class="page-container">
         <div class="content-wrap">
-        <header>
-            <a href="index.php" class="logo-link">
-                <div class="logo">
-                    <img src="images/svcc.jpg" alt="VincentThinks Logo" class="nav-logo">
-                    <h1>VincenThinks</h1>
+            <header>
+                <!-- Logo for Larger Screens -->
+                <a href="index.php" class="logo-link desktop-only">
+                    <div class="logo">
+                        <img src="images/svcc.jpg" alt="VincentThinks Logo" class="nav-logo">
+                        <h1>VincenThinks</h1>
+                    </div>
+                </a>
+
+                <!-- Ask a Question Link for Smaller Screens -->
+                <a href="post_question.php" class="ask-question-link mobile-only">
+                    Ask a Question
+                </a>
+
+                <!-- Search Bar -->
+                <div class="search-bar">
+                    <input type="text" id="searchInput" placeholder="Search questions..." onkeyup="searchQuestions()">
+                    <i class="fas fa-search search-icon"></i>
                 </div>
-            </a>
 
-            <!-- Search Bar -->
-            <div class="search-bar">
-                <input type="text" id="searchInput" placeholder="Search questions..." onkeyup="searchQuestions()">
-                <i class="fas fa-search search-icon"></i>
-            </div>
+                <!-- Hamburger Menu Icon -->
+                <div class="hamburger" onclick="toggleMenu()">
+                    <i class="fas fa-bars"></i>
+                </div>
 
-            <!-- Hamburger Menu Icon -->
-            <div class="hamburger" onclick="toggleMenu()">
-                <i class="fas fa-bars"></i>
-            </div>
-
-            <!-- Navigation Links -->
-            <nav id="nav-menu">
-                <a href="index.php">Home</a>
-                <?php if (isset($_SESSION['user_id'])): ?>
-                    <a href="post_question.php">Ask a Question</a>
-                    <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'admin'): ?>
-                        <a href="admin_dashboard.php">Admin Dashboard</a>
-                    <?php endif; ?>
-                    <div class="profile-dropdown">
-                        <i class="fas fa-user-circle profile-icon"></i>
-                        <div class="dropdown-content">
+                <!-- Navigation Links -->
+                <nav id="nav-menu">
+                    <a href="index.php">Home</a>
+                    <?php if (isset($_SESSION['user_id'])): ?>
+                        <!-- Ask a Question Link for Larger Screens -->
+                        <a href="post_question.php" class="desktop-only">Ask a Question</a>
+                        <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'admin'): ?>
+                            <a href="admin_dashboard.php">Admin Dashboard</a>
+                        <?php endif; ?>
+                        <!-- Profile Dropdown for Larger Screens -->
+                        <div class="profile-dropdown desktop-only">
+                            <i class="fas fa-user-circle profile-icon"></i>
+                            <div class="dropdown-content">
+                                <a href="#">My Profile</a>
+                                <a href="logout.php">Logout</a>
+                            </div>
+                        </div>
+                        <!-- Profile Links for Smaller Screens -->
+                        <div class="profile-links mobile-only">
                             <a href="#">My Profile</a>
                             <a href="logout.php">Logout</a>
                         </div>
-                    </div>
-                <?php else: ?>
-                    <a href="login.php">Login</a>
-                    <a href="register.php">Register</a>
-                <?php endif; ?>
-            </nav>
-        </header>
+                    <?php else: ?>
+                        <a href="login.php">Login</a>
+                        <a href="register.php">Register</a>
+                    <?php endif; ?>
+                </nav>
+            </header>
 
             <!-- Recent Questions Section -->
             <div class="recent-questions-wrapper">
