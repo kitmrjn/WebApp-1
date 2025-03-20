@@ -303,3 +303,96 @@ button i {
 .filter-group select:hover {
   border-color: #800000;
 }
+
+/* Header Styles */
+header {
+  background-color: #800000; /* Maroon background */
+  color: #fdd835; /* Gold text color */
+  padding: 10px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  box-sizing: border-box; /* Ensure padding is included in width */
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0; /* Prevent logo from shrinking */
+}
+
+.logo-img {
+  height: 40px; /* Adjust based on your logo size */
+}
+
+.site-name {
+  font-size: 20px;
+  font-weight: bold;
+  white-space: nowrap; /* Prevent text from wrapping */
+  color: #fdd835; /* Gold text color */
+}
+
+nav {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-shrink: 0; /* Prevent nav from shrinking */
+}
+
+nav a {
+  color: #fdd835; /* Gold text color */
+  text-decoration: none;
+  font-size: 16px;
+  transition: color 0.3s ease;
+  white-space: nowrap; /* Prevent text from wrapping */
+}
+
+nav a:hover {
+  color: #fff; /* White text color on hover */
+}
+
+/* Hamburger Menu */
+.hamburger {
+  display: none; /* Hidden by default */
+  font-size: 24px;
+  cursor: pointer;
+  color: #fdd835; /* Gold text color */
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .hamburger {
+      display: block; /* Show hamburger menu on smaller screens */
+  }
+
+  nav {
+      display: none; /* Hide the nav menu by default on smaller screens */
+      flex-direction: column;
+      position: absolute;
+      top: 60px; /* Adjust based on header height */
+      right: 20px;
+      background-color: #800000;
+      padding: 10px;
+      border-radius: 5px;
+      box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+  }
+
+  nav.active {
+      display: flex; /* Show the nav menu when active */
+  }
+
+  nav a {
+      padding: 10px 0; /* Add spacing between links */
+  }
+}
+
+/* Add space between header and admin dashboard */
+.admin-dashboard {
+  margin-top: 80px; /* Adjust based on header height */
+}

@@ -36,6 +36,22 @@ $totalReported = countReportedPosts($conn, $filterType); // Total number of repo
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
+    <!-- Header -->
+    <header>
+        <div class="logo">
+            <img src="images/svcc.jpg" alt="SVCC Logo" class="logo-img">
+            <span class="site-name">Vincenthinks</span>
+        </div>
+        <!-- Hamburger Menu Icon -->
+        <div class="hamburger" onclick="toggleMenu()">
+            <i class="fas fa-bars"></i>
+        </div>
+        <nav id="nav-menu">
+            <a href="index.php">Home</a>
+            <a href="profile.php">Profile</a>
+            <a href="logout.php">Logout</a>
+        </nav>
+    </header>
     <div class="admin-dashboard">
         <h1>Admin Dashboard</h1>
         <div class="admin-sections">

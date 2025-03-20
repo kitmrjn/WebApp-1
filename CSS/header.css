@@ -1,3 +1,4 @@
+/* Header Styles */
 header {
   background-color: #800000;
   color: #fdd835;
@@ -11,13 +12,13 @@ header {
   width: 100%;
   z-index: 1000;
   height: 60px;
+  box-sizing: border-box;
 }
 
 header .logo {
   display: flex;
   align-items: center;
-  flex: 0 0 auto;
-  min-width: 150px;
+  flex: 0 0 auto; /* Prevent logo from shrinking */
 }
 
 header .logo h1 {
@@ -37,13 +38,67 @@ a {
   border-radius: 3px;
 }
 
+/* Search Bar */
+.search-bar {
+  flex: 1; /* Take up remaining space */
+  margin: 0 20px; /* Added margin for spacing */
+  display: flex;
+  align-items: center;
+  position: relative;
+  max-width: 500px; /* Limit maximum width */
+}
+
+.search-bar input {
+  width: 100%;
+  padding: 8px 35px 8px 12px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 25px;
+  height: 36px;
+  box-sizing: border-box;
+  transition: all 0.3s ease;
+}
+
+.search-bar input[type="text"]::placeholder {
+  color: #999;
+}
+
+.search-bar input[type="text"]:focus {
+  border-color: #007BFF;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+  outline: none;
+}
+
+.search-icon {
+  position: absolute;
+  right: 12px;
+  color: #999;
+  cursor: pointer;
+  font-size: 1rem;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.search-bar input:focus ~ .search-icon,
+.search-bar input:not(:placeholder-shown) ~ .search-icon {
+  opacity: 0;
+}
+
+/* Hamburger Menu */
+.hamburger {
+  display: none; /* Hidden by default */
+  font-size: 24px;
+  cursor: pointer;
+  color: #fdd835;
+  margin-left: 10px; /* Add space between search bar and hamburger */
+}
+
+/* Navigation Links */
 nav {
   display: flex;
   align-items: center;
   gap: 15px;
-  flex: 0 0 auto;
-  justify-content: flex-end;
-  min-width: 150px;
+  flex: 0 0 auto; /* Prevent nav from shrinking */
 }
 
 nav a {
@@ -56,6 +111,7 @@ nav a:hover {
   text-decoration: underline;
 }
 
+/* Profile Dropdown */
 .profile-dropdown {
   position: relative;
   display: inline-block;
@@ -90,29 +146,98 @@ nav a:hover {
   border-radius: 5px;
 }
 
-@media (max-width: 300){
-  header {
-    padding: 10px;
-    height: auto;
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  header .logo {
-    margin-bottom: 10px;
-  }
-
-  .search-bar {
-    width: 10%;
-    margin: 10px 0;
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .hamburger {
+      display: block; /* Show hamburger menu on smaller screens */
   }
 
   nav {
-    width: 50%;
-    justify-content: space-between;
+      display: none; /* Hide the nav menu by default on smaller screens */
+      flex-direction: column;
+      position: absolute;
+      top: 60px; /* Adjust based on header height */
+      right: 20px;
+      background-color: #800000;
+      padding: 10px;
+      border-radius: 5px;
+      box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
   }
 
-  .profile-dropdown {
-    margin-left: auto;
+  nav.active {
+      display: flex; /* Show the nav menu when active */
+  }
+
+  nav a {
+      padding: 10px 0; /* Add spacing between links */
+  }
+
+  /* Adjust search bar for smaller screens */
+  .search-bar {
+      margin: 0 10px; /* Adjust margin for smaller screens */
+      max-width: 50px; /* Shrink search bar to 50px */
+      transition: max-width 0.3s ease;
+  }
+
+  .search-bar input {
+      width: 0; /* Hide input by default */
+      padding: 8px 0; /* Remove padding */
+      opacity: 0; /* Hide input */
+      transition: width 0.3s ease, opacity 0.3s ease;
+  }
+
+  .search-bar input:focus {
+      width: 100%; /* Expand input on focus */
+      opacity: 1; /* Show input */
+      padding: 8px 35px 8px 12px; /* Restore padding */
+  }
+
+  .search-icon {
+      right: 0; /* Align search icon to the right */
+      pointer-events: auto; /* Allow clicking on the icon */
+  }
+
+  /* Tooltip for search icon */
+  .search-icon::after {
+      content: "Search";
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: #333;
+      color: #fff;
+      padding: 5px 10px;
+      border-radius: 5px;
+      font-size: 0.8rem;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+  }
+
+  .search-icon:hover::after {
+      opacity: 1;
+      visibility: visible;
+  }
+
+  /* Adjust logo and text size for smaller screens */
+  header .logo h1 {
+      font-size: 16px; /* Smaller text size */
+  }
+
+  .nav-logo {
+      height: 30px; /* Smaller logo size */
+  }
+
+  /* Ensure search bar and hamburger menu are aligned to the right */
+  header {
+      justify-content: flex-start; /* Align items to the left */
+  }
+
+  .search-bar {
+      margin-left: auto; /* Push search bar to the right */
+  }
+
+  .hamburger {
+      margin-left: 10px; /* Add space between search bar and hamburger */
   }
 }

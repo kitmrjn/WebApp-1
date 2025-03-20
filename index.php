@@ -48,37 +48,46 @@ foreach ($questions as &$question) {
 <body>
     <div class="page-container">
         <div class="content-wrap">
-            <header>
-                <a href="index.php" class="logo-link">
-                    <div class="logo">
-                        <img src="images/svcc.jpg" alt="VincentThinks Logo" class="nav-logo">
-                        <h1>VincenThinks</h1>
-                    </div>
-                </a>
-                <div class="search-bar">
-                    <input type="text" id="searchInput" placeholder="Search questions..." onkeyup="searchQuestions()">
-                    <i class="fas fa-search search-icon"></i>
+        <header>
+            <a href="index.php" class="logo-link">
+                <div class="logo">
+                    <img src="images/svcc.jpg" alt="VincentThinks Logo" class="nav-logo">
+                    <h1>VincenThinks</h1>
                 </div>
-                <nav>
-                    <a href="index.php">Home</a>
-                    <?php if (isset($_SESSION['user_id'])): ?>
-                        <a href="post_question.php">Ask a Question</a>
-                        <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'admin'): ?>
-                            <a href="admin_dashboard.php">Admin Dashboard</a>
-                        <?php endif; ?>
-                        <div class="profile-dropdown">
-                            <i class="fas fa-user-circle profile-icon"></i>
-                            <div class="dropdown-content">
-                                <a href="#">My Profile</a>
-                                <a href="logout.php">Logout</a>
-                            </div>
-                        </div>
-                    <?php else: ?>
-                        <a href="login.php">Login</a>
-                        <a href="register.php">Register</a>
+            </a>
+
+            <!-- Search Bar -->
+            <div class="search-bar">
+                <input type="text" id="searchInput" placeholder="Search questions..." onkeyup="searchQuestions()">
+                <i class="fas fa-search search-icon"></i>
+            </div>
+
+            <!-- Hamburger Menu Icon -->
+            <div class="hamburger" onclick="toggleMenu()">
+                <i class="fas fa-bars"></i>
+            </div>
+
+            <!-- Navigation Links -->
+            <nav id="nav-menu">
+                <a href="index.php">Home</a>
+                <?php if (isset($_SESSION['user_id'])): ?>
+                    <a href="post_question.php">Ask a Question</a>
+                    <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'admin'): ?>
+                        <a href="admin_dashboard.php">Admin Dashboard</a>
                     <?php endif; ?>
-                </nav>
-            </header>
+                    <div class="profile-dropdown">
+                        <i class="fas fa-user-circle profile-icon"></i>
+                        <div class="dropdown-content">
+                            <a href="#">My Profile</a>
+                            <a href="logout.php">Logout</a>
+                        </div>
+                    </div>
+                <?php else: ?>
+                    <a href="login.php">Login</a>
+                    <a href="register.php">Register</a>
+                <?php endif; ?>
+            </nav>
+        </header>
 
             <!-- Recent Questions Section -->
             <div class="recent-questions-wrapper">

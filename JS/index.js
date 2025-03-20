@@ -240,3 +240,20 @@ function reportAnswer(answerId) {
         });
     }
 }
+
+// Toggle menu for smaller screens
+function toggleMenu() {
+    const navMenu = document.getElementById('nav-menu');
+    navMenu.classList.toggle('active');
+}
+
+// Close menu when clicking outside
+document.addEventListener('click', function(event) {
+    const navMenu = document.getElementById('nav-menu');
+    const hamburger = document.querySelector('.hamburger');
+
+    // Close nav menu if clicking outside
+    if (!navMenu.contains(event.target) && !hamburger.contains(event.target)) {
+        navMenu.classList.remove('active');
+    }
+});
