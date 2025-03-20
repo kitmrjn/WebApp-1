@@ -99,6 +99,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <html>
 <head>
     <title>Register</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Ensure proper scaling -->
     <link rel="stylesheet" href="CSS/global.css">
     <link rel="stylesheet" href="CSS/forms.css">
     <link rel="stylesheet" href="CSS/form-links.css">

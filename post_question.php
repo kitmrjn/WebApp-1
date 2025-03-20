@@ -156,6 +156,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <html>
 <head>
     <title>Post a Question</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Ensure proper scaling -->
     <link rel="stylesheet" href="CSS/global.css">
     <link rel="stylesheet" href="CSS/header.css">
     <link rel="stylesheet" href="CSS/forms.css">
@@ -182,51 +183,53 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </header>
 
     <main>
-        <h2>Post a Question</h2>
-        <?php if (!empty($error)): ?>
-            <div class="error-message"><?php echo htmlspecialchars($error); ?></div>
-        <?php endif; ?>
-        <form method="POST" action="" enctype="multipart/form-data">
-            <div class="form-group">
-                <label for="category">Category</label>
-                <select id="category" name="category" required>
-                    <option value="">Select Category</option>
-                    <option value="BSIT">BSIT - Bachelor of Science in Information Technology</option>
-                    <option value="BSHM">BSHM - Bachelor of Science in Hospitality Management</option>
-                    <option value="BSTM">BSTM - Bachelor of Science in Tourism Management</option>
-                    <option value="BSBA">BSBA - Bachelor of Science in Business Administration</option>
-                    <option value="BSA">BSA - Bachelor of Science in Accountancy</option>
-                    <option value="BSCRIM">BSCRIM - Bachelor of Science in Criminology</option>
-                    <option value="BSED">BSED - Bachelor of Secondary Education</option>
-                    <option value="BEED">BEED - Bachelor of Elementary Education</option>
-                    <option value="BSPSY">BSPSY - Bachelor of Science in Psychology</option>
-                    <option value="BPE">BPE - Bachelor of Physical Education</option>
-                    <option value="BSECE">BSECE - Bachelor of Science in Early Childhood Education</option>
-                    <option value="STEM">STEM - Science, Technology, Engineering, and Mathematics</option>
-                    <option value="ABM">ABM - Accountancy, Business, and Management</option>
-                    <option value="GAS">GAS - General Academic Strand</option>
-                    <option value="HE">HE - Home Economics</option>
-                    <option value="ICT">ICT - Information and Communications Technology</option>
-                </select>
-            </div>
+        <div class="post-question-container"> <!-- Wrap the form in a container -->
+            <h2>Post a Question</h2>
+            <?php if (!empty($error)): ?>
+                <div class="error-message"><?php echo htmlspecialchars($error); ?></div>
+            <?php endif; ?>
+            <form method="POST" action="" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="category">Category</label>
+                    <select id="category" name="category" required>
+                        <option value="">Select Category</option>
+                        <option value="BSIT">BSIT - Bachelor of Science in Information Technology</option>
+                        <option value="BSHM">BSHM - Bachelor of Science in Hospitality Management</option>
+                        <option value="BSTM">BSTM - Bachelor of Science in Tourism Management</option>
+                        <option value="BSBA">BSBA - Bachelor of Science in Business Administration</option>
+                        <option value="BSA">BSA - Bachelor of Science in Accountancy</option>
+                        <option value="BSCRIM">BSCRIM - Bachelor of Science in Criminology</option>
+                        <option value="BSED">BSED - Bachelor of Secondary Education</option>
+                        <option value="BEED">BEED - Bachelor of Elementary Education</option>
+                        <option value="BSPSY">BSPSY - Bachelor of Science in Psychology</option>
+                        <option value="BPE">BPE - Bachelor of Physical Education</option>
+                        <option value="BSECE">BSECE - Bachelor of Science in Early Childhood Education</option>
+                        <option value="STEM">STEM - Science, Technology, Engineering, and Mathematics</option>
+                        <option value="ABM">ABM - Accountancy, Business, and Management</option>
+                        <option value="GAS">GAS - General Academic Strand</option>
+                        <option value="HE">HE - Home Economics</option>
+                        <option value="ICT">ICT - Information and Communications Technology</option>
+                    </select>
+                </div>
 
-            <div class="form-group">
-                <label for="content">Question Content</label>
-                <textarea id="content" name="content" rows="5" required></textarea>
-            </div>
+                <div class="form-group">
+                    <label for="content">Question Content</label>
+                    <textarea id="content" name="content" rows="5" required></textarea>
+                </div>
 
-            <div class="form-group">
-                <label for="photos">Upload Photos (Optional)</label>
-                <input type="file" id="photos" name="photos[]" accept="image/jpeg, image/png" multiple>
-            </div>
+                <div class="form-group">
+                    <label for="photos">Upload Photos (Optional)</label>
+                    <input type="file" id="photos" name="photos[]" accept="image/jpeg, image/png" multiple>
+                </div>
 
-            <div class="form-actions">
-                <button type="submit">Post</button>
-                <a href="index.php" class="back-to-home">
-                    <i class="fas fa-arrow-left"></i> Back to Home
-                </a>
-            </div>
-        </form>
+                <div class="form-actions">
+                    <button type="submit">Post</button>
+                    <a href="index.php" class="back-to-home">
+                        <i class="fas fa-arrow-left"></i> Back to Home
+                    </a>
+                </div>
+            </form>
+        </div>
     </main>
 
     <footer>

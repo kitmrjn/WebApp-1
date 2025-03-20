@@ -55,6 +55,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <html>
 <head>
     <title>Login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Ensure proper scaling -->
     <link rel="stylesheet" href="CSS/global.css">
     <link rel="stylesheet" href="CSS/forms.css">
     <link rel="stylesheet" href="CSS/form-links.css">
@@ -62,26 +63,34 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <script src="JS/login.js" defer></script>
 </head>
 <body class="auth-page">
+    <!-- Non-clickable header -->
+    <header class="auth-header">
+        <div class="logo">
+            <img src="images/svcc.jpg" alt="VincentThinks Logo" class="nav-logo">
+            <h1>VincenThinks</h1>
+        </div>
+    </header>
 
-<section class="form-section">
-    <h2>Login</h2>
-    <?php if (!empty($error)): ?>
-        <div class="error-message"><?php echo $error; ?></div>
-    <?php endif; ?>
-    <form method="POST" action="">
-        <label>Username or Email</label>
-        <input type="text" name="usernameOrEmail" required value="<?php echo htmlspecialchars($usernameOrEmail); ?>">
+    <main>
+        <section class="form-section">
+            <h2>Login</h2>
+            <?php if (!empty($error)): ?>
+                <div class="error-message"><?php echo $error; ?></div>
+            <?php endif; ?>
+            <form method="POST" action="">
+                <label>Username or Email</label>
+                <input type="text" name="usernameOrEmail" required value="<?php echo htmlspecialchars($usernameOrEmail); ?>">
 
-        <label>Password</label>
-        <input type="password" name="password" required>
+                <label>Password</label>
+                <input type="password" name="password" required>
 
-        <!-- Centered reCAPTCHA Widget -->
-        <div class="g-recaptcha" data-sitekey="6LeJXvEqAAAAAARS60cGZML2OOi0US8HT1qEtGhJ"></div>
+                <!-- Centered reCAPTCHA Widget -->
+                <div class="g-recaptcha" data-sitekey="6LeJXvEqAAAAAARS60cGZML2OOi0US8HT1qEtGhJ"></div>
 
-        <button type="submit">Login</button>
-    </form>
-    <p>Don't have an account? <a href="register.php">Register here</a></p>
-</section>
-
+                <button type="submit">Login</button>
+            </form>
+            <p>Don't have an account? <a href="register.php">Register here</a></p>
+        </section>
+    </main>
 </body>
 </html>
