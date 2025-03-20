@@ -1,3 +1,4 @@
+/* Recent Questions Section */
 .recent-questions-wrapper {
   display: flex;
   justify-content: center;
@@ -7,7 +8,8 @@
 
 .recent-questions {
   margin: 0 20px;
-  width: 700px;
+  width: 100%; /* Full width for smaller screens */
+  max-width: 700px; /* Limit width for larger screens */
   display: flex;
   flex-direction: column;
   align-items: stretch;
@@ -16,6 +18,7 @@
 .recent-questions h2 {
   text-align: center;
   color: #800000;
+  font-size: 24px; /* Default font size */
 }
 
 .question {
@@ -209,69 +212,81 @@
   color: inherit; /* Inherit the color from the button */
 }
 
-/* Container for the answer content and star icon */
-.answer-content-wrapper {
-  display: flex;
-  align-items: center; /* Vertically center the content and star */
-  justify-content: space-between; /* Space between content and star */
-  gap: 10px; /* Add some space between the content and star */
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .recent-questions h2 {
+      font-size: 20px; /* Smaller heading */
+  }
+
+  .question {
+      padding: 12px; /* Reduce padding */
+  }
+
+  .question-info h3 {
+      font-size: 16px; /* Smaller question title */
+  }
+
+  .timestamp {
+      font-size: 12px; /* Smaller timestamp */
+  }
+
+  .answer-preview {
+      font-size: 14px; /* Smaller preview text */
+  }
+
+  .question-photos {
+      gap: 8px; /* Reduce gap between photos */
+  }
+
+  .photo-container.multiple-photos {
+      width: 48%; /* Keep two photos per row */
+  }
+
+  .question-actions {
+      margin-top: 8px; /* Reduce margin */
+  }
+
+  .answer-button, .report-button {
+      padding: 6px 10px; /* Reduce button padding */
+      font-size: 0.9rem; /* Smaller button text */
+  }
 }
 
-/* Style for the answer content */
-.answer-content {
-  flex: 1; /* Allow the content to take up remaining space */
-  margin: 0; /* Remove default margin */
-}
+@media (max-width: 480px) {
+  .recent-questions h2 {
+      font-size: 18px; /* Even smaller heading */
+  }
 
-/* Style for the answer rating (star icon and count) */
-.answer-rating {
-  position: relative; /* Required for tooltip positioning */
-  cursor: pointer;
-  display: flex; /* Align icon and count horizontally */
-  align-items: center; /* Vertically center icon and count */
-  gap: 5px; /* Space between icon and count */
-}
+  .question {
+      padding: 10px; /* Further reduce padding */
+  }
 
-/* Style for the star icon */
-.answer-rating i {
-  font-size: 1.5rem; /* Adjusted size */
-  color: #ccc; /* Default color (unselected) */
-  background-color: transparent; /* No background */
-  transition: color 0.3s ease; /* Smooth transition for color */
-}
+  .question-info h3 {
+      font-size: 14px; /* Even smaller question title */
+  }
 
-/* Style for the star icon when hovered or selected */
-.answer-rating i:hover,
-.answer-rating i.selected {
-  color: #fdd835; /* Yellow color for selected stars */
-}
+  .timestamp {
+      font-size: 10px; /* Even smaller timestamp */
+  }
 
-/* Style for the rating count */
-.answer-rating .rating-count {
-  font-size: 1rem; /* Adjust the size */
-  color: #666; /* Default text color */
-  font-weight: bold; /* Make the count stand out */
-}
+  .answer-preview {
+      font-size: 12px; /* Even smaller preview text */
+  }
 
-/* Tooltip styles */
-.answer-rating::before {
-  content: attr(data-tooltip); /* Display the tooltip text */
-  position: absolute;
-  top: -25px; /* Position above the star icon */
-  left: 50%;
-  transform: translateX(-50%);
-  background-color: #333; /* Tooltip background color */
-  color: #fff; /* Tooltip text color */
-  padding: 5px 10px;
-  border-radius: 5px;
-  font-size: 0.8rem;
-  opacity: 0; /* Hide by default */
-  visibility: hidden;
-  transition: opacity 0.3s ease, visibility 0.3s ease;
-}
+  .question-photos {
+      gap: 6px; /* Further reduce gap between photos */
+  }
 
-/* Show tooltip on hover */
-.answer-rating:hover::before {
-  opacity: 1;
-  visibility: visible;
+  .photo-container.multiple-photos {
+      width: 48%; /* Keep two photos per row */
+  }
+
+  .question-actions {
+      margin-top: 6px; /* Further reduce margin */
+  }
+
+  .answer-button, .report-button {
+      padding: 5px 8px; /* Further reduce button padding */
+      font-size: 0.8rem; /* Even smaller button text */
+  }
 }

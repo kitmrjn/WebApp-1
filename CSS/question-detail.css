@@ -16,38 +16,96 @@
   margin-bottom: 5px;
 }
 
-/* Style for the answer report icon */
-.answer-report {
-  position: relative; /* Required for tooltip positioning */
-  cursor: pointer;
-  display: flex; /* Align icon and count horizontally */
-  align-items: center; /* Vertically center icon and count */
-  gap: 5px; /* Space between icon and count */
-  margin-left: 10px;
-  color: #666;
-  margin-left: 10px;
-  transition: color 0.3s ease;
+/* Answer Content Wrapper */
+.answer-content-wrapper {
+  display: flex;
+  flex-direction: column; /* Stack content and icons vertically */
+  gap: 10px; /* Space between content and icons */
 }
 
-/* Style for the flag icon */
-.answer-report i {
+/* Answer Content */
+.answer-content {
+  width: 100%; /* Full width for content */
+}
+
+/* Icons Container */
+.answer-icons {
+  display: flex;
+  justify-content: space-between; /* Align icons to the left and right */
+  align-items: center; /* Vertically center icons */
+  width: 100%; /* Full width for icons container */
+}
+
+/* Answer Rating (Star Icon) */
+.answer-rating {
+  position: relative; /* Required for tooltip positioning */
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px; /* Space between star icon and count */
+}
+
+.answer-rating::before {
+  content: attr(data-tooltip); /* Display the tooltip text */
+  position: absolute;
+  top: -25px; /* Position above the star icon */
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #333; /* Tooltip background color */
+  color: #fff; /* Tooltip text color */
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-size: 0.8rem;
+  opacity: 0; /* Hide by default */
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.answer-rating:hover::before {
+  opacity: 1;
+  visibility: visible;
+}
+
+.answer-rating i {
   font-size: 1.4rem; /* Adjusted size */
   color: #ccc; /* Default color (unselected) */
-  background-color: transparent; /* No background */
+  cursor: pointer;
   transition: color 0.3s ease; /* Smooth transition for color */
 }
 
-/* Style for the flag icon when hovered */
+.answer-rating i.selected {
+  color: #fdd835; /* Yellow color for selected stars */
+}
+
+.rating-count {
+  font-size: 0.9rem; /* Adjusted size */
+  color: #666; /* Default text color */
+  font-weight: bold; /* Make the count stand out */
+}
+
+/* Answer Report (Flag Icon) */
+.answer-report {
+  position: relative; /* Required for tooltip positioning */
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 5px; /* Space between flag icon and tooltip */
+}
+
+.answer-report i {
+  font-size: 1.4rem; /* Adjusted size */
+  color: #ccc; /* Default color (unselected) */
+  transition: color 0.3s ease; /* Smooth transition for color */
+}
+
 .answer-report:hover i {
   color: #800000; /* Red color on hover */
 }
 
-/* Style for the flag icon when reported */
 .answer-report i.reported {
   color: #800000; /* Red color to indicate reported */
 }
 
-/* Tooltip styles */
 .answer-report::before {
   content: attr(data-tooltip); /* Display the tooltip text */
   position: absolute;
@@ -64,7 +122,6 @@
   transition: opacity 0.3s ease, visibility 0.3s ease;
 }
 
-/* Show tooltip on hover */
 .answer-report:hover::before {
   opacity: 1;
   visibility: visible;

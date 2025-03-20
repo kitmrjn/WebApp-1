@@ -159,14 +159,19 @@ $answers = $aStmt->fetchAll(PDO::FETCH_ASSOC);
                                                 <div class="answer-content">
                                                     <p><?php echo nl2br(htmlspecialchars($answer['content'])); ?></p>
                                                 </div>
-                                                <!-- Star icon with hover tooltip and count -->
-                                                <div class="answer-rating" data-tooltip="Rate">
-                                                    <i class="bi bi-star-fill <?php echo $answer['is_helpful'] ? 'selected' : ''; ?>" data-is-helpful="<?php echo $answer['is_helpful'] ? 'true' : 'false'; ?>"></i>
-                                                    <span class="rating-count"><?php echo $answer['helpful_count']; ?></span>
-                                                </div>
-                                                <!-- Flag icon for reporting answers -->
-                                                <div class="answer-report" data-answer-id="<?php echo $answer['answer_id']; ?>" data-tooltip="Report">
-                                                    <i class="bi bi-flag-fill" onclick="reportAnswer(<?php echo $answer['answer_id']; ?>)"></i>
+                                                <!-- Icons Container -->
+                                                <div class="answer-icons">
+                                                    <!-- Star icon with hover tooltip and count -->
+                                                    <div class="answer-rating" data-tooltip="Helpful">
+                                                        <i class="bi bi-star-fill <?php echo isset($answer['is_helpful']) && $answer['is_helpful'] ? 'selected' : ''; ?>" 
+                                                        data-is-helpful="<?php echo isset($answer['is_helpful']) && $answer['is_helpful'] ? 'true' : 'false'; ?>">
+                                                        </i>
+                                                        <span class="rating-count"><?php echo isset($answer['helpful_count']) ? $answer['helpful_count'] : 0; ?></span>
+                                                    </div>
+                                                    <!-- Flag icon for reporting answers -->
+                                                    <div class="answer-report" data-answer-id="<?php echo $answer['answer_id']; ?>" data-tooltip="Report">
+                                                        <i class="bi bi-flag-fill" onclick="reportAnswer(<?php echo $answer['answer_id']; ?>)"></i>
+                                                    </div>
                                                 </div>
                                             </div>
                                             <hr>
