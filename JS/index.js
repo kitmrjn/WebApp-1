@@ -93,29 +93,33 @@ function searchQuestions() {
 
 // Expand search bar on smaller screens
 function expandSearchBar() {
-    const searchBar = document.querySelector('.search-bar');
-    const searchInput = document.getElementById('searchInput');
+    if (window.matchMedia("(max-width: 768px)").matches) {
+        const searchBar = document.querySelector('.search-bar');
+        const searchInput = document.getElementById('searchInput');
 
-    if (searchBar && searchInput) {
-        searchBar.style.maxWidth = '100%'; // Expand the search bar
-        searchInput.style.width = '100%'; // Expand the input field
-        searchInput.style.opacity = '1'; // Show the input field
-        searchInput.style.padding = '8px 35px 8px 12px'; // Restore padding
-        searchInput.focus(); // Focus on the input field
+        if (searchBar && searchInput) {
+            searchBar.style.maxWidth = '100%'; // Expand the search bar
+            searchInput.style.width = '100%'; // Expand the input field
+            searchInput.style.opacity = '1'; // Show the input field
+            searchInput.style.padding = '8px 35px 8px 12px'; // Restore padding
+            searchInput.focus(); // Focus on the input field
+        }
     }
 }
 
 // Collapse search bar on smaller screens
 function collapseSearchBar() {
-    const searchBar = document.querySelector('.search-bar');
-    const searchInput = document.getElementById('searchInput');
+    if (window.matchMedia("(max-width: 768px)").matches) {
+        const searchBar = document.querySelector('.search-bar');
+        const searchInput = document.getElementById('searchInput');
 
-    if (searchBar && searchInput) {
-        searchBar.style.maxWidth = '50px'; // Collapse the search bar
-        searchInput.style.width = '0'; // Hide the input field
-        searchInput.style.opacity = '0'; // Hide the input field
-        searchInput.style.padding = '8px 0'; // Remove padding
-        searchInput.value = ''; // Clear the input field
+        if (searchBar && searchInput) {
+            searchBar.style.maxWidth = '50px'; // Collapse the search bar
+            searchInput.style.width = '0'; // Hide the input field
+            searchInput.style.opacity = '0'; // Hide the input field
+            searchInput.style.padding = '8px 0'; // Remove padding
+            searchInput.value = ''; // Clear the input field
+        }
     }
 }
 
@@ -294,7 +298,7 @@ document.addEventListener('DOMContentLoaded', function() {
     if (searchInput) {
         searchInput.addEventListener('keyup', searchQuestions);
 
-        // Collapse search bar when clicking outside
+        // Collapse search bar when clicking outside (only on smaller screens)
         document.addEventListener('click', function(event) {
             const searchBar = document.querySelector('.search-bar');
             if (!searchBar.contains(event.target)) {
@@ -302,7 +306,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
 
-        // Collapse search bar when pressing "Escape" key
+        // Collapse search bar when pressing "Escape" key (only on smaller screens)
         searchInput.addEventListener('keydown', function(event) {
             if (event.key === 'Escape') {
                 collapseSearchBar(); // Collapse the search bar
@@ -317,3 +321,4 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 });
+

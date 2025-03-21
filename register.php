@@ -107,60 +107,68 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <script src="JS/register.js" defer></script>
 </head>
 <body class="auth-page">
+    <!-- Non-clickable header -->
+    <header class="auth-header">
+        <div class="logo">
+            <img src="images/svcc.jpg" alt="VincentThinks Logo" class="nav-logo">
+            <h1>VincenThinks</h1>
+        </div>
+    </header>
 
-<section class="form-section">
-    <h2>Register</h2>
-    <?php if (!empty($error)): ?>
-        <div class="error-message"><?php echo $error; ?></div>
-    <?php endif; ?>
-    <form method="POST" action="">
-        <label>Username</label>
-        <input type="text" name="username" required minlength="5" maxlength="20" pattern="[a-zA-Z0-9-]+" title="Username can only contain letters, numbers, and hyphens (-)." value="<?php echo htmlspecialchars($username); ?>">
+    <main>
+        <section class="form-section">
+            <h2>Register</h2>
+            <?php if (!empty($error)): ?>
+                <div class="error-message"><?php echo $error; ?></div>
+            <?php endif; ?>
+            <form method="POST" action="">
+                <label>Username</label>
+                <input type="text" name="username" required minlength="5" maxlength="20" pattern="[a-zA-Z0-9-]+" title="Username can only contain letters, numbers, and hyphens (-)." value="<?php echo htmlspecialchars($username); ?>">
 
-        <label>Email</label>
-        <input type="email" name="email" required value="<?php echo htmlspecialchars($email); ?>">
+                <label>Email</label>
+                <input type="email" name="email" required value="<?php echo htmlspecialchars($email); ?>">
 
-        <label>Password</label>
-        <input type="password" name="password" required minlength="8" maxlength="20">
+                <label>Password</label>
+                <input type="password" name="password" required minlength="8" maxlength="20">
 
-        <label>Confirm Password</label>
-        <input type="password" name="confirmPassword" required minlength="8" maxlength="20">
+                <label>Confirm Password</label>
+                <input type="password" name="confirmPassword" required minlength="8" maxlength="20">
 
-        <label>Course/Strand</label>
-        <select name="course" required>
-            <option value="" disabled selected>Select your course/strand</option>
-            <optgroup label="College Courses">
-                <option value="BSIT" <?php if ($course === 'BSIT') echo 'selected'; ?>>BSIT - Bachelor of Science in Information Technology</option>
-                <option value="BSHM" <?php if ($course === 'BSHM') echo 'selected'; ?>>BSHM - Bachelor of Science in Hospitality Management</option>
-                <option value="BSTM" <?php if ($course === 'BSTM') echo 'selected'; ?>>BSTM - Bachelor of Science in Tourism Management</option>
-                <option value="BSBA" <?php if ($course === 'BSBA') echo 'selected'; ?>>BSBA - Bachelor of Science in Business Administration</option>
-                <option value="BSA" <?php if ($course === 'BSA') echo 'selected'; ?>>BSA - Bachelor of Science in Accountancy</option>
-                <option value="BSCRIM" <?php if ($course === 'BSCRIM') echo 'selected'; ?>>BSCRIM - Bachelor of Science in Criminology</option>
-                <option value="BSED" <?php if ($course === 'BSED') echo 'selected'; ?>>BSED - Bachelor of Secondary Education</option>
-                <option value="BEED" <?php if ($course === 'BEED') echo 'selected'; ?>>BEED - Bachelor of Elementary Education</option>
-                <option value="BSPSY" <?php if ($course === 'BSPSY') echo 'selected'; ?>>BSPSY - Bachelor of Science in Psychology</option>
-                <option value="BPE" <?php if ($course === 'BPE') echo 'selected'; ?>>BPE - Bachelor of Physical Education</option>
-                <option value="BSECE" <?php if ($course === 'BSECE') echo 'selected'; ?>>BSECE - Bachelor of Science in Early Childhood Education</option>
-            </optgroup>
-            <optgroup label="Senior High School Strands">
-                <option value="STEM" <?php if ($course === 'STEM') echo 'selected'; ?>>STEM - Science, Technology, Engineering, and Mathematics</option>
-                <option value="ABM" <?php if ($course === 'ABM') echo 'selected'; ?>>ABM - Accountancy, Business, and Management</option>
-                <option value="GAS" <?php if ($course === 'GAS') echo 'selected'; ?>>GAS - General Academic Strand</option>
-                <option value="HE" <?php if ($course === 'HE') echo 'selected'; ?>>HE - Home Economics</option>
-                <option value="ICT" <?php if ($course === 'ICT') echo 'selected'; ?>>ICT - Information and Communications Technology</option>
-            </optgroup>
-            <optgroup label="Elementary">
-                <option value="Elementary" <?php if ($course === 'Elementary') echo 'selected'; ?>>Elementary</option>
-            </optgroup>
-        </select>
+                <label>Course/Strand</label>
+                <select name="course" required>
+                    <option value="" disabled selected>Select your course/strand</option>
+                    <optgroup label="College Courses">
+                        <option value="BSIT" <?php if ($course === 'BSIT') echo 'selected'; ?>>BSIT - Bachelor of Science in Information Technology</option>
+                        <option value="BSHM" <?php if ($course === 'BSHM') echo 'selected'; ?>>BSHM - Bachelor of Science in Hospitality Management</option>
+                        <option value="BSTM" <?php if ($course === 'BSTM') echo 'selected'; ?>>BSTM - Bachelor of Science in Tourism Management</option>
+                        <option value="BSBA" <?php if ($course === 'BSBA') echo 'selected'; ?>>BSBA - Bachelor of Science in Business Administration</option>
+                        <option value="BSA" <?php if ($course === 'BSA') echo 'selected'; ?>>BSA - Bachelor of Science in Accountancy</option>
+                        <option value="BSCRIM" <?php if ($course === 'BSCRIM') echo 'selected'; ?>>BSCRIM - Bachelor of Science in Criminology</option>
+                        <option value="BSED" <?php if ($course === 'BSED') echo 'selected'; ?>>BSED - Bachelor of Secondary Education</option>
+                        <option value="BEED" <?php if ($course === 'BEED') echo 'selected'; ?>>BEED - Bachelor of Elementary Education</option>
+                        <option value="BSPSY" <?php if ($course === 'BSPSY') echo 'selected'; ?>>BSPSY - Bachelor of Science in Psychology</option>
+                        <option value="BPE" <?php if ($course === 'BPE') echo 'selected'; ?>>BPE - Bachelor of Physical Education</option>
+                        <option value="BSECE" <?php if ($course === 'BSECE') echo 'selected'; ?>>BSECE - Bachelor of Science in Early Childhood Education</option>
+                    </optgroup>
+                    <optgroup label="Senior High School Strands">
+                        <option value="STEM" <?php if ($course === 'STEM') echo 'selected'; ?>>STEM - Science, Technology, Engineering, and Mathematics</option>
+                        <option value="ABM" <?php if ($course === 'ABM') echo 'selected'; ?>>ABM - Accountancy, Business, and Management</option>
+                        <option value="GAS" <?php if ($course === 'GAS') echo 'selected'; ?>>GAS - General Academic Strand</option>
+                        <option value="HE" <?php if ($course === 'HE') echo 'selected'; ?>>HE - Home Economics</option>
+                        <option value="ICT" <?php if ($course === 'ICT') echo 'selected'; ?>>ICT - Information and Communications Technology</option>
+                    </optgroup>
+                    <optgroup label="Elementary">
+                        <option value="Elementary" <?php if ($course === 'Elementary') echo 'selected'; ?>>Elementary</option>
+                    </optgroup>
+                </select>
 
-        <!-- Centered reCAPTCHA Widget -->
-        <div class="g-recaptcha" data-sitekey="6LeJXvEqAAAAAARS60cGZML2OOi0US8HT1qEtGhJ"></div>
+                <!-- Centered reCAPTCHA Widget -->
+                <div class="g-recaptcha" data-sitekey="6LeJXvEqAAAAAARS60cGZML2OOi0US8HT1qEtGhJ"></div>
 
-        <button type="submit">Register</button>
-    </form>
-    <p>Already have an account? <a href="login.php">Login here</a></p>
-</section>
-
+                <button type="submit">Register</button>
+            </form>
+            <p>Already have an account? <a href="login.php">Login here</a></p>
+        </section>
+    </main>
 </body>
 </html>

@@ -212,6 +212,32 @@
   color: inherit; /* Inherit the color from the button */
 }
 
+/* Pagination Styles */
+.pagination {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.pagination a {
+  padding: 8px 16px;
+  text-decoration: none;
+  border: 1px solid #ddd;
+  color: #333;
+  margin: 0 4px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.pagination a.active {
+  background-color: #800000;
+  color: white;
+  border: 1px solid #800000;
+}
+
+.pagination a:hover:not(.active) {
+  background-color: #ddd;
+}
+
 /* Responsive Styles */
 @media (max-width: 768px) {
   .recent-questions h2 {

@@ -1,16 +1,24 @@
-
 <?php
 session_start();
 require_once 'db_config.php'; // includes $conn (PDO)
 require_once 'functions.php'; // include the time_ago function
 
-// Fetch the latest approved questions
+// Pagination logic
+$questions_per_page = 10; // Number of questions per page
+$page = isset($_GET['page']) ? (int)$_GET['page'] : 1; // Current page number
+$offset = ($page - 1) * $questions_per_page; // Calculate offset
+
+// Fetch questions for the current page
 $sql = "SELECT q.*, u.username
         FROM questions q
         JOIN users u ON q.user_id = u.user_id
         WHERE q.status = 'approved'
-        ORDER BY q.created_at DESC";
-$stmt = $conn->query($sql);
+        ORDER BY q.created_at DESC
+        LIMIT :limit OFFSET :offset";
+$stmt = $conn->prepare($sql);
+$stmt->bindValue(':limit', $questions_per_page, PDO::PARAM_INT);
+$stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
+$stmt->execute();
 $questions = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 // Fetch the first 2 photos for each question
@@ -28,6 +36,14 @@ foreach ($questions as &$question) {
     $count_stmt->execute();
     $question['total_photos'] = $count_stmt->fetch(PDO::FETCH_ASSOC)['total_photos'];
 }
+
+// Fetch total number of approved questions
+$total_questions_sql = "SELECT COUNT(*) as total FROM questions WHERE status = 'approved'";
+$total_questions_stmt = $conn->query($total_questions_sql);
+$total_questions = $total_questions_stmt->fetch(PDO::FETCH_ASSOC)['total'];
+
+// Calculate total pages
+$total_pages = ceil($total_questions / $questions_per_page);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -157,6 +173,19 @@ foreach ($questions as &$question) {
                             <?php endforeach; ?>
                         <?php else: ?>
                             <p>No questions found.</p>
+                        <?php endif; ?>
+                    </div>
+
+                    <!-- Pagination Links -->
+                    <div class="pagination">
+                        <?php if ($page > 1): ?>
+                            <a href="index.php?page=<?php echo ($page - 1); ?>">Previous</a>
+                        <?php endif; ?>
+                        <?php for ($i = 1; $i <= $total_pages; $i++): ?>
+                            <a href="index.php?page=<?php echo $i; ?>" <?php echo ($i == $page ? 'class="active"' : ''); ?>><?php echo $i; ?></a>
+                        <?php endfor; ?>
+                        <?php if ($page < $total_pages): ?>
+                            <a href="index.php?page=<?php echo ($page + 1); ?>">Next</a>
                         <?php endif; ?>
                     </div>
                 </section>
