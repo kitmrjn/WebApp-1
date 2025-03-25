@@ -1,3 +1,14 @@
+// Register Service Worker
+if ("serviceWorker" in navigator) {
+    window.addEventListener("load", () => {
+      navigator.serviceWorker.register("/sw.js")
+        .then(reg => console.log("SW registered:", reg))
+        .catch(err => console.log("SW failed:", err));
+    });
+  }
+
+
+
 // Function to handle question click
 document.querySelectorAll('.question').forEach(question => {
     question.addEventListener('click', function(event) {
