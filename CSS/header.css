@@ -157,7 +157,7 @@ nav a:hover {
   display: none; /* Hidden by default */
   color: #fdd835;
   text-decoration: none;
-  font-size: 12px;
+  font-size: 14px;
   white-space: nowrap;
   margin-right: 10px; /* Add spacing between elements */
 }
@@ -306,6 +306,6 @@ nav a:hover {
   }
 
   .nav-logo {
-      height: 25px; /* Even smaller logo size */
+      height: 40px; /* Even smaller logo size */
   }
 }

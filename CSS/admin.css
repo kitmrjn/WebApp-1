@@ -1,4 +1,9 @@
-/* Admin Dashboard Container */
+*{
+  font-family: "News Cycle", sans-serif;
+  font-weight: 500;
+  font-style: normal;
+}
+
 .admin-dashboard {
   max-width: 1200px;
   margin: 20px auto;
@@ -329,6 +334,7 @@ header {
 
 .logo-img {
   height: 40px; /* Adjust based on your logo size */
+  border-radius: 3px;
 }
 
 .site-name {
