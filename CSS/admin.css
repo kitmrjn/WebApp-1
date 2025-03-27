@@ -406,7 +406,7 @@ nav a:hover {
 /* Tab Navigation */
 .admin-tabs {
   display: flex;
-  margin-bottom: 20px;
+  margin-bottom: 0;
   border-bottom: 2px solid #ddd;
   position: sticky;
   top: 60px;
@@ -414,6 +414,25 @@ nav a:hover {
   padding: 10px;
   border: 1px solid #ddd;
   z-index: 100;
+}
+
+.admin-header{
+  margin-bottom: 20px;
+  border-bottom: 2px solid #ddd;
+  background-color: #f8f9fa;
+  padding: 10px;
+  border: 1px solid #ddd;
+  z-index: 100;
+  margin-left: 0px;
+  margin-right: 0px;
+}
+
+.admin-header-pending-posts{
+  background-color: #f8f9fa;
+  border: 1px solid #ddd;
+  padding: 10px;
+  margin-left: 0px;
+  margin-bottom: 20px;
 }
 
 .tab-button {

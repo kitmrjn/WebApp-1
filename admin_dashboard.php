@@ -76,7 +76,8 @@ $activeTab = isset($_GET['tab']) ? $_GET['tab'] : 'pending';
         
         <div class="admin-sections">
             <div class="pending-posts tab-content <?php echo $activeTab === 'pending' ? 'active' : ''; ?>" id="pending-tab">
-                <h2>Pending Posts</h2>
+               <div class="admin-header-pending-posts">
+               <h2>Pending Posts</h2>
                 <div class="sort-group">
                     <label for="sort-pending">Sort:</label>
                     <select id="sort-pending" onchange="updatePendingSort(this.value)">
@@ -84,6 +85,7 @@ $activeTab = isset($_GET['tab']) ? $_GET['tab'] : 'pending';
                         <option value="oldest" <?php echo ($sortPending === 'oldest') ? 'selected' : ''; ?>>Oldest First</option>
                     </select>
                 </div>
+               </div> 
                 <?php if (!empty($pending_posts)): ?>
                     <?php foreach ($pending_posts as $post): ?>
                         <div class="post">
@@ -123,21 +125,23 @@ $activeTab = isset($_GET['tab']) ? $_GET['tab'] : 'pending';
             </div>
 
             <div class="reported-posts tab-content <?php echo $activeTab === 'reported' ? 'active' : ''; ?>" id="reported-tab">
-                <h2>Reported Posts & Answers</h2>
-                <div class="sort-group">
-                    <label for="sort-reported">Sort:</label>
-                    <select id="sort-reported" onchange="updateReportedSort(this.value)">
-                        <option value="newest" <?php echo ($sortReported === 'newest') ? 'selected' : ''; ?>>Newest First</option>
-                        <option value="oldest" <?php echo ($sortReported === 'oldest') ? 'selected' : ''; ?>>Oldest First</option>
-                    </select>
-                </div>
-                <div class="filter-group">
-                    <label for="filter-type">Filter:</label>
-                    <select id="filter-type" onchange="updateReportedFilter(this.value)">
-                        <option value="all" <?php echo ($filterType === 'all') ? 'selected' : ''; ?>>All</option>
-                        <option value="question" <?php echo ($filterType === 'question') ? 'selected' : ''; ?>>Questions Only</option>
-                        <option value="answer" <?php echo ($filterType === 'answer') ? 'selected' : ''; ?>>Answers Only</option>
-                    </select>
+                <div class="admin-header">
+                    <h2>Reported Posts & Answers</h2>
+                    <div class="sort-group">
+                        <label for="sort-reported">Sort:</label>
+                        <select id="sort-reported" onchange="updateReportedSort(this.value)">
+                            <option value="newest" <?php echo ($sortReported === 'newest') ? 'selected' : ''; ?>>Newest First</option>
+                            <option value="oldest" <?php echo ($sortReported === 'oldest') ? 'selected' : ''; ?>>Oldest First</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label for="filter-type">Filter:</label>
+                        <select id="filter-type" onchange="updateReportedFilter(this.value)">
+                            <option value="all" <?php echo ($filterType === 'all') ? 'selected' : ''; ?>>All</option>
+                            <option value="question" <?php echo ($filterType === 'question') ? 'selected' : ''; ?>>Questions Only</option>
+                            <option value="answer" <?php echo ($filterType === 'answer') ? 'selected' : ''; ?>>Answers Only</option>
+                        </select>
+                    </div>
                 </div>
                 <?php if (!empty($reported_posts)): ?>
                     <?php foreach ($reported_posts as $report): ?>
