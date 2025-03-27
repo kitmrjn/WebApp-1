@@ -1,4 +1,4 @@
-// Function to handle question click
+//Function to handle question click
 document.querySelectorAll('.question').forEach(question => {
     question.addEventListener('click', function(event) {
         // Prevent the event from triggering if the click is on the "View Answers" button
@@ -319,5 +319,17 @@ document.addEventListener('DOMContentLoaded', function() {
             event.stopPropagation(); // Prevent the click from bubbling up
             expandSearchBar(); // Expand the search bar on smaller screens
         });
+    }
+});
+
+document.getElementById('searchInput').addEventListener('focus', function() {
+    if (window.innerWidth <= 768) { // Check if viewport width is 768px or below
+        document.getElementById('ask-text').style.display = 'none';
+    }
+});
+
+document.getElementById('searchInput').addEventListener('blur', function() {
+    if (window.innerWidth <= 768) { // Check if viewport width is 768px or below
+        document.getElementById('ask-text').style.display = 'block';
     }
 });

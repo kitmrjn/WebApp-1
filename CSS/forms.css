@@ -177,12 +177,6 @@ header .logo h1 {
 }
 
 @media (max-width: 768px) {
-  /* Header adjustments */
-  header {
-      height: auto; /* Allow header to expand based on content */
-      padding: 10px; /* Reduce padding for smaller screens */
-      flex-wrap: wrap; /* Allow header content to wrap if necessary */
-  }
 
   /* Hide the "Home" link */
   nav a[href="index.php"] {
@@ -198,20 +192,7 @@ header .logo h1 {
       display: none;
   }
 
-  /* Adjust logo to use available space */
-  header .logo {
-      flex: 1; /* Allow logo to take up available space */
-      min-width: 0; /* Prevent logo from overflowing */
-  }
 
-  header .logo h1 {
-      font-size: 16px; /* Adjust font size for smaller screens */
-      margin-left: 5px; /* Reduce margin for tighter spacing */
-  }
-
-  .nav-logo {
-      height: 30px; /* Reduce logo size for smaller screens */
-  }
 
   /* Form adjustments */
   .form-section,

@@ -94,7 +94,7 @@ $total_pages = ceil($total_questions / $questions_per_page);
                 </a>
 
                 <!-- Ask a Question Link for Smaller Screens -->
-                <a href="post_question" class="ask-question-link mobile-only">
+                <a href="post_question" class="ask-question-link mobile-only" id="ask-text">
                     Ask a Question
                 </a>
 
