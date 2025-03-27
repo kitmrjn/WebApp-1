@@ -9,7 +9,7 @@
 .recent-questions {
   margin: 0 20px;
   width: 100%; /* Full width for smaller screens */
-  max-width: 700px; /* Limit width for larger screens */
+  max-width: 950px; /* Limit width for larger screens */
   display: flex;
   flex-direction: column;
   align-items: stretch;
@@ -22,16 +22,16 @@
 }
 
 .question {
-  background-color: #fff;
+  background-color: #f8f9fa;
   padding: 15px;
   margin-bottom: 15px;
-  border-radius: 10px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
   display: flex;
   flex-direction: column;
+  border-radius: 10px;
   overflow: hidden;
   cursor: pointer;
-  border: 1px solid #ccc;
+  border: 1px solid #ddd;
   transition: max-height 0.3s ease-in-out;
   width: 100%;
 }

@@ -82,8 +82,6 @@ $total_pages = ceil($total_questions / $questions_per_page);
     <link href="https://fonts.googleapis.com/css2?family=News+Cycle:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="page-container">
-        <div class="content-wrap">
             <header>
                 <!-- Logo for Larger Screens -->
                 <a href="index" class="logo-link desktop-only">
@@ -210,11 +208,10 @@ $total_pages = ceil($total_questions / $questions_per_page);
                     </div>
                 </section>
             </div>
-        </div>
         <footer>
             <p>&copy; <?php echo date('Y'); ?> VincenThinks. All rights reserved.</p>
         </footer>
-    </div>
+    
 
     <!-- Full Question Modal -->
     <div id="fullQuestionModal" class="modal">

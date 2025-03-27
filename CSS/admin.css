@@ -5,12 +5,9 @@
 }
 
 .admin-dashboard {
-  max-width: 1200px;
-  margin: 20px auto;
+  max-width: auto;
+  margin: 80px auto;
   padding: 20px;
-  background-color: #fff;
-  border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
 .admin-dashboard h1 {
@@ -73,9 +70,8 @@
 .post {
   margin-bottom: 15px;
   padding: 15px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  background-color: #fff;
+  border: 1px solid #ddd; 
+  background-color: #f8f9fa;
   transition: box-shadow 0.3s ease;
 }
 
@@ -396,11 +392,20 @@ nav a:hover {
   nav a {
       padding: 10px 0; /* Add spacing between links */
   }
-}
 
-/* Add space between header and admin dashboard */
-.admin-dashboard {
-  margin-top: 80px; /* Adjust based on header height */
+  .admin-header{
+    margin-left: 0px !important;
+    margin-right: 0px !important;
+  }
+  
+  .admin-header-pending-posts{
+    margin-left: 0px !important;
+    margin-right: 0px !important;
+  }
+
+  .admin-dashboard{
+    padding: 2px;
+  }
 }
 
 /* Tab Navigation */
@@ -423,8 +428,8 @@ nav a:hover {
   padding: 10px;
   border: 1px solid #ddd;
   z-index: 100;
-  margin-left: 0px;
   margin-right: 0px;
+  margin-left: 0px;
 }
 
 .admin-header-pending-posts{
@@ -432,6 +437,7 @@ nav a:hover {
   border: 1px solid #ddd;
   padding: 10px;
   margin-left: 0px;
+  margin-right: 0px;
   margin-bottom: 20px;
 }
 
