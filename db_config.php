@@ -1,17 +1,15 @@
 <?php
+date_default_timezone_set('Asia/Manila'); 
 $host = 'localhost';
-$dbname = 'vincenthinks_db'; // Change if needed
-$username = 'root';          // Change if needed
-$password = '';              // Change if needed
+$dbname = 'vincenthinks_db'; 
+$username = 'root';          
+$password = '';              
 
 try {
-    // Create a PDO instance
     $conn = new PDO("mysql:host=$host;dbname=$dbname;charset=utf8", $username, $password);
-    // Set PDO to throw exceptions on errors
     $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $conn->exec("SET time_zone = '+08:00'");
 
-    // Optional debug line: 
-    // echo "Connected successfully!";
 } catch (PDOException $e) {
     die("Connection failed: " . $e->getMessage());
 }
