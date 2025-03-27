@@ -21,11 +21,12 @@ header .logo {
   flex: 0 0 auto; /* Prevent logo from shrinking */
 }
 
-header .logo h1 {
+ h1 {
   font-size: 20px;
   margin-left: 10px;
   white-space: nowrap;
   margin-right: 5px;
+  font-weight: 500;
 }
 
 a {
