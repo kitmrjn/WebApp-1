@@ -1,21 +1,16 @@
 <?php
-require_once 'auth.php';    // Ensures user is logged in
-require_once 'db_config.php'; // Includes $conn (PDO)
+require_once 'auth.php';  
+require_once 'db_config.php'; 
 
-// Initialize error variable
 $error = "";
 
-// Function to resize image
 function resizeImage($file, $max_width, $max_height) {
-    // Check if the file exists
     if (!file_exists($file)) {
         throw new Exception("File does not exist: $file");
     }
 
-    // Get image dimensions and type
     list($width, $height, $type) = getimagesize($file);
 
-    // Calculate aspect ratio
     $ratio = $width / $height;
     if ($max_width / $max_height > $ratio) {
         $max_width = $max_height * $ratio;
@@ -23,7 +18,6 @@ function resizeImage($file, $max_width, $max_height) {
         $max_height = $max_width / $ratio;
     }
 
-    // Create a new image resource
     $src = imagecreatefromstring(file_get_contents($file));
     if ($src === false) {
         throw new Exception("Failed to create image from string.");
@@ -35,25 +29,23 @@ function resizeImage($file, $max_width, $max_height) {
         throw new Exception("Failed to create true color image.");
     }
 
-    // Resize the image
     if (!imagecopyresampled($dst, $src, 0, 0, 0, 0, $max_width, $max_height, $width, $height)) {
         imagedestroy($src);
         imagedestroy($dst);
         throw new Exception("Failed to resize the image.");
     }
 
-    // Save the resized image
     $resized_file = tempnam(sys_get_temp_dir(), 'resized');
     switch ($type) {
         case IMAGETYPE_JPEG:
-            if (!imagejpeg($dst, $resized_file, 90)) { // 90% quality
+            if (!imagejpeg($dst, $resized_file, 90)) { 
                 imagedestroy($src);
                 imagedestroy($dst);
                 throw new Exception("Failed to save JPEG image.");
             }
             break;
         case IMAGETYPE_PNG:
-            if (!imagepng($dst, $resized_file, 9)) { // 9 = compression level
+            if (!imagepng($dst, $resized_file, 9)) { 
                 imagedestroy($src);
                 imagedestroy($dst);
                 throw new Exception("Failed to save PNG image.");
@@ -65,7 +57,6 @@ function resizeImage($file, $max_width, $max_height) {
             throw new Exception("Unsupported image type.");
     }
 
-    // Free up memory
     imagedestroy($src);
     imagedestroy($dst);
 
@@ -74,24 +65,22 @@ function resizeImage($file, $max_width, $max_height) {
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $content  = trim($_POST['content']);
-    $category = trim($_POST['category']); // Get category (this will be the title)
+    $category = trim($_POST['category']); 
     $user_id  = $_SESSION['user_id'];
 
     if (!empty($content) && !empty($category)) {
-        // Insert the question into the database
         $sql = "INSERT INTO questions (user_id, title, content, category, status) VALUES (:uid, :title, :content, :category, 'pending')";
         $stmt = $conn->prepare($sql);
         $stmt->bindParam(':uid', $user_id, PDO::PARAM_INT);
-        $stmt->bindParam(':title', $category, PDO::PARAM_STR); // Set title to the selected category
+        $stmt->bindParam(':title', $category, PDO::PARAM_STR); 
         $stmt->bindParam(':content', $content, PDO::PARAM_STR);
         $stmt->bindParam(':category', $category, PDO::PARAM_STR);
 
         if ($stmt->execute()) {
-            $question_id = $conn->lastInsertId(); // Get the ID of the newly inserted question
+            $question_id = $conn->lastInsertId(); 
 
-            // Handle multiple file uploads
             if (!empty($_FILES['photos']['name'][0])) {
-                $upload_dir = 'uploads/'; // Directory to store uploaded files
+                $upload_dir = 'uploads/'; 
                 if (!is_dir($upload_dir)) {
                     if (!mkdir($upload_dir, 0755, true)) {
                         $error = "Failed to create upload directory.";
@@ -103,7 +92,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $file_tmp = $_FILES['photos']['tmp_name'][$key];
                     $file_type = strtolower(pathinfo($file_name, PATHINFO_EXTENSION));
 
-                    // Validate file type (only allow JPEG and PNG)
                     $allowed_types = ['jpg', 'jpeg', 'png'];
                     if (!in_array($file_type, $allowed_types)) {
                         $error = "Only JPG, JPEG, and PNG files are allowed.";
@@ -111,20 +99,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     }
 
                     try {
-                        // Resize the image to a maximum width of 400px
                         $resized_file = resizeImage($file_tmp, 400, 400);
 
-                        // Generate a unique file name to avoid conflicts
                         $unique_name = uniqid() . '.' . $file_type;
                         $photo_path = $upload_dir . $unique_name;
 
-                        // Move the resized file to the uploads directory
                         if (!rename($resized_file, $photo_path)) {
                             $error = "Failed to upload the file.";
                             break;
                         }
 
-                        // Insert the photo into the question_photos table
                         $photo_sql = "INSERT INTO question_photos (question_id, photo_path) VALUES (:qid, :photo_path)";
                         $photo_stmt = $conn->prepare($photo_sql);
                         $photo_stmt->bindParam(':qid', $question_id, PDO::PARAM_INT);
@@ -209,6 +193,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <option value="GAS">GAS - General Academic Strand</option>
                         <option value="HE">HE - Home Economics</option>
                         <option value="ICT">ICT - Information and Communications Technology</option>
+                        <option value="JHS">JHS - Junior High School</option>
+                        <option value="FACULTY">Faculty</option>
                     </select>
                 </div>
 

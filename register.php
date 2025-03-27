@@ -137,6 +137,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <label>Course/Strand</label>
                 <select name="course" required>
                     <option value="" disabled selected>Select your course/strand</option>
+                    <optgroup label="Faculty">
+                        <option value="FACULTY" <?php if ($course === 'FACULTY') echo 'selected'; ?>>Faculty</option>
+                    </optgroup>
+                    <optgroup label="Junior High School">
+                        <option value="JHS" <?php if ($course === 'JHS') echo 'selected'; ?>>JHS - Junior High School</option>
+                    </optgroup>
                     <optgroup label="College Courses">
                         <option value="BSIT" <?php if ($course === 'BSIT') echo 'selected'; ?>>BSIT - Bachelor of Science in Information Technology</option>
                         <option value="BSHM" <?php if ($course === 'BSHM') echo 'selected'; ?>>BSHM - Bachelor of Science in Hospitality Management</option>
@@ -156,9 +162,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <option value="GAS" <?php if ($course === 'GAS') echo 'selected'; ?>>GAS - General Academic Strand</option>
                         <option value="HE" <?php if ($course === 'HE') echo 'selected'; ?>>HE - Home Economics</option>
                         <option value="ICT" <?php if ($course === 'ICT') echo 'selected'; ?>>ICT - Information and Communications Technology</option>
-                    </optgroup>
-                    <optgroup label="Elementary">
-                        <option value="Elementary" <?php if ($course === 'Elementary') echo 'selected'; ?>>Elementary</option>
                     </optgroup>
                 </select>
 
