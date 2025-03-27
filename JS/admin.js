@@ -208,3 +208,88 @@ function approvePost(questionId) {
           navMenu.classList.remove('active');
       }
   });
+
+  // Tab switching functionality
+function setupTabs() {
+    const tabButtons = document.querySelectorAll('.tab-button');
+    const tabContents = document.querySelectorAll('.tab-content');
+    
+    tabButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            // Remove active class from all buttons and contents
+            tabButtons.forEach(btn => btn.classList.remove('active'));
+            tabContents.forEach(content => content.classList.remove('active'));
+            
+            // Add active class to clicked button and corresponding content
+            button.classList.add('active');
+            const tabId = button.getAttribute('data-tab');
+            document.getElementById(`${tabId}-tab`).classList.add('active');
+            
+            // Update URL without reloading
+            updateUrlForTab(tabId);
+        });
+    });
+    
+    // Check URL for tab parameter on load
+    const urlParams = new URLSearchParams(window.location.search);
+    const activeTab = urlParams.get('tab') || 'pending';
+    
+    // Activate the correct tab if not already active
+    const currentActiveTab = document.querySelector('.tab-button.active');
+    if (!currentActiveTab || currentActiveTab.getAttribute('data-tab') !== activeTab) {
+        document.querySelector(`.tab-button[data-tab="${activeTab}"]`).click();
+    }
+}
+
+// Update URL when changing tabs
+function updateUrlForTab(tab) {
+    const url = new URL(window.location.href);
+    url.searchParams.set('tab', tab);
+    
+    // Remove parameters from the other tab
+    if (tab === 'pending') {
+        url.searchParams.delete('sort-reported');
+        url.searchParams.delete('page-reported');
+        url.searchParams.delete('filter-type');
+    } else {
+        url.searchParams.delete('sort-pending');
+        url.searchParams.delete('page-pending');
+    }
+    
+    window.history.pushState({}, '', url);
+}
+
+// Update sort for pending posts
+function updatePendingSort(sortValue) {
+    const url = new URL(window.location.href);
+    url.searchParams.set('sort-pending', sortValue);
+    url.searchParams.set('tab', 'pending');
+    window.location.href = url.toString();
+}
+
+// Update sort for reported posts
+function updateReportedSort(sortValue) {
+    const url = new URL(window.location.href);
+    url.searchParams.set('sort-reported', sortValue);
+    url.searchParams.set('tab', 'reported');
+    window.location.href = url.toString();
+}
+
+// Update filter for reported posts
+function updateReportedFilter(filterValue) {
+    const url = new URL(window.location.href);
+    url.searchParams.set('filter-type', filterValue);
+    url.searchParams.set('tab', 'reported');
+    window.location.href = url.toString();
+}
+
+// Initialize tabs when DOM is loaded
+document.addEventListener('DOMContentLoaded', function() {
+    setupTabs();
+    
+    // All existing event listeners remain the same...
+    // (Keep all your existing functions below this point)
+});
+
+// All your existing functions (approvePost, rejectPost, deletePost, etc.) remain unchanged
+// ... (keep all the rest of your existing admin.js code)

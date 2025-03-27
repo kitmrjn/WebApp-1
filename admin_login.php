@@ -16,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($admin && password_verify($password, $admin['password'])) {
         $_SESSION['user_id'] = $admin['user_id'];
         $_SESSION['role'] = 'admin';
-        header("Location: admin_dashboard.php");
+        header("Location: admin_dashboard");
         exit();
     } else {
         $error = "Invalid email or password.";

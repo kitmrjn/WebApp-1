@@ -4,7 +4,7 @@ require_once 'db_config.php'; // includes $conn (PDO)
 require_once 'functions.php'; // include the time_ago function
 
 if (!isset($_GET['id'])) {
-    header("Location: index.php");
+    header("Location: index");
     exit();
 }
 
@@ -41,7 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_SESSION['user_id'])) {
         $aStmt->execute();
 
         // Reload to show the new answer
-        header("Location: question.php?id=$question_id");
+        header("Location: question?id=$question_id");
         exit();
     }
 }
@@ -65,6 +65,7 @@ $answers = $aStmt->fetchAll(PDO::FETCH_ASSOC);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#4CAF50">
     <title>Vincenthinks - Question</title>
     <link rel="stylesheet" href="CSS/global.css">
     <link rel="stylesheet" href="CSS/header.css">
@@ -74,33 +75,48 @@ $answers = $aStmt->fetchAll(PDO::FETCH_ASSOC);
     <link rel="stylesheet" href="CSS/question-detail.css">
     <link rel="stylesheet" href="CSS/forms.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <!-- Add Bootstrap Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="apple-touch-icon" sizes="57x57" href="images/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="images/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="images/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="images/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="images/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="images/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="images/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192"  href="images/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="images/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff">
 </head>
 <body>
     <div class="page-container">
         <div class="content-wrap">
             <header>
-                <a href="index.php" class="logo-link">
+                <a href="index" class="logo-link">
                     <div class="logo">
                         <img src="images/svcc.jpg" alt="VincentThinks Logo" class="nav-logo">
                         <h1>VincenThinks</h1>
                     </div>
                 </a>
                 <nav>
-                    <a href="index.php">Home</a>
+                    <a href="index">Home</a>
                     <?php if (isset($_SESSION['user_id'])): ?>
-                        <a href="post_question.php">Ask a Question</a>
+                        <a href="post_question">Ask a Question</a>
                         <div class="profile-dropdown">
                             <i class="fas fa-user-circle profile-icon"></i>
                             <div class="dropdown-content">
                                 <a href="#">My Profile</a>
-                                <a href="logout.php">Logout</a>
+                                <a href="logout">Logout</a>
                             </div>
                         </div>
                     <?php else: ?>
-                        <a href="login.php">Login</a>
-                        <a href="register.php">Register</a>
+                        <a href="login">Login</a>
+                        <a href="register">Register</a>
                     <?php endif; ?>
                 </nav>
             </header>
@@ -185,12 +201,12 @@ $answers = $aStmt->fetchAll(PDO::FETCH_ASSOC);
                             <?php if (isset($_SESSION['user_id'])): ?>
                                 <div class="form-actions">
                                     <button onclick="openAnswerModal()" class="answer-button">Post Your Answer</button>
-                                    <a href="index.php" class="back-to-home">
+                                    <a href="index" class="back-to-home">
                                         <i class="fas fa-arrow-left"></i> Back to Home
                                     </a>
                                 </div>
                             <?php else: ?>
-                                <p class="login-prompt"><a href="login.php">Login</a> to answer this question.</p>
+                                <p class="login-prompt"><a href="login">Login</a> to answer this question.</p>
                             <?php endif; ?>
                         </div>
                     </div>

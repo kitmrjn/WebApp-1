@@ -123,7 +123,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             if (empty($error)) {
                 // Redirect to home
-                header("Location: index.php");
+                header("Location: index");
                 exit();
             }
         } else {
@@ -146,22 +146,39 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="stylesheet" href="CSS/forms.css">
     <link rel="stylesheet" href="CSS/footer.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <meta name="theme-color" content="#4CAF50">
+    <link rel="apple-touch-icon" sizes="57x57" href="images/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="images/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="images/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="images/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="images/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="images/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="images/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192"  href="images/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="images/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff">
 </head>
 <body>
     <header>
-        <a href="index.php" class="logo-link">
+        <a href="index" class="logo-link">
             <div class="logo">
                 <img src="images/svcc.jpg" alt="VincentThinks Logo" class="nav-logo">
                 <h1>VincenThinks</h1>
             </div>
         </a>
         <nav>
-            <a href="index.php">Home</a>
+            <a href="index">Home</a>
             <?php if (isset($_SESSION['user_id'])): ?>
-                <a href="logout.php">Logout (<?php echo htmlspecialchars($_SESSION['username']); ?>)</a>
+                <a href="logout">Logout (<?php echo htmlspecialchars($_SESSION['username']); ?>)</a>
             <?php else: ?>
-                <a href="login.php">Login</a>
-                <a href="register.php">Register</a>
+                <a href="login">Login</a>
+                <a href="register">Register</a>
             <?php endif; ?>
         </nav>
     </header>
@@ -194,7 +211,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <option value="HE">HE - Home Economics</option>
                         <option value="ICT">ICT - Information and Communications Technology</option>
                         <option value="JHS">JHS - Junior High School</option>
-                        <option value="FACULTY">Faculty</option>
+                        <option value="FACULTY">FACULTY - Faculty</option>
                     </select>
                 </div>
 
@@ -210,7 +227,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 <div class="form-actions">
                     <button type="submit">Post</button>
-                    <a href="index.php" class="back-to-home">
+                    <a href="index" class="back-to-home">
                         <i class="fas fa-arrow-left"></i> Back to Home
                     </a>
                 </div>

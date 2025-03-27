@@ -85,7 +85,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 if ($stmt->execute()) {
                     // Success: redirect to login
-                    header("Location: login.php");
+                    header("Location: login");
                     exit();
                 } else {
                     $error = "Error creating account.";
@@ -103,6 +103,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="stylesheet" href="CSS/global.css">
     <link rel="stylesheet" href="CSS/forms.css">
     <link rel="stylesheet" href="CSS/form-links.css">
+    <meta name="theme-color" content="#4CAF50">
+    <link rel="apple-touch-icon" sizes="57x57" href="images/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="images/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="images/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="images/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="images/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="images/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="images/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192"  href="images/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="images/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff">
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     <script src="JS/register.js" defer></script>
 </head>
@@ -137,12 +154,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <label>Course/Strand</label>
                 <select name="course" required>
                     <option value="" disabled selected>Select your course/strand</option>
-                    <optgroup label="Faculty">
-                        <option value="FACULTY" <?php if ($course === 'FACULTY') echo 'selected'; ?>>Faculty</option>
-                    </optgroup>
-                    <optgroup label="Junior High School">
-                        <option value="JHS" <?php if ($course === 'JHS') echo 'selected'; ?>>JHS - Junior High School</option>
-                    </optgroup>
                     <optgroup label="College Courses">
                         <option value="BSIT" <?php if ($course === 'BSIT') echo 'selected'; ?>>BSIT - Bachelor of Science in Information Technology</option>
                         <option value="BSHM" <?php if ($course === 'BSHM') echo 'selected'; ?>>BSHM - Bachelor of Science in Hospitality Management</option>
@@ -163,6 +174,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <option value="HE" <?php if ($course === 'HE') echo 'selected'; ?>>HE - Home Economics</option>
                         <option value="ICT" <?php if ($course === 'ICT') echo 'selected'; ?>>ICT - Information and Communications Technology</option>
                     </optgroup>
+                    <optgroup label="Faculty">
+                        <option value="FACULTY" <?php if ($course === 'FACULTY') echo 'selected'; ?>>FACULTY - Faculty</option>
+                    </optgroup>
+                    <optgroup label="Junior High School">
+                        <option value="JHS" <?php if ($course === 'JHS') echo 'selected'; ?>>JHS - Junior High School</option>
+                    </optgroup>
                 </select>
 
                 <!-- Centered reCAPTCHA Widget -->
@@ -170,7 +187,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 <button type="submit">Register</button>
             </form>
-            <p>Already have an account? <a href="login.php">Login here</a></p>
+            <p>Already have an account? <a href="login">Login here</a></p>
         </section>
     </main>
 </body>

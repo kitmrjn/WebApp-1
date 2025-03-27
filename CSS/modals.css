@@ -66,6 +66,7 @@
 #fullQuestionModal .modal-content {
   max-width: 700px;
   padding: 25px;
+  padding-top: 0;
 }
 
 #fullQuestionModal h2 {
@@ -83,6 +84,16 @@
   font-size: 1rem;
   color: #444;
   line-height: 1.6;
+}
+
+.modal-sticky{
+  position: sticky;
+  top:1px;
+  background-color: #fff;
+  padding: 10px;
+  border: none;
+  z-index: 100;
+  padding-top: 26px;
 }
 
 #fullQuestionModal .modalQuestionPhoto img {

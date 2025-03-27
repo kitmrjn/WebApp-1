@@ -86,7 +86,7 @@ $total_pages = ceil($total_questions / $questions_per_page);
         <div class="content-wrap">
             <header>
                 <!-- Logo for Larger Screens -->
-                <a href="index.php" class="logo-link desktop-only">
+                <a href="index" class="logo-link desktop-only">
                     <div class="logo">
                         <img src="images/svcc.jpg" alt="VincentThinks Logo" class="nav-logo">
                         <h1>VincenThinks</h1>
@@ -94,7 +94,7 @@ $total_pages = ceil($total_questions / $questions_per_page);
                 </a>
 
                 <!-- Ask a Question Link for Smaller Screens -->
-                <a href="post_question.php" class="ask-question-link mobile-only">
+                <a href="post_question" class="ask-question-link mobile-only">
                     Ask a Question
                 </a>
 
@@ -111,29 +111,29 @@ $total_pages = ceil($total_questions / $questions_per_page);
 
                 <!-- Navigation Links -->
                 <nav id="nav-menu">
-                    <a href="index.php">Home</a>
+                    <a href="index">Home</a>
                     <?php if (isset($_SESSION['user_id'])): ?>
                         <!-- Ask a Question Link for Larger Screens -->
-                        <a href="post_question.php" class="desktop-only">Ask a Question</a>
+                        <a href="post_question" class="desktop-only">Ask a Question</a>
                         <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'admin'): ?>
-                            <a href="admin_dashboard.php">Admin Dashboard</a>
+                            <a href="admin_dashboard">Admin Dashboard</a>
                         <?php endif; ?>
                         <!-- Profile Dropdown for Larger Screens -->
                         <div class="profile-dropdown desktop-only">
                             <i class="fas fa-user-circle profile-icon"></i>
                             <div class="dropdown-content">
                                 <a href="#">My Profile</a>
-                                <a href="logout.php">Logout</a>
+                                <a href="logout">Logout</a>
                             </div>
                         </div>
                         <!-- Profile Links for Smaller Screens -->
                         <div class="profile-links mobile-only">
                             <a href="#">My Profile</a>
-                            <a href="logout.php">Logout</a>
+                            <a href="logout">Logout</a>
                         </div>
                     <?php else: ?>
-                        <a href="login.php">Login</a>
-                        <a href="register.php">Register</a>
+                        <a href="login">Login</a>
+                        <a href="register">Register</a>
                     <?php endif; ?>
                 </nav>
             </header>
@@ -181,7 +181,7 @@ $total_pages = ceil($total_questions / $questions_per_page);
                                     <!-- Buttons at the bottom -->
                                     <div class="question-actions">
                                         <!-- Answers button on the left -->
-                                        <a href="question.php?id=<?php echo htmlspecialchars($row['question_id']); ?>" class="answer-button">
+                                        <a href="question?id=<?php echo htmlspecialchars($row['question_id']); ?>" class="answer-button">
                                             <i class="bi bi-chat-left-text"></i> Answers
                                         </a>
                                         <!-- Report button for questions -->
@@ -199,13 +199,13 @@ $total_pages = ceil($total_questions / $questions_per_page);
                     <!-- Pagination Links -->
                     <div class="pagination">
                         <?php if ($page > 1): ?>
-                            <a href="index.php?page=<?php echo ($page - 1); ?>">Previous</a>
+                            <a href="index?page=<?php echo ($page - 1); ?>">Previous</a>
                         <?php endif; ?>
                         <?php for ($i = 1; $i <= $total_pages; $i++): ?>
-                            <a href="index.php?page=<?php echo $i; ?>" <?php echo ($i == $page ? 'class="active"' : ''); ?>><?php echo $i; ?></a>
+                            <a href="index?page=<?php echo $i; ?>" <?php echo ($i == $page ? 'class="active"' : ''); ?>><?php echo $i; ?></a>
                         <?php endfor; ?>
                         <?php if ($page < $total_pages): ?>
-                            <a href="index.php?page=<?php echo ($page + 1); ?>">Next</a>
+                            <a href="index?page=<?php echo ($page + 1); ?>">Next</a>
                         <?php endif; ?>
                     </div>
                 </section>
@@ -219,11 +219,13 @@ $total_pages = ceil($total_questions / $questions_per_page);
     <!-- Full Question Modal -->
     <div id="fullQuestionModal" class="modal">
         <div class="modal-content">
+            <div class="modal-sticky">
             <span class="close">&times;</span>
             <h2 id="modalQuestionTitle"></h2>
             <p class="modal-question-meta">
                 <span id="modalQuestionUsername"></span> • <span id="modalQuestionTime"></span>
             </p>
+            </div>
             <div class="modal-question-content">
                 <p id="modalQuestionContent"></p>
                 <div id="modalQuestionPhoto"></div>
@@ -231,18 +233,7 @@ $total_pages = ceil($total_questions / $questions_per_page);
         </div>
     </div>
 
-    <!-- Answer Modal -->
-    <div id="answerModal" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <h2>Post Your Answer</h2>
-            <form method="POST" action="">
-                <input type="hidden" name="question_id" id="modalQuestionId" value="">
-                <textarea name="answer" rows="4" required placeholder="Write your answer..."></textarea>
-                <button type="submit" class="answer-submit-btn">Submit Answer</button>
-            </form>
-        </div>
-    </div>
+    <!--- Removed the duplicate previous modal here-->
 
     <script src="JS/index.js"></script>
 </body>
