@@ -117,16 +117,26 @@ $total_pages = ceil($total_questions / $questions_per_page);
                             <a href="admin_dashboard">Admin Dashboard</a>
                         <?php endif; ?>
                         <!-- Profile Dropdown for Larger Screens -->
-                        <div class="profile-dropdown desktop-only">
-                            <i class="fas fa-user-circle profile-icon"></i>
-                            <div class="dropdown-content">
-                                <a href="#">My Profile</a>
-                                <a href="logout">Logout</a>
-                            </div>
-                        </div>
+                            <?php if (isset($_SESSION['user_id'])): 
+                                $user = get_user_data($conn, $_SESSION['user_id']);
+                            ?>
+                                <div class="profile-dropdown desktop-only">
+                                    <?php if (!empty($user['profile_picture'])): ?>
+                                        <img src="<?php echo htmlspecialchars($user['profile_picture']); ?>" 
+                                            alt="Profile Picture" 
+                                            class="profile-icon">
+                                    <?php else: ?>
+                                        <img src="images/userAvatar.jpg" class="avatar">
+                                    <?php endif; ?>
+                                    <div class="dropdown-content">
+                                        <a href="profile.php">My Profile</a>
+                                        <a href="logout">Logout</a>
+                                    </div>
+                                </div>
+                            <?php endif; ?>
                         <!-- Profile Links for Smaller Screens -->
                         <div class="profile-links mobile-only">
-                            <a href="#">My Profile</a>
+                            <a href="profile.php">My Profile</a>
                             <a href="logout">Logout</a>
                         </div>
                     <?php else: ?>
@@ -145,7 +155,15 @@ $total_pages = ceil($total_questions / $questions_per_page);
                             <?php foreach($questions as $row): ?>
                                 <div class="question" data-question-id="<?php echo htmlspecialchars($row['question_id']); ?>">
                                     <div class="question-header">
-                                        <img src="images/userAvatar.jpg" alt="User Avatar" class="avatar">
+                                    <?php 
+                                        $asker = get_user_data($conn, $row['user_id']);
+                                        if (!empty($asker['profile_picture'])): ?>
+                                            <img src="<?php echo htmlspecialchars($asker['profile_picture']); ?>" 
+                                                alt="User Avatar" 
+                                                class="avatar">
+                                        <?php else: ?>
+                                            <img src="images/userAvatar.jpg" alt="User Avatar" class="avatar">
+                                        <?php endif; ?>
                                         <div class="question-info">
                                             <h3><?php echo htmlspecialchars($row['title']); ?></h3>
                                             <p class="timestamp">
@@ -230,7 +248,6 @@ $total_pages = ceil($total_questions / $questions_per_page);
         </div>
     </div>
 
-    <!--- Removed the duplicate previous modal here-->
 
     <script src="JS/index.js"></script>
 </body>

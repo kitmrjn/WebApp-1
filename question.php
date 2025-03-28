@@ -10,8 +10,8 @@ if (!isset($_GET['id'])) {
 
 $question_id = intval($_GET['id']);
 
-// Fetch question info
-$qSql = "SELECT q.*, u.username
+// Fetch question info with profile picture
+$qSql = "SELECT q.*, u.username, u.profile_picture
          FROM questions q
          JOIN users u ON q.user_id = u.user_id
          WHERE q.question_id = :qid AND q.status = 'approved'";
@@ -46,8 +46,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_SESSION['user_id'])) {
     }
 }
 
-// Fetch existing answers with the user's rating (if logged in)
-$aSql = "SELECT a.*, u.username, 
+// Fetch existing answers with profile pictures and ratings
+$aSql = "SELECT a.*, u.username, u.profile_picture,
                 IFNULL(r.is_helpful, 0) AS is_helpful
          FROM answers a
          JOIN users u ON a.user_id = u.user_id
@@ -59,6 +59,9 @@ $aStmt->bindValue(':qid', $question_id, PDO::PARAM_INT);
 $aStmt->bindValue(':user_id', isset($_SESSION['user_id']) ? $_SESSION['user_id'] : 0, PDO::PARAM_INT);
 $aStmt->execute();
 $answers = $aStmt->fetchAll(PDO::FETCH_ASSOC);
+
+// Get current user data if logged in
+$currentUser = isset($_SESSION['user_id']) ? get_user_data($conn, $_SESSION['user_id']) : null;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -106,14 +109,6 @@ $answers = $aStmt->fetchAll(PDO::FETCH_ASSOC);
                 <nav>
                     <a href="index">Home</a>
                     <?php if (isset($_SESSION['user_id'])): ?>
-                        <a href="post_question">Ask a Question</a>
-                        <div class="profile-dropdown">
-                            <i class="fas fa-user-circle profile-icon"></i>
-                            <div class="dropdown-content">
-                                <a href="#">My Profile</a>
-                                <a href="logout">Logout</a>
-                            </div>
-                        </div>
                     <?php else: ?>
                         <a href="login">Login</a>
                         <a href="register">Register</a>
@@ -140,7 +135,11 @@ $answers = $aStmt->fetchAll(PDO::FETCH_ASSOC);
                         <div class="recent-questions">
                             <div class="question">
                                 <div class="question-header">
-                                    <img src="images/userAvatar.jpg" alt="User Avatar" class="avatar">
+                                    <?php if (!empty($question['profile_picture'])): ?>
+                                        <img src="<?php echo htmlspecialchars($question['profile_picture']); ?>" alt="User Avatar" class="avatar">
+                                    <?php else: ?>
+                                        <i class="fas fa-user-circle avatar-icon"></i>
+                                    <?php endif; ?>
                                     <div class="question-info">
                                         <h3><?php echo htmlspecialchars($question['title']); ?></h3>
                                         <p class="timestamp">
@@ -168,23 +167,29 @@ $answers = $aStmt->fetchAll(PDO::FETCH_ASSOC);
                                 <?php if (!empty($answers)): ?>
                                     <?php foreach ($answers as $answer): ?>
                                         <div class="answer-box" data-answer-id="<?php echo $answer['answer_id']; ?>">
-                                            <p class="answer-meta">
-                                                <strong><?php echo htmlspecialchars($answer['username']); ?></strong> • <?php echo time_ago($answer['created_at']); ?>
-                                            </p>
+                                            <div class="answer-meta">
+                                                <div class="answer-user">
+                                                    <?php if (!empty($answer['profile_picture'])): ?>
+                                                        <img src="<?php echo htmlspecialchars($answer['profile_picture']); ?>" alt="User Avatar" class="avatar">
+                                                    <?php else: ?>
+                                                        <i class="fas fa-user-circle avatar-icon"></i>
+                                                    <?php endif; ?>
+                                                    <span>
+                                                        <strong><?php echo htmlspecialchars($answer['username']); ?></strong> • <?php echo time_ago($answer['created_at']); ?>
+                                                    </span>
+                                                </div>
+                                            </div>
                                             <div class="answer-content-wrapper">
                                                 <div class="answer-content">
                                                     <p><?php echo nl2br(htmlspecialchars($answer['content'])); ?></p>
                                                 </div>
-                                                <!-- Icons Container -->
                                                 <div class="answer-icons">
-                                                    <!-- Star icon with hover tooltip and count -->
                                                     <div class="answer-rating" data-tooltip="Helpful">
                                                         <i class="bi bi-star-fill <?php echo isset($answer['is_helpful']) && $answer['is_helpful'] ? 'selected' : ''; ?>" 
                                                         data-is-helpful="<?php echo isset($answer['is_helpful']) && $answer['is_helpful'] ? 'true' : 'false'; ?>">
                                                         </i>
                                                         <span class="rating-count"><?php echo isset($answer['helpful_count']) ? $answer['helpful_count'] : 0; ?></span>
                                                     </div>
-                                                    <!-- Flag icon for reporting answers -->
                                                     <div class="answer-report" data-answer-id="<?php echo $answer['answer_id']; ?>" data-tooltip="Report">
                                                         <i class="bi bi-flag-fill" onclick="reportAnswer(<?php echo $answer['answer_id']; ?>)"></i>
                                                     </div>
@@ -200,7 +205,9 @@ $answers = $aStmt->fetchAll(PDO::FETCH_ASSOC);
 
                             <?php if (isset($_SESSION['user_id'])): ?>
                                 <div class="form-actions">
-                                    <button onclick="openAnswerModal()" class="answer-button">Post Your Answer</button>
+                                    <div class="answer-prompt">
+                                        <button onclick="openAnswerModal()" class="answer-button">Post Your Answer</button>
+                                    </div>
                                     <a href="index" class="back-to-home">
                                         <i class="fas fa-arrow-left"></i> Back to Home
                                     </a>

@@ -106,6 +106,37 @@
   color: #800000; /* Red color to indicate reported */
 }
 
+/* Avatar Styles */
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 10px;
+}
+
+.avatar-icon {
+  font-size: 40px;
+  color: #ccc;
+  margin-right: 10px;
+}
+
+/* Answer User Styles */
+.answer-user {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.answer-user span {
+  display: flex;
+  flex-direction: column;
+}
+
+.answer-meta {
+  margin-bottom: 10px;
+}
+
 .answer-report::before {
   content: attr(data-tooltip); /* Display the tooltip text */
   position: absolute;
