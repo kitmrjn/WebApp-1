@@ -51,9 +51,7 @@ try {
     <div class="activity-chart">
         <h3><i class="fas fa-chart-line"></i> Your Activity Timeline</h3>
         <div class="chart-placeholder">
-            <!-- This would be replaced with a real chart in production -->
-            <p>Activity chart would appear here</p>
-            <img src="images/chart-placeholder.png" alt="Activity Chart Placeholder">
+            COMING SOON!!!!!!!
         </div>
     </div>
 </section>

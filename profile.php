@@ -77,6 +77,9 @@ $active_tab = isset($_GET['tab']) ? $_GET['tab'] : 'questions';
                 <a href="profile.php?tab=stats" class="<?php echo $active_tab == 'stats' ? 'active' : ''; ?>">
                     <i class="fas fa-chart-bar"></i> Your Stats
                 </a>
+                <a href="index.php?tab=home" class="<?php echo $active_tab == 'home' ? 'active' : ''; ?>">
+                    <i class="fas fa-arrow-left"></i> Back to Home
+                </a>
             </nav>
         </div>
 
