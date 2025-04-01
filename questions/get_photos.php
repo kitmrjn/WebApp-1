@@ -3,7 +3,7 @@ session_start();
 require_once '../includes/db_config.php'; 
 
 if (!isset($_GET['question_id'])) {
-    die("Question ID not provided.");
+    die(json_encode(['error' => 'Question ID not provided']));
 }
 
 $question_id = intval($_GET['question_id']);
@@ -14,10 +14,9 @@ $pStmt->bindValue(':qid', $question_id, PDO::PARAM_INT);
 $pStmt->execute();
 $photos = $pStmt->fetchAll(PDO::FETCH_ASSOC);
 
-$html = '';
-foreach ($photos as $photo) {
-    $html .= '<img src="/webapp/uploads/' . htmlspecialchars($photo['photo_path']) . '" alt="Question Photo" class="question-photo">';
-}
-
-echo $html;
+// Return as JSON
+header('Content-Type: application/json');
+echo json_encode(array_map(function($photo) {
+    return '/webapp/uploads/' . htmlspecialchars($photo['photo_path']);
+}, $photos));
 ?>

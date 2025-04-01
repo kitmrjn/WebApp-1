@@ -229,21 +229,32 @@ $total_pages = ceil($total_questions / $questions_per_page);
     
 
     <!-- Full Question Modal -->
-    <div id="fullQuestionModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-sticky">
+<div id="fullQuestionModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-sticky">
             <span class="close">&times;</span>
             <h2 id="modalQuestionTitle"></h2>
             <p class="modal-question-meta">
                 <span id="modalQuestionUsername"></span> • <span id="modalQuestionTime"></span>
             </p>
+        </div>
+        <div class="modal-question-content">
+            <p id="modalQuestionContent"></p>
+            <div class="photo-carousel">
+                <button class="carousel-button prev" aria-label="Previous photo">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <div class="carousel-container">
+                    <div id="modalQuestionPhoto" class="carousel-slide"></div>
+                </div>
+                <button class="carousel-button next" aria-label="Next photo">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
             </div>
-            <div class="modal-question-content">
-                <p id="modalQuestionContent"></p>
-                <div id="modalQuestionPhoto"></div>
-            </div>
+            <div class="photo-counter" id="photoCounter"></div>
         </div>
     </div>
+</div>
 
 
     <script src="assets/JS/index.js"></script>

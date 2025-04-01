@@ -1,51 +1,106 @@
-//Function to handle question click
+// Function to handle question click
 document.querySelectorAll('.question').forEach(question => {
     question.addEventListener('click', function(event) {
-        // Prevent the event from triggering if the click is on the "View Answers" button
-        if (event.target.classList.contains('answer-button') || event.target.classList.contains('report-button')) {
-            return; // Allow the default behavior (navigation to question.php or report action)
+        // Don't open modal if clicking on these elements
+        if (event.target.closest('.answer-button') || 
+            event.target.closest('.report-button') ||
+            event.target.closest('.photo-count-overlay')) {
+            return;
         }
 
-        event.stopPropagation(); // Prevent event from bubbling up
-
         const questionId = this.getAttribute('data-question-id');
-        const questionTitle = this.querySelector('h3').innerText;
-        const questionUsername = this.querySelector('.username').innerText;
-        const questionTime = this.querySelector('.time-ago').innerText;
-        const questionContent = this.querySelector('.answer-full').innerHTML;
+        const questionTitle = this.querySelector('h3').textContent;
+        const questionUsername = this.querySelector('.username').textContent;
+        const questionTime = this.querySelector('.time-ago').textContent;
+        const questionContent = this.querySelector('.answer-full').innerHTML || 
+                              this.querySelector('.answer-preview').textContent;
+
+        // Set modal content
+        document.getElementById('modalQuestionTitle').textContent = questionTitle;
+        document.getElementById('modalQuestionUsername').textContent = questionUsername;
+        document.getElementById('modalQuestionTime').textContent = questionTime;
+        document.getElementById('modalQuestionContent').innerHTML = questionContent;
 
         // Fetch all photos for the question
         fetch(`/webapp/questions/get_photos.php?question_id=${questionId}`)
-            .then(response => response.text())
+            .then(response => response.json())
             .then(photos => {
-                // Populate the modal with question details
-                document.getElementById('modalQuestionTitle').innerText = questionTitle;
-                document.getElementById('modalQuestionUsername').innerText = questionUsername;
-                document.getElementById('modalQuestionTime').innerText = questionTime;
-                document.getElementById('modalQuestionContent').innerHTML = questionContent;
-                document.getElementById('modalQuestionPhoto').innerHTML = photos;
-
-                // Show the modal
-                const modal = document.getElementById('fullQuestionModal');
-                modal.style.display = 'block';
-
-                // Prevent background scrolling
-                document.body.style.overflow = 'hidden';
-
-                // Re-enable background scrolling when the modal is closed
-                modal.querySelector('.close').addEventListener('click', function() {
-                    modal.style.display = 'none';
-                    document.body.style.overflow = 'auto'; // Re-enable background scrolling
+                const carouselSlide = document.getElementById('modalQuestionPhoto');
+                const photoCounter = document.getElementById('photoCounter');
+                
+                // Clear previous photos
+                carouselSlide.innerHTML = '';
+                
+                // Add photos to carousel
+                photos.forEach((photo, index) => {
+                    const img = document.createElement('img');
+                    img.src = photo;
+                    img.alt = `Question Photo ${index + 1}`;
+                    img.className = 'modal-photo';
+                    carouselSlide.appendChild(img);
                 });
 
-                // Re-enable background scrolling when clicking outside the modal
-                window.onclick = function(event) {
-                    if (event.target == modal) {
-                        modal.style.display = 'none';
-                        document.body.style.overflow = 'auto'; // Re-enable background scrolling
-                    }
-                };
+                // Initialize carousel
+                initCarousel(photos.length);
+                
+                // Show photo counter if more than one photo
+                photoCounter.textContent = photos.length > 1 ? `1 of ${photos.length}` : '';
+                
+                // Show the modal
+                document.getElementById('fullQuestionModal').style.display = 'block';
+                document.body.style.overflow = 'hidden';
+            })
+            .catch(error => {
+                console.error('Error loading photos:', error);
+                document.getElementById('modalQuestionPhoto').innerHTML = '';
+                document.getElementById('photoCounter').textContent = '';
+                document.getElementById('fullQuestionModal').style.display = 'block';
+                document.body.style.overflow = 'hidden';
             });
+    });
+});
+
+// Carousel functionality
+function initCarousel(totalPhotos) {
+    if (totalPhotos <= 1) {
+        document.querySelectorAll('.carousel-button').forEach(btn => {
+            btn.style.display = 'none';
+        });
+        return;
+    }
+
+    const slide = document.getElementById('modalQuestionPhoto');
+    const prevBtn = document.querySelector('.carousel-button.prev');
+    const nextBtn = document.querySelector('.carousel-button.next');
+    const photoCounter = document.getElementById('photoCounter');
+    
+    let currentIndex = 0;
+    const slideWidth = 100; // Percentage
+    
+    function updateCarousel() {
+        slide.style.transform = `translateX(-${currentIndex * slideWidth}%)`;
+        photoCounter.textContent = `${currentIndex + 1} of ${totalPhotos}`;
+    }
+
+    prevBtn.addEventListener('click', () => {
+        currentIndex = (currentIndex - 1 + totalPhotos) % totalPhotos;
+        updateCarousel();
+    });
+
+    nextBtn.addEventListener('click', () => {
+        currentIndex = (currentIndex + 1) % totalPhotos;
+        updateCarousel();
+    });
+
+    updateCarousel();
+}
+
+// Handle photo count overlay click separately
+document.querySelectorAll('.photo-count-overlay').forEach(overlay => {
+    overlay.addEventListener('click', function(e) {
+        e.stopPropagation();
+        const question = this.closest('.question');
+        question.click(); // Trigger the question click handler
     });
 });
 
