@@ -1,8 +1,8 @@
 <?php
 session_start();
 date_default_timezone_set('Asia/Manila');
-require_once 'db_config.php'; // includes $conn (PDO)
-require_once 'functions.php'; // include the time_ago function
+require_once 'includes/db_config.php'; 
+require_once 'includes/functions.php'; 
 
 // Pagination logic
 $questions_per_page = 10; // Number of questions per page
@@ -50,31 +50,30 @@ $total_pages = ceil($total_questions / $questions_per_page);
 <html lang="en">
 <head>
     <meta name="theme-color" content="#4CAF50">
-    <link rel="apple-touch-icon" sizes="57x57" href="images/apple-icon-57x57.png">
-    <link rel="apple-touch-icon" sizes="60x60" href="images/apple-icon-60x60.png">
-    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-icon-72x72.png">
-    <link rel="apple-touch-icon" sizes="76x76" href="images/apple-icon-76x76.png">
-    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-icon-114x114.png">
-    <link rel="apple-touch-icon" sizes="120x120" href="images/apple-icon-120x120.png">
-    <link rel="apple-touch-icon" sizes="144x144" href="images/apple-icon-144x144.png">
-    <link rel="apple-touch-icon" sizes="152x152" href="images/apple-icon-152x152.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="images/apple-icon-180x180.png">
-    <link rel="icon" type="image/png" sizes="192x192"  href="images/android-icon-192x192.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="96x96" href="images/favicon-96x96.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="57x57" href="assets/images/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="assets/images/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="assets/images/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="assets/images/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="assets/images/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="assets/images/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="assets/images/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="assets/images/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/images/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192"  href="assets/images/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="assets/images/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon-16x16.png">
     <meta name="msapplication-TileColor" content="#ffffff">
     <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
     <meta name="theme-color" content="#ffffff">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Vincenthinks - Home</title>
-    <link rel="stylesheet" href="CSS/global.css">
-    <link rel="stylesheet" href="CSS/header.css">
-    <link rel="stylesheet" href="CSS/search-bar.css">
-    <link rel="stylesheet" href="CSS/footer.css">
-    <link rel="stylesheet" href="CSS/questions.css">
-    <link rel="stylesheet" href="CSS/modals.css">
+    <link rel="stylesheet" href="assets/CSS/global.css">
+    <link rel="stylesheet" href="assets/CSS/header.css">
+    <link rel="stylesheet" href="assets/CSS/footer.css">
+    <link rel="stylesheet" href="assets/CSS/questions.css">
+    <link rel="stylesheet" href="assets/CSS/modals.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -83,16 +82,14 @@ $total_pages = ceil($total_questions / $questions_per_page);
 </head>
 <body>
             <header>
-                <!-- Logo for Larger Screens -->
                 <a href="index" class="logo-link desktop-only">
                     <div class="logo">
-                        <img src="images/svcc.jpg" alt="VincentThinks Logo" class="nav-logo">
+                        <img src="assets/images/svcc.jpg" alt="VincentThinks Logo" class="nav-logo">
                         <h1>VincenThinks</h1>
                     </div>
                 </a>
 
-                <!-- Ask a Question Link for Smaller Screens -->
-                <a href="post_question" class="ask-question-link mobile-only" id="ask-text">
+                <a href="questions/post_question" class="ask-question-link mobile-only" id="ask-text">
                     Ask a Question
                 </a>
 
@@ -112,9 +109,9 @@ $total_pages = ceil($total_questions / $questions_per_page);
                     <a href="index">Home</a>
                     <?php if (isset($_SESSION['user_id'])): ?>
                         <!-- Ask a Question Link for Larger Screens -->
-                        <a href="post_question" class="desktop-only">Ask a Question</a>
+                        <a href="questions/post_question" class="desktop-only">Ask a Question</a>
                         <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'admin'): ?>
-                            <a href="admin_dashboard">Admin Dashboard</a>
+                            <a href="admin/admin_dashboard">Admin Dashboard</a>
                         <?php endif; ?>
                         <!-- Profile Dropdown for Larger Screens -->
                             <?php if (isset($_SESSION['user_id'])): 
@@ -126,17 +123,17 @@ $total_pages = ceil($total_questions / $questions_per_page);
                                             alt="Profile Picture" 
                                             class="profile-icon">
                                     <?php else: ?>
-                                        <img src="images/userAvatar.jpg" class="avatar">
+                                        <img src="assets/images/userAvatar.jpg" class="avatar">
                                     <?php endif; ?>
                                     <div class="dropdown-content">
-                                        <a href="profile.php">My Profile</a>
+                                        <a href="user/profile.php">My Profile</a>
                                         <a href="logout">Logout</a>
                                     </div>
                                 </div>
                             <?php endif; ?>
                         <!-- Profile Links for Smaller Screens -->
                         <div class="profile-links mobile-only">
-                            <a href="profile.php">My Profile</a>
+                            <a href="user/profile.php">My Profile</a>
                             <a href="logout">Logout</a>
                         </div>
                     <?php else: ?>
@@ -162,7 +159,7 @@ $total_pages = ceil($total_questions / $questions_per_page);
                                                 alt="User Avatar" 
                                                 class="avatar">
                                         <?php else: ?>
-                                            <img src="images/userAvatar.jpg" alt="User Avatar" class="avatar">
+                                            <img src="assets/images/userAvatar.jpg" alt="User Avatar" class="avatar">
                                         <?php endif; ?>
                                         <div class="question-info">
                                             <h3><?php echo htmlspecialchars($row['title']); ?></h3>
@@ -197,7 +194,7 @@ $total_pages = ceil($total_questions / $questions_per_page);
                                     <!-- Buttons at the bottom -->
                                     <div class="question-actions">
                                         <!-- Answers button on the left -->
-                                        <a href="question?id=<?php echo htmlspecialchars($row['question_id']); ?>" class="answer-button">
+                                        <a href="questions/question?id=<?php echo htmlspecialchars($row['question_id']); ?>" class="answer-button">
                                             <i class="bi bi-chat-left-text"></i> Answers
                                         </a>
                                         <!-- Report button for questions -->
@@ -249,6 +246,6 @@ $total_pages = ceil($total_questions / $questions_per_page);
     </div>
 
 
-    <script src="JS/index.js"></script>
+    <script src="assets/JS/index.js"></script>
 </body>
 </html>
