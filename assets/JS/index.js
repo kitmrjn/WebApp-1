@@ -60,6 +60,76 @@ document.querySelectorAll('.question').forEach(question => {
     });
 });
 
+function initQuestionModals() {
+    document.querySelectorAll('.question').forEach(question => {
+        // Remove any existing click handlers to prevent duplicates
+        question.removeEventListener('click', handleQuestionClick);
+        // Add new click handler
+        question.addEventListener('click', handleQuestionClick);
+    });
+}
+
+// Separate function for the click handler
+function handleQuestionClick(event) {
+    // Don't open modal if clicking on these elements
+    if (event.target.closest('.answer-button') || 
+        event.target.closest('.report-button') ||
+        event.target.closest('.photo-count-overlay')) {
+        return;
+    }
+
+    const questionId = this.getAttribute('data-question-id');
+    const questionTitle = this.querySelector('h3').textContent;
+    const questionUsername = this.querySelector('.username').textContent;
+    const questionTime = this.querySelector('.time-ago').textContent;
+    const questionContent = this.querySelector('.answer-full')?.innerHTML || 
+                          this.querySelector('.answer-preview').textContent;
+
+    // Set modal content
+    document.getElementById('modalQuestionTitle').textContent = questionTitle;
+    document.getElementById('modalQuestionUsername').textContent = questionUsername;
+    document.getElementById('modalQuestionTime').textContent = questionTime;
+    document.getElementById('modalQuestionContent').innerHTML = questionContent;
+
+    // Fetch all photos for the question
+    fetch(`/webapp/questions/get_photos.php?question_id=${questionId}`)
+        .then(response => response.json())
+        .then(photos => {
+            const carouselSlide = document.getElementById('modalQuestionPhoto');
+            const photoCounter = document.getElementById('photoCounter');
+            
+            // Clear previous photos
+            carouselSlide.innerHTML = '';
+            
+            // Add photos to carousel
+            photos.forEach((photo, index) => {
+                const img = document.createElement('img');
+                img.src = photo;
+                img.alt = `Question Photo ${index + 1}`;
+                img.className = 'modal-photo';
+                carouselSlide.appendChild(img);
+            });
+
+            // Initialize carousel
+            initCarousel(photos.length);
+            
+            // Show photo counter if more than one photo
+            photoCounter.textContent = photos.length > 1 ? `1 of ${photos.length}` : '';
+            
+            // Show the modal
+            document.getElementById('fullQuestionModal').style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        })
+        .catch(error => {
+            console.error('Error loading photos:', error);
+            document.getElementById('modalQuestionPhoto').innerHTML = '';
+            document.getElementById('photoCounter').textContent = '';
+            document.getElementById('fullQuestionModal').style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        });
+}
+
+
 // Carousel functionality
 function initCarousel(totalPhotos) {
     if (totalPhotos <= 1) {
@@ -133,16 +203,13 @@ window.onclick = function(event) {
 function searchQuestions() {
     let input = document.getElementById("searchInput").value.trim();
     
-    // If search input is empty, reload the current page to show all questions
     if (input === '') {
         window.location.reload();
         return;
     }
     
-    // Show loading indicator
     document.getElementById('questionsContainer').innerHTML = '<div class="loading">Searching...</div>';
     
-    // Make AJAX request to search endpoint
     fetch('/webapp/includes/search_questions.php', {
         method: 'POST',
         headers: {
@@ -153,8 +220,14 @@ function searchQuestions() {
     .then(response => response.text())
     .then(html => {
         document.getElementById('questionsContainer').innerHTML = html;
-        // Hide pagination when showing search results
         document.querySelector('.pagination').style.display = 'none';
+        
+        // Reinitialize modals for the new content
+        initQuestionModals();
+        
+        // Reinitialize other functionality if needed
+        initReportButtons();
+        adjustSeeMorePosition();
     })
     .catch(error => {
         console.error('Error:', error);
@@ -162,6 +235,19 @@ function searchQuestions() {
     });
 }
 
+// Function to initialize report buttons
+function initReportButtons() {
+    document.querySelectorAll('.report-button').forEach(reportButton => {
+        reportButton.removeEventListener('click', handleReportClick);
+        reportButton.addEventListener('click', handleReportClick);
+    });
+}
+
+function handleReportClick(event) {
+    event.stopPropagation();
+    const questionId = this.closest('.question').getAttribute('data-question-id');
+    reportPost(questionId);
+}
 
 
 // Expand search bar on smaller screens
