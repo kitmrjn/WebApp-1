@@ -16,7 +16,7 @@ $photos = $pStmt->fetchAll(PDO::FETCH_ASSOC);
 
 $html = '';
 foreach ($photos as $photo) {
-    $html .= '<img src="' . htmlspecialchars($photo['photo_path']) . '" alt="Question Photo" class="question-photo">';
+    $html .= '<img src="/webapp/uploads/' . htmlspecialchars($photo['photo_path']) . '" alt="Question Photo" class="question-photo">';
 }
 
 echo $html;

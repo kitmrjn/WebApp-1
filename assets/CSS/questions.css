@@ -106,11 +106,10 @@
 }
 
 .question-photos {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* Two equal columns */
+  gap: 8px; /* Space between photos */
   margin-top: 10px;
-  margin-bottom: 10px;
 }
 
 .question-photo {
@@ -123,11 +122,13 @@
 }
 
 .question-photo-thumbnail {
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
-  height: auto;
-  border-radius: 10px;
-  margin-top: 10px;
-  display: block;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
 }
 
 .question-content {
@@ -136,8 +137,10 @@
 
 .photo-container {
   position: relative;
-  border-radius: 10px;
+  width: 100%;
+  padding-top: 100%; /* Creates a square aspect ratio */
   overflow: hidden;
+  border-radius: 5px;
 }
 
 /* Single photo takes 100% width */
@@ -147,7 +150,7 @@
 
 /* Multiple photos take 48% width each */
 .photo-container.multiple-photos {
-  width: 48%;
+  width: 100%;
 }
 
 .photo-count-overlay {
@@ -265,7 +268,7 @@
   }
 
   .photo-container.multiple-photos {
-      width: 48%; /* Keep two photos per row */
+      width: 100%; /* Keep two photos per row */
   }
 
   .question-actions {
@@ -304,7 +307,7 @@
   }
 
   .photo-container.multiple-photos {
-      width: 48%; /* Keep two photos per row */
+      width: 100%; /* Keep two photos per row */
   }
 
   .question-actions {
