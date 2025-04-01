@@ -39,7 +39,7 @@ $active_tab = isset($_GET['tab']) ? $_GET['tab'] : 'questions';
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
-<header>
+    <header>
         <a href="../index" class="logo-link">
             <div class="logo">
                 <img src="../assets/images/svcc.jpg" alt="VincentThinks Logo" class="nav-logo">
@@ -55,10 +55,15 @@ $active_tab = isset($_GET['tab']) ? $_GET['tab'] : 'questions';
                 <a href="../register">Register</a>
             <?php endif; ?>
         </nav>
+        <button class="menu-toggle" id="sidebarToggle">
+            <i class="fas fa-bars"></i>
+        </button>
     </header>
 
+    <div class="overlay" id="overlay"></div>
+
     <main class="profile-container">
-        <div class="profile-sidebar">
+        <div class="profile-sidebar" id="profileSidebar">
             <div class="profile-summary">
                 <?php 
                 $user = get_user_data($conn, $_SESSION['user_id']);
@@ -124,6 +129,33 @@ $active_tab = isset($_GET['tab']) ? $_GET['tab'] : 'questions';
     <footer>
             <p>&copy; <?php echo date('Y'); ?> VincenThinks. All rights reserved.</p>
         </footer>
-    <script src="../assets/JS/profile.js"></script> 
+    <script src="../assets/JS/profile.js"></script>
+    <script>
+        // Sidebar toggle functionality
+        const sidebarToggle = document.getElementById('sidebarToggle');
+        const profileSidebar = document.getElementById('profileSidebar');
+        const overlay = document.getElementById('overlay');
+
+        sidebarToggle.addEventListener('click', () => {
+            profileSidebar.classList.toggle('active');
+            overlay.classList.toggle('active');
+        });
+
+        overlay.addEventListener('click', () => {
+            profileSidebar.classList.remove('active');
+            overlay.classList.remove('active');
+        });
+
+        // Close sidebar when clicking on a menu item (for mobile)
+        const menuLinks = document.querySelectorAll('.profile-menu a');
+        menuLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                if (window.innerWidth <= 768) {
+                    profileSidebar.classList.remove('active');
+                    overlay.classList.remove('active');
+                }
+            });
+        });
+    </script>
 </body>
 </html>

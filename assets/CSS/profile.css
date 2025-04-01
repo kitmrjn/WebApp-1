@@ -23,8 +23,9 @@ header{
   top: 60px; /* Stick below header */
   height: calc(100vh - 60px); /* Full height minus header */
   overflow-y: auto; /* Enable scrolling if content is long */
-  border-right: 2px solid #fdd835;
+  border-right: 1px solid #fdd835;
 }
+
 
 .profile-content {
   flex: 1;
@@ -39,6 +40,7 @@ header{
   padding: 20px 0;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   margin-bottom: 20px;
+  width: 100%; /* Ensure full width */
 }
 
 .profile-avatar {
@@ -63,6 +65,10 @@ header{
 .profile-menu {
   display: flex;
   flex-direction: column;
+  align-items: center;
+  padding: 0;
+  margin: 20px auto 0; /* Add top margin to separate from summary */
+  width: 100%;
 }
 
 .profile-menu a {
@@ -70,10 +76,11 @@ header{
   text-decoration: none;
   padding: 12px 15px;
   margin: 5px 0;
-  border-radius: 5px;
   display: flex;
   align-items: center;
   transition: all 0.2s;
+  width: 100%; /* Make links take full width of menu */
+  justify-content: center; /* Center the text and icons */
 }
 
 .profile-menu a i {
@@ -401,25 +408,28 @@ header{
   margin-top: 20px;
 }
 
+
 /* Responsive Design */
 @media (max-width: 768px) {
   .profile-container {
       flex-direction: column;
   }
+
+  .profile-summary {
+    order: 1; /* Ensure summary stays at top */
+    margin-bottom: 30px; /* Add more space below summary */
+  }
   
   .profile-sidebar {
-      width: 100%;
-      border-radius: 8px 8px 0 0;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
   }
   
   .profile-menu {
-      flex-direction: row;
-      overflow-x: auto;
-      padding-bottom: 10px;
-  }
-  
-  .profile-menu a {
-      white-space: nowrap;
+    order: 2; /* Ensure menu comes after summary */
+    margin-top: 130px; /* Reset margin for mobile */
+    padding: 0;
   }
   
   .info-grid {
@@ -616,4 +626,67 @@ header{
   font-size: 75px;
   font-style: italic;
   font-weight: 800;
+}
+
+/* Mobile Sidebar Toggle */
+.menu-toggle {
+  display: none;
+  background: none;
+  border: none;
+  color: white;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 10px;
+  position: absolute;
+  left: 10px;
+  top: 10px;
+}
+
+.profile-sidebar {
+  transition: transform 0.3s ease;
+}
+
+@media (max-width: 768px) {
+  .menu-toggle {
+    display: block;
+  }
+  
+  .profile-sidebar {
+    position: fixed;
+    top: 60px;
+    left: 0;
+    z-index: 1000;
+    height: calc(100vh - 60px);
+    transform: translateX(-100%);
+    width: 250px;
+  }
+  
+  .profile-sidebar.active {
+    transform: translateX(0);
+  }
+  
+  .profile-content {
+    margin-left: 0;
+  }
+  
+  .overlay {
+    position: fixed;
+    top: 60px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,0.5);
+    z-index: 999;
+    display: none;
+  }
+  
+  .overlay.active {
+    display: block;
+  }
+
+}
+
+.fa-bars{
+  position: fixed;
+  right: 10px;
 }
