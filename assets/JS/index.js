@@ -395,6 +395,25 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.answer-preview').forEach(preview => {
+        const content = preview.textContent;
+        const lineHeight = parseInt(getComputedStyle(preview).lineHeight);
+        const maxHeight = lineHeight * 5; // 5 lines
+        
+        if (preview.scrollHeight > maxHeight) {
+            preview.classList.add('truncated');
+            preview.style.maxHeight = maxHeight + 'px';
+            preview.style.overflow = 'hidden';
+            
+            // Add click handler to open modal
+            preview.addEventListener('click', function() {
+                this.closest('.question').click();
+            });
+        }
+    });
+});
+
 document.getElementById('searchInput').addEventListener('focus', function() {
     if (window.innerWidth <= 768) { // Check if viewport width is 768px or below
         document.getElementById('ask-text').style.display = 'none';
@@ -406,3 +425,46 @@ document.getElementById('searchInput').addEventListener('blur', function() {
         document.getElementById('ask-text').style.display = 'block';
     }
 });
+
+// Add this to your index.js
+function adjustSeeMorePosition() {
+    document.querySelectorAll('.answer-preview.truncated').forEach(preview => {
+        // Calculate exact position needed
+        const lineHeight = parseInt(getComputedStyle(preview).lineHeight);
+        const maxHeight = lineHeight * 5;
+        
+        // Remove any existing pseudo-element
+        preview.style.setProperty('--see-more-content', 'none');
+        
+        // Create a visible "See more" element
+        let seeMore = preview.querySelector('.see-more-visible');
+        if (!seeMore) {
+            seeMore = document.createElement('span');
+            seeMore.className = 'see-more-visible';
+            seeMore.textContent = 'See more...';
+            seeMore.style.cssText = `
+                position: absolute;
+                right: 0;
+                bottom: 0;
+                color: #800000;
+                font-weight: bold;
+                background: #f8f9fa;
+                padding: 0 5px;
+                cursor: pointer;
+            `;
+            preview.style.position = 'relative';
+            preview.appendChild(seeMore);
+        }
+        
+        // Position it correctly
+        if (preview.scrollHeight > maxHeight) {
+            seeMore.style.display = 'inline-block';
+        } else {
+            seeMore.style.display = 'none';
+        }
+    });
+}
+
+// Run on load and resize
+window.addEventListener('load', adjustSeeMorePosition);
+window.addEventListener('resize', adjustSeeMorePosition);

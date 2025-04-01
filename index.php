@@ -170,8 +170,8 @@ $total_pages = ceil($total_questions / $questions_per_page);
                                         </div>
                                     </div>
                                     <div class="question-content">
-                                        <p class="answer-preview">
-                                            <?php echo mb_strimwidth(htmlspecialchars($row['content']), 0, 100, "..."); ?>
+                                        <p class="answer-preview <?php echo (strlen($content) > 300) ? 'truncated' : ''; ?>">
+                                            <?php echo htmlspecialchars($row['content']); ?>
                                         </p>
                                         <div class="answer-full" style="display: none;">
                                             <?php echo htmlspecialchars($row['content']); ?>
