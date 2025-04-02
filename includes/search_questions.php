@@ -73,7 +73,7 @@ if (!empty($questions)) {
                     <div class="question-photos">
                         <?php foreach ($row['photos'] as $index => $photo): ?>
                             <div class="photo-container <?php echo (count($row['photos']) === 1 ? 'single-photo' : 'multiple-photos'); ?>">
-                                <img src="/webapp/user/uploads/<?php echo htmlspecialchars($photo['photo_path']); ?>" alt="Question Photo" class="question-photo-thumbnail">
+                                <img src="/webapp/uploads/<?php echo htmlspecialchars($photo['photo_path']); ?>" alt="Question Photo" class="question-photo-thumbnail">
                                 <?php if ($index === 1 && $row['total_photos'] > 2): ?>
                                     <div class="photo-count-overlay">
                                         +<?php echo $row['total_photos'] - 2; ?>

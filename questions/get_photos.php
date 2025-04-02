@@ -17,6 +17,6 @@ $photos = $pStmt->fetchAll(PDO::FETCH_ASSOC);
 // Return as JSON
 header('Content-Type: application/json');
 echo json_encode(array_map(function($photo) {
-    return '/webapp/user/uploads/' . htmlspecialchars($photo['photo_path']);
+    return '/webapp/uploads/' . htmlspecialchars($photo['photo_path']);
 }, $photos));
 ?>

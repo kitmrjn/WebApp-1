@@ -152,7 +152,7 @@ $currentUser = isset($_SESSION['user_id']) ? get_user_data($conn, $_SESSION['use
                                     <?php if (!empty($photos)): ?>
                                         <div class="question-photos-answer">
                                             <?php foreach ($photos as $photo): ?>
-                                                <img src="/webapp/user/uploads/<?php echo htmlspecialchars($photo['photo_path']); ?>" alt="Question Photo" class="question-photo">
+                                                <img src="/webapp/uploads/<?php echo htmlspecialchars($photo['photo_path']); ?>" alt="Question Photo" class="question-photo">
                                             <?php endforeach; ?>
                                         </div>
                                     <?php endif; ?>

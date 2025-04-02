@@ -98,7 +98,7 @@ $activeTab = isset($_GET['tab']) ? $_GET['tab'] : 'pending';
                             <?php if (!empty($post['photos'])): ?>
                                 <div class="question-photos">
                                     <?php foreach ($post['photos'] as $photo): ?>
-                                        <img src="/webapp/user/uploads/<?php echo htmlspecialchars($photo['photo_path']); ?>" alt="Question Photo" class="question-photo">
+                                        <img src="/webapp/uploads/<?php echo htmlspecialchars($photo['photo_path']); ?>" alt="Question Photo" class="question-photo">
                                     <?php endforeach; ?>
                                 </div>
                             <?php endif; ?>
@@ -160,7 +160,7 @@ $activeTab = isset($_GET['tab']) ? $_GET['tab'] : 'pending';
                             <?php if (!empty($report['photos'])): ?>
                                 <div class="question-photos">
                                     <?php foreach ($report['photos'] as $photo): ?>
-                                        <img src="/webapp/user/uploads/<?php echo htmlspecialchars($photo['photo_path']); ?>" alt="Question Photo" class="question-photo">
+                                        <img src="/webapp/uploads/<?php echo htmlspecialchars($photo['photo_path']); ?>" alt="Question Photo" class="question-photo">
                                     <?php endforeach; ?>
                                 </div>
                             <?php endif; ?>
