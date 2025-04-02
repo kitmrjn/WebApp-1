@@ -6,7 +6,7 @@ require_once 'includes/db_config.php'; // includes $conn (PDO object)
 $recaptchaSecretKey = '6LeJXvEqAAAAAKm0-NmvD-iraCVhy4h7IYO8kDxi'; // Replace with your Secret Key
 
 // Initialize variables to hold form data
-$username = $email = $course = '';
+$username = $student_number = $email = $course = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Verify reCAPTCHA
@@ -19,22 +19,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $error = "reCAPTCHA verification failed. Please try again.";
     } else {
         $username = trim($_POST['username']);
+        $student_number = trim($_POST['student_number']);
         $email    = trim($_POST['email']);
         $password = trim($_POST['password']);
         $confirmPassword = trim($_POST['confirmPassword']);
         $course   = trim($_POST['course']);
 
-        // Validate username
+        // Validate full name
         if (empty($username)) {
-            $error = "Username is required.";
-        } elseif (strlen($username) < 5 || strlen($username) > 20) {
-            $error = "Username must be between 5 and 20 characters.";
-        } elseif (preg_match('/^[0-9]+$/', $username)) {
-            $error = "Username cannot be only numbers.";
-        } elseif (!preg_match('/^[a-zA-Z0-9-]+$/', $username)) {
-            $error = "Username can only contain letters, numbers, and hyphens (-).";
+            $error = "Full name is required.";
+        } elseif (strlen($username) < 5 || strlen($username) > 50) {
+            $error = "Full name must be between 5 and 50 characters.";
+        } elseif (!preg_match('/^[a-zA-Z\s\-]+$/', $username)) {
+            $error = "Full name can only contain letters, spaces, and hyphens.";
         }
 
+       // Validate student number
+        elseif (empty($student_number)) {
+            $error = "Student number is required.";
+        } elseif (!preg_match('/^AY[a-zA-Z0-9\-]+$/i', $student_number)) {
+            $error = "Student number must start with 'AY' and can only contain letters, numbers, and hyphens.";
+        } elseif (strlen($student_number) < 11 || strlen($student_number) > 20) {  // Changed from 5 to 11
+            $error = "Student number must be between 11 and 20 characters.";
+        }
         // Validate password
         elseif (empty($password)) {
             $error = "Password is required.";
@@ -61,24 +68,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         // If no errors, proceed with registration
         else {
-            // Check if username or email already exists
-            $checkSql = "SELECT * FROM users WHERE username = :username OR email = :email LIMIT 1";
+            // Check if student number or email already exists
+            $checkSql = "SELECT * FROM users WHERE student_number = :student_number OR email = :email LIMIT 1";
             $stmt = $conn->prepare($checkSql);
-            $stmt->bindValue(':username', $username);
+            $stmt->bindValue(':student_number', $student_number);
             $stmt->bindValue(':email', $email);
             $stmt->execute();
             $existing = $stmt->fetch(PDO::FETCH_ASSOC);
 
             if ($existing) {
-                $error = "Username or Email already taken.";
+                $error = "Student number or Email already taken.";
             } else {
                 // Hash the password
                 $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
                 // Insert new user
-                $sql = "INSERT INTO users (username, email, password, course) VALUES (:username, :email, :password, :course)";
+                $sql = "INSERT INTO users (username, student_number, email, password, course) VALUES (:username, :student_number, :email, :password, :course)";
                 $stmt = $conn->prepare($sql);
                 $stmt->bindValue(':username', $username);
+                $stmt->bindValue(':student_number', $student_number);
                 $stmt->bindValue(':email', $email);
                 $stmt->bindValue(':password', $hashedPassword);
                 $stmt->bindValue(':course', $course);
@@ -138,9 +146,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <div class="error-message"><?php echo $error; ?></div>
             <?php endif; ?>
             <form method="POST" action="">
-                <label>Username</label>
-                <input type="text" name="username" required minlength="5" maxlength="20" pattern="[a-zA-Z0-9-]+" title="Username can only contain letters, numbers, and hyphens (-)." value="<?php echo htmlspecialchars($username); ?>">
+                <label>Full Name</label>
+                <input type="text" name="username" required minlength="5" maxlength="50" pattern="[a-zA-Z\s\-]+" title="Full name can only contain letters, spaces, and hyphens." value="<?php echo htmlspecialchars($username); ?>">
 
+                <label>Student Number (must start with AY)</label>
+                <input type="text" name="student_number" required minlength="11" maxlength="20" pattern="AY[a-zA-Z0-9\-]+" title="Student number must start with 'AY', be 11-20 characters long, and can only contain letters, numbers, and hyphens" value="<?php echo htmlspecialchars($student_number); ?>">
+                
                 <label>Email</label>
                 <input type="email" name="email" required value="<?php echo htmlspecialchars($email); ?>">
 

@@ -203,10 +203,13 @@ nav a:hover {
 
   nav.active {
       display: flex; /* Show the nav menu when active */
+      align-items: flex-start; /* Align items to the left */
+      justify-content: flex-start; /* Start from the top */
   }
 
   nav a {
       padding: 10px 0; /* Add spacing between links */
+      text-align: left;
   }
 
   /* Hide profile icon on smaller screens */

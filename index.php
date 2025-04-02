@@ -10,7 +10,7 @@ $page = isset($_GET['page']) ? (int)$_GET['page'] : 1; // Current page number
 $offset = ($page - 1) * $questions_per_page; // Calculate offset
 
 // Fetch questions for the current page
-$sql = "SELECT q.*, u.username
+$sql = "SELECT q.*, u.username, u.course
         FROM questions q
         JOIN users u ON q.user_id = u.user_id
         WHERE q.status = 'approved'
@@ -165,7 +165,10 @@ $total_pages = ceil($total_questions / $questions_per_page);
                                             <h3><?php echo htmlspecialchars($row['title']); ?></h3>
                                             <p class="timestamp">
                                                 <span class="username"><?php echo htmlspecialchars($row['username']); ?></span>
-                                                <span class="time-ago"><?php echo time_ago($row['created_at']); ?></span>
+                                                <?php if (!empty($row['course'])): ?>
+                                                    <span class="user-course">• <?php echo htmlspecialchars($row['course']); ?></span>
+                                                <?php endif; ?>
+                                                <span class="time-ago">• <?php echo time_ago($row['created_at']); ?></span>
                                             </p>
                                         </div>
                                     </div>

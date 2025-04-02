@@ -698,3 +698,10 @@ header{
   right: 10px;
   color: #fdd835;
 }
+
+.profile-student-number {
+  font-size: 0.9rem;
+  color:white;
+  margin: 0.2rem 0;
+  font-weight: bold;
+}

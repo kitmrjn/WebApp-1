@@ -6,7 +6,7 @@ require_once 'includes/db_config.php'; // includes $conn (PDO object)
 $recaptchaSecretKey = '6LeJXvEqAAAAAKm0-NmvD-iraCVhy4h7IYO8kDxi'; // Replace with your Secret Key
 
 // Initialize variables to hold form data
-$usernameOrEmail = '';
+$studentNumberOrEmail = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Verify reCAPTCHA
@@ -18,16 +18,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (!$responseData->success) {
         $error = "reCAPTCHA verification failed. Please try again.";
     } else {
-        $usernameOrEmail = trim($_POST['usernameOrEmail']);
+        $studentNumberOrEmail = trim($_POST['studentNumberOrEmail']);
         $password        = trim($_POST['password']);
 
-        if (empty($usernameOrEmail) || empty($password)) {
+        if (empty($studentNumberOrEmail) || empty($password)) {
             $error = "All fields are required.";
         } else {
-            // Fetch user by username or email
-            $sql = "SELECT * FROM users WHERE username = :userOrEmail OR email = :userOrEmail LIMIT 1";
+            // Fetch user by student number or email
+            $sql = "SELECT * FROM users WHERE student_number = :studentNumberOrEmail OR email = :studentNumberOrEmail LIMIT 1";
             $stmt = $conn->prepare($sql);
-            $stmt->bindValue(':userOrEmail', $usernameOrEmail);
+            $stmt->bindValue(':studentNumberOrEmail', $studentNumberOrEmail);
             $stmt->execute();
             $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -45,7 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 }
                 exit();
             } else {
-                $error = "Invalid username/email or password.";
+                $error = "Invalid student number/email or password.";
             }
         }
     }
@@ -95,8 +95,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <div class="error-message"><?php echo $error; ?></div>
             <?php endif; ?>
             <form method="POST" action="">
-                <label>Username or Email</label>
-                <input type="text" name="usernameOrEmail" required value="<?php echo htmlspecialchars($usernameOrEmail); ?>">
+                <label>Student Number or Email</label>
+                <input type="text" name="studentNumberOrEmail" required value="<?php echo htmlspecialchars($studentNumberOrEmail); ?>">
 
                 <label>Password</label>
                 <input type="password" name="password" required>

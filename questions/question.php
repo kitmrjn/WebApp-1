@@ -10,10 +10,11 @@ if (!isset($_GET['id'])) {
 
 $question_id = intval($_GET['id']);
 
-$qSql = "SELECT q.*, u.username, u.profile_picture
+$qSql = "SELECT q.*, u.username, u.profile_picture, u.course
          FROM questions q
          JOIN users u ON q.user_id = u.user_id
          WHERE q.question_id = :qid AND q.status = 'approved'";
+
 $qStmt = $conn->prepare($qSql);
 $qStmt->bindValue(':qid', $question_id, PDO::PARAM_INT);
 $qStmt->execute();
@@ -43,7 +44,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_SESSION['user_id'])) {
 }
 
       //get user database information
-$aSql = "SELECT a.*, u.username, u.profile_picture,
+$aSql = "SELECT a.*, u.username, u.profile_picture, u.course,
                 IFNULL(r.is_helpful, 0) AS is_helpful
          FROM answers a
          JOIN users u ON a.user_id = u.user_id
@@ -131,14 +132,18 @@ $currentUser = isset($_SESSION['user_id']) ? get_user_data($conn, $_SESSION['use
                             <div class="question">
                                 <div class="question-header">
                                     <?php if (!empty($question['profile_picture'])): ?>
-                                        <img src="../<?php echo htmlspecialchars($question['profile_picture']); ?>" alt="User Avatar" class="avatar">
+                                        <img src="../user/<?php echo htmlspecialchars($question['profile_picture']); ?>" alt="User Avatar" class="avatar">
                                     <?php else: ?>
                                         <i class="fas fa-user-circle avatar-icon"></i>
                                     <?php endif; ?>
                                     <div class="question-info">
                                         <h3><?php echo htmlspecialchars($question['title']); ?></h3>
                                         <p class="timestamp">
-                                            <?php echo htmlspecialchars($question['username']); ?> • <?php echo time_ago($question['created_at']); ?>
+                                            <span class="username"><?php echo htmlspecialchars($question['username']); ?></span>
+                                            <?php if (!empty($question['course'])): ?>
+                                                <span class="user-course">• <?php echo htmlspecialchars($question['course']); ?></span>
+                                            <?php endif; ?>
+                                            <span class="time-ago">• <?php echo time_ago($question['created_at']); ?></span>
                                         </p>
                                     </div>
                                 </div>
@@ -147,7 +152,7 @@ $currentUser = isset($_SESSION['user_id']) ? get_user_data($conn, $_SESSION['use
                                     <?php if (!empty($photos)): ?>
                                         <div class="question-photos-answer">
                                             <?php foreach ($photos as $photo): ?>
-                                                <img src="/webapp/uploads/<?php echo htmlspecialchars($photo['photo_path']); ?>" alt="Question Photo" class="question-photo">
+                                                <img src="/webapp/user/uploads/<?php echo htmlspecialchars($photo['photo_path']); ?>" alt="Question Photo" class="question-photo">
                                             <?php endforeach; ?>
                                         </div>
                                     <?php endif; ?>
@@ -163,16 +168,20 @@ $currentUser = isset($_SESSION['user_id']) ? get_user_data($conn, $_SESSION['use
                                     <?php foreach ($answers as $answer): ?>
                                         <div class="answer-box" data-answer-id="<?php echo $answer['answer_id']; ?>">
                                             <div class="answer-meta">
-                                                <div class="answer-user">
-                                                    <?php if (!empty($answer['profile_picture'])): ?>
-                                                        <img src="../<?php echo htmlspecialchars($answer['profile_picture']); ?>" alt="User Avatar" class="avatar">
-                                                    <?php else: ?>
-                                                        <i class="fas fa-user-circle avatar-icon"></i>
+                                            <div class="answer-user">
+                                                <?php if (!empty($answer['profile_picture'])): ?>
+                                                    <img src="../user/<?php echo htmlspecialchars($answer['profile_picture']); ?>" alt="User Avatar" class="avatar">
+                                                <?php else: ?>
+                                                    <i class="fas fa-user-circle avatar-icon"></i>
+                                                <?php endif; ?>
+                                                <span>
+                                                    <strong><?php echo htmlspecialchars($answer['username']); ?></strong>
+                                                    <?php if (!empty($answer['course'])): ?>
+                                                        <span class="user-course">• <?php echo htmlspecialchars($answer['course']); ?></span>
                                                     <?php endif; ?>
-                                                    <span>
-                                                        <strong><?php echo htmlspecialchars($answer['username']); ?></strong> • <?php echo time_ago($answer['created_at']); ?>
-                                                    </span>
-                                                </div>
+                                                    <span class="time-ago">• <?php echo time_ago($answer['created_at']); ?></span>
+                                                </span>
+                                            </div>
                                             </div>
                                             <div class="answer-content-wrapper">
                                                 <div class="answer-content">

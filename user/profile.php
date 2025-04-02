@@ -76,6 +76,9 @@ $active_tab = isset($_GET['tab']) ? $_GET['tab'] : 'questions';
                     <img src="../assets/images/userAvatar.jpg" class="avatar">
                 <?php endif; ?>
                 <h2><?php echo htmlspecialchars($user['username']); ?></h2>
+                <?php if (!empty($user['student_number'])): ?>
+                    <p class="profile-student-number"><?php echo htmlspecialchars($user['student_number']); ?></p>
+                <?php endif; ?>
                 <p class="profile-email"><?php echo htmlspecialchars($user['email']); ?></p>
             </div>
 

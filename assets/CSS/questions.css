@@ -91,6 +91,10 @@
   transition: max-height 0.3s ease;
 }
 
+.user-course{
+  font-size: 12px;
+}
+
 .answer-preview.truncated {
   cursor: pointer;
 }
