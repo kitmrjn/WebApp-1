@@ -69,7 +69,7 @@ $active_tab = isset($_GET['tab']) ? $_GET['tab'] : 'questions';
                 <?php 
                 $user = get_user_data($conn, $_SESSION['user_id']);
                 if (!empty($user['profile_picture'])): ?>
-                    <img src="../<?php echo htmlspecialchars($user['profile_picture']); ?>" 
+                    <img src="../user/<?php echo htmlspecialchars($user['profile_picture']); ?>" 
                         alt="Profile Picture" 
                         class="profile-avatar-img">
                 <?php else: ?>

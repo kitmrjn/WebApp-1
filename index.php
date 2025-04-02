@@ -119,7 +119,7 @@ $total_pages = ceil($total_questions / $questions_per_page);
                             ?>
                                 <div class="profile-dropdown desktop-only">
                                     <?php if (!empty($user['profile_picture'])): ?>
-                                        <img src="<?php echo htmlspecialchars($user['profile_picture']); ?>" 
+                                        <img src="user/<?php echo htmlspecialchars($user['profile_picture']); ?>" 
                                             alt="Profile Picture" 
                                             class="profile-icon">
                                     <?php else: ?>
@@ -155,7 +155,7 @@ $total_pages = ceil($total_questions / $questions_per_page);
                                     <?php 
                                         $asker = get_user_data($conn, $row['user_id']);
                                         if (!empty($asker['profile_picture'])): ?>
-                                            <img src="<?php echo htmlspecialchars($asker['profile_picture']); ?>" 
+                                            <img src="user/<?php echo htmlspecialchars($asker['profile_picture']); ?>" 
                                                 alt="User Avatar" 
                                                 class="avatar">
                                         <?php else: ?>
@@ -180,7 +180,7 @@ $total_pages = ceil($total_questions / $questions_per_page);
                                             <div class="question-photos">
                                                 <?php foreach ($row['photos'] as $index => $photo): ?>
                                                     <div class="photo-container <?php echo (count($row['photos']) === 1 ? 'single-photo' : 'multiple-photos'); ?>">
-                                                        <img src="/webapp/uploads/<?php echo htmlspecialchars($photo['photo_path']); ?>" alt="Question Photo" class="question-photo-thumbnail">
+                                                        <img src="/webapp/user/uploads/<?php echo htmlspecialchars($photo['photo_path']); ?>" alt="Question Photo" class="question-photo-thumbnail">
                                                         <?php if ($index === 1 && $row['total_photos'] > 2): ?>
                                                             <div class="photo-count-overlay">
                                                                 +<?php echo $row['total_photos'] - 2; ?>

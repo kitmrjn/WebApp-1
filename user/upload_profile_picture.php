@@ -4,8 +4,8 @@ ini_set('display_errors', 0);
 header('Content-Type: application/json');
 
 session_start();
-require_once '../incldues/db_config.php';
-require_once '../incldues/auth.php';
+require_once '../includes/db_config.php';
+require_once '../includes/auth.php';
 
 if (!isset($_SESSION['user_id'])) {
     http_response_code(401);

@@ -36,7 +36,7 @@ $last_login = isset($user['last_login']) ? $user['last_login'] : 'Never';
         <?php 
         $user = get_user_data($conn, $_SESSION['user_id']);
         if (!empty($user['profile_picture'])): ?>
-            <img src="../<?php echo htmlspecialchars($user['profile_picture']); ?>" 
+            <img src="../user/<?php echo htmlspecialchars($user['profile_picture']); ?>" 
                 alt="Profile Picture" 
                 class="profile-avatar-img">
         <?php else: ?>
