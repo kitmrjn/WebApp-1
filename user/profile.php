@@ -35,6 +35,7 @@ $active_tab = isset($_GET['tab']) ? $_GET['tab'] : 'questions';
     <title>Vincenthinks - My Profile</title>
     <link rel="stylesheet" href="../assets/CSS/global.css">
     <link rel="stylesheet" href="../assets/CSS/header.css">
+    <link rel="stylesheet" href="../assets/CSS/footer.css">
     <link rel="stylesheet" href="../assets/CSS/profile.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>

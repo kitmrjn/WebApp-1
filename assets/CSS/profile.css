@@ -39,7 +39,6 @@ header{
   text-align: center;
   padding: 20px 0;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  margin-bottom: 20px;
   width: 100%; /* Ensure full width */
 }
 
@@ -80,7 +79,7 @@ header{
   align-items: center;
   transition: all 0.2s;
   width: 100%; /* Make links take full width of menu */
-  justify-content: center; /* Center the text and icons */
+  justify-content: flex-start; /* Align content to the left */
 }
 
 .profile-menu a i {
@@ -417,19 +416,23 @@ header{
 
   .profile-summary {
     order: 1; /* Ensure summary stays at top */
-    margin-bottom: 30px; /* Add more space below summary */
   }
   
   .profile-sidebar {
     display: flex;
     flex-direction: column;
     padding: 20px;
+    padding-right: 0px;
   }
   
   .profile-menu {
     order: 2; /* Ensure menu comes after summary */
     margin-top: 130px; /* Reset margin for mobile */
+    margin-left: 50px;
     padding: 0;
+    padding-left: 20px;
+
+    box-shadow: none;
   }
   
   .info-grid {
@@ -650,6 +653,10 @@ header{
   .menu-toggle {
     display: block;
   }
+
+  h1 {
+    display: block !important;
+}
   
   .profile-sidebar {
     position: fixed;
@@ -689,4 +696,5 @@ header{
 .fa-bars{
   position: fixed;
   right: 10px;
+  color: #fdd835;
 }
