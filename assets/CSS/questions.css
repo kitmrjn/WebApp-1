@@ -91,9 +91,12 @@
   transition: max-height 0.3s ease;
 }
 
-.user-course{
+.user-course {
+  color: #666;
   font-size: 12px;
+  margin: 0 5px;
 }
+
 
 .answer-preview.truncated {
   cursor: pointer;
@@ -137,6 +140,10 @@
   grid-template-columns: 1fr 1fr; /* Two equal columns */
   gap: 8px; /* Space between photos */
   margin-top: 10px;
+}
+
+.question-photos:has(.photo-container:only-child) {
+  grid-template-columns: 1fr;
 }
 
 .question-photo {
